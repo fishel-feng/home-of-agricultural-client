@@ -8,7 +8,7 @@
 export default {
   data () {
     return {
-      msg: 'Welcome to 问专家页面'
+      msg: 'Welcome to 农友圈页面'
     }
   }
 }

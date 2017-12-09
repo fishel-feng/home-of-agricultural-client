@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import News from '@/components/News'
 import Wiki from '@/components/Wiki'
 import Question from '@/components/Question'
-import Circle from '@/components/Circle'
+import Circles from '@/components/Circles'
 import Me from '@/components/Me'
 
 Vue.use(Router)
@@ -30,9 +30,9 @@ export default new Router({
       component: Question
     },
     {
-      path: '/circle',
-      name: 'Circle',
-      component: Circle
+      path: '/circles',
+      name: 'Circles',
+      component: Circles
     },
     {
       path: '/me',

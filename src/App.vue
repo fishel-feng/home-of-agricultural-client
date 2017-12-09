@@ -1,15 +1,31 @@
 <template>
 <div id="app">
   <mt-header fixed :title="selected"></mt-header>
-  <router-view></router-view>
-  <mt-tabbar v-model="selected">
+  <mt-tab-container class="container" v-model="active">
+    <mt-tab-container-item id="新闻">
+      <news></news>
+    </mt-tab-container-item>
+    <mt-tab-container-item id="百科">
+      <wiki></wiki>
+    </mt-tab-container-item>
+    <mt-tab-container-item id="问专家">
+      <question></question>
+    </mt-tab-container-item>
+    <mt-tab-container-item id="农友圈">
+      <circles></circles>
+    </mt-tab-container-item>
+    <mt-tab-container-item id="我的">
+      <me></me>
+    </mt-tab-container-item>
+  </mt-tab-container>
+  <mt-tabbar @click.native="changePage" v-model="selected">
     <mt-tab-item id="新闻">
       <img slot="icon" src="./assets/svg/home.svg"> 新闻
     </mt-tab-item>
     <mt-tab-item id="百科">
       <img slot="icon" src="./assets/svg/wiki.svg"> 百科
     </mt-tab-item>
-    <mt-tab-item id="专家">
+    <mt-tab-item id="问专家">
       <img slot="icon" src="./assets/svg/question.svg"> 问专家
     </mt-tab-item>
     <mt-tab-item id="农友圈">
@@ -23,16 +39,38 @@
 </template>
 
 <script>
+import News from '@/components/News'
+import Wiki from '@/components/Wiki'
+import Question from '@/components/Question'
+import Circles from '@/components/Circles'
+import Me from '@/components/Me'
 export default {
   name: 'app',
   data () {
     return {
-      selected: '新闻'
+      selected: '新闻',
+      active: '新闻'
+    }
+  },
+  components: {
+    News,
+    Wiki,
+    Question,
+    Circles,
+    Me
+  },
+  methods: {
+    changePage () {
+      this.active = this.selected
     }
   }
 }
 </script>
 
-<style>
-
+<style lang="stylus" scoped>
+.container
+  position: fixed
+  width: 100%
+  top: 40px
+  bottom: 55px
 </style>
