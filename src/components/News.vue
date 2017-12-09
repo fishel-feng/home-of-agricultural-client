@@ -14,11 +14,10 @@ export default {
 }
 </script>
 
-<style scoped>
-.news{
-  position: fixed;
-  width: 100%;
-  top: 40px;
-  bottom: 0;
-}
+<style lang="stylus" scoped>
+.news
+  position: fixed
+  width: 100%
+  top: 40px
+  bottom: 55px
 </style>
