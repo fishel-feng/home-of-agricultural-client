@@ -18,15 +18,29 @@
               </mt-swipe-item>
             </mt-swipe>
           </li>
-          <li v-for="item in newslist" :key="item.rank">
+          <li v-for="item in hotList" :key="item.rank">
             {{item.rank}} {{item.title}}
           </li>
         </ul>
       </mt-tab-container-item>
       <mt-tab-container-item v-for="(nav,index) in navList.slice(1)" :key="index" :id="nav.itemName">
-        <li v-for="item in newslist" :key="item.rank">
-          {{item.rank}} {{item.title}}
-        </li>
+        <ul
+          class="main"
+          v-infinite-scroll="loadMore"
+          infinite-scroll-disabled="loading"
+          infinite-scroll-distance="10">
+          <li v-for="(item,index) in newsList" :key="index" @click="getInfo(item.articleId)">
+            <div class="list-item">
+              <h2 class="title">{{item.title}}</h2>
+              <p class="desc">{{item.desc}}</p>
+              <span class="date">{{item.date}}</span>
+              <span class="read">
+                <img src="../assets/svg/read.svg" alt="" height="8px">
+                {{item.read}}
+              </span>
+            </div>
+          </li>
+        </ul>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -39,7 +53,8 @@ export default {
     return {
       msg: 'Welcome to 新闻页面',
       scroll: [],
-      newslist: [],
+      hotList: [],
+      newsList: [],
       navList: [],
       selected: '首页'
     }
@@ -51,21 +66,27 @@ export default {
     initData () {
       axios.get('http://127.0.0.1:7001/news/getArticleIndex').then(res => {
         this.scroll = res.data.data.scroll
-        this.newslist = res.data.data.todayNews
+        this.hotList = res.data.data.todayNews
         this.navList = res.data.data.navItem
       })
     },
-    getItemContent (url) {
-      axios.get(`http://localhost:7001/news/getArticleListByPage/${url}/1`).then(res => {
-        console.log(res.data)
+    getContent (url, page) {
+      axios.get(`http://localhost:7001/news/getArticleListByPage/${url}/${page}`).then(res => {
+        this.newsList = res.data.data.articles
       })
+    },
+    getInfo (id) {
+      this.$router.push({
+        path: `/articleInfo/${id}`
+      })
+      console.log(id)
     },
     loadMore () {
       this.loading = true
       setTimeout(() => {
-        let last = this.newslist[this.newslist.length - 1]
+        let last = this.hotList[this.hotList.length - 1]
         for (let i = 1; i <= 10; i++) {
-          this.newslist.push(last + i)
+          this.hotList.push(last + i)
         }
         this.loading = false
       }, 2500)
@@ -76,7 +97,7 @@ export default {
       if (newVal !== '首页') {
         this.navList.forEach(element => {
           if (newVal === element.itemName) {
-            this.getItemContent(element.navUrl)
+            this.getContent(element.navUrl, 1)
           }
         })
       }
@@ -99,4 +120,19 @@ export default {
         position absolute
         top 20px
         background #ccc
+    .list-item
+      display block
+      overflow hidden
+      padding 15px
+      color black
+      .title
+        font-size 18px
+      .desc
+        margin 5px
+        font-size 12px
+      .date
+        font-size 12px
+      .read
+        float right
+        font-size 12px
 </style>

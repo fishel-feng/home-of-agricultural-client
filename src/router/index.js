@@ -2,9 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import News from '@/components/News'
 import Wiki from '@/components/Wiki'
-import Question from '@/components/Question'
-import Circles from '@/components/Circles'
-import Me from '@/components/Me'
+// import Question from '@/components/Question'
+// import Circles from '@/components/Circles'
+// import Me from '@/components/Me'
+import ArticleInfo from '@/components/ArticleInfo'
 
 Vue.use(Router)
 
@@ -12,10 +13,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/news'
-    },
-    {
-      path: '/news',
       name: 'News',
       component: News
     },
@@ -25,19 +22,9 @@ export default new Router({
       component: Wiki
     },
     {
-      path: '/question',
-      name: 'Question',
-      component: Question
-    },
-    {
-      path: '/circles',
-      name: 'Circles',
-      component: Circles
-    },
-    {
-      path: '/me',
-      name: 'Me',
-      component: Me
+      path: '/articleInfo/:id',
+      name: 'ArticleInfo',
+      component: ArticleInfo
     }
   ]
 })
