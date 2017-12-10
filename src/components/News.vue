@@ -1,10 +1,19 @@
 <template>
   <div class="news">
-    <mt-swipe class="swipe" :auto="4000">
-      <mt-swipe-item class="swipe-item" v-for="(item,index) in scroll" :key="index">
-        <img class="image" :src="item.imageUrl" alt="" height="160px">
-      </mt-swipe-item>
-    </mt-swipe>
+    <ul
+      class="main"
+      v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="10">
+      <li>
+        <mt-swipe class="swipe" :auto="4000">
+          <mt-swipe-item class="swipe-item" v-for="(item,index) in scroll" :key="index">
+            <img class="image" :src="item.imageUrl" alt="" width="100%" height="100%">
+          </mt-swipe-item>
+        </mt-swipe>
+      </li>
+      <li v-for="(item,index) in list" :key="index">gberiuhgueuib<br><br>{{ item }}</li>
+    </ul>
   </div>
 </template>
 
@@ -14,7 +23,8 @@ export default {
   data () {
     return {
       msg: 'Welcome to 新闻页面',
-      scroll: []
+      scroll: [],
+      list: [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6]
     }
   },
   mounted () {
@@ -29,6 +39,16 @@ export default {
       }).then(res => {
         this.scroll = res.data.data.scroll
       })
+    },
+    loadMore () {
+      this.loading = true
+      setTimeout(() => {
+        let last = this.list[this.list.length - 1]
+        for (let i = 1; i <= 10; i++) {
+          this.list.push(last + i)
+        }
+        this.loading = false
+      }, 2500)
     }
   }
 }
@@ -36,14 +56,14 @@ export default {
 
 <style lang="stylus" scoped>
 .news
-  position: fixed
+  position: relative
   width: 100%
   top: 40px
-  bottom: 55px
+  padding-bottom: 55px
   .swipe
-    height 160px
+    height 215px
+    position relative
     .swipe-item
-      position relative
       .image
         position absolute
         left auto

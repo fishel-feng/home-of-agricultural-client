@@ -18,7 +18,7 @@
       <me></me>
     </mt-tab-container-item>
   </mt-tab-container>
-  <mt-tabbar @click.native="changePage" v-model="selected">
+  <mt-tabbar @click.native="changePage" v-model="selected" class="tail">
     <mt-tab-item id="新闻">
       <img slot="icon" src="./assets/svg/home.svg"> 新闻
     </mt-tab-item>
@@ -69,8 +69,7 @@ export default {
 
 <style lang="stylus" scoped>
 .container
-  position: fixed
-  width: 100%
-  top: 40px
   bottom: 55px
+.tail
+  position fixed
 </style>
