@@ -1,12 +1,10 @@
 <template>
   <div class="news">
     <mt-navbar class="nav" v-model="selected">
-      <mt-tab-item id="1">选项一</mt-tab-item>
-      <mt-tab-item id="2">选项二</mt-tab-item>
-      <mt-tab-item id="3">选项三</mt-tab-item>
+      <mt-tab-item v-for="nav in navList" :key="nav.itemName" :id="nav.itemName">{{nav.itemName}}</mt-tab-item>
     </mt-navbar>
     <mt-tab-container class="content" v-model="selected">
-      <mt-tab-container-item id="1">
+      <mt-tab-container-item id="首页">
         <ul
           class="main"
           v-infinite-scroll="loadMore"
@@ -15,6 +13,7 @@
           <li>
             <mt-swipe class="swipe" :auto="4000">
               <mt-swipe-item class="swipe-item" v-for="(item,index) in scroll" :key="index">
+                <span class="title">{{item.title}}</span>
                 <img class="image" :src="item.imageUrl" alt="" width="100%" height="100%">
               </mt-swipe-item>
             </mt-swipe>
@@ -24,11 +23,10 @@
           </li>
         </ul>
       </mt-tab-container-item>
-      <mt-tab-container-item id="2">
-        <mt-cell v-for="n in 4" :title="'测试 ' + n" />
-      </mt-tab-container-item>
-      <mt-tab-container-item id="3">
-        <mt-cell v-for="n in 6" :title="'选项 ' + n" />
+      <mt-tab-container-item v-for="(nav,index) in navList.slice(1)" :key="index" :id="nav.itemName">
+        <li v-for="item in newslist" :key="item.rank">
+          {{item.rank}} {{item.title}}
+        </li>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -42,7 +40,8 @@ export default {
       msg: 'Welcome to 新闻页面',
       scroll: [],
       newslist: [],
-      selected: '1'
+      navList: [],
+      selected: '首页'
     }
   },
   mounted () {
@@ -53,6 +52,12 @@ export default {
       axios.get('http://127.0.0.1:7001/news/getArticleIndex').then(res => {
         this.scroll = res.data.data.scroll
         this.newslist = res.data.data.todayNews
+        this.navList = res.data.data.navItem
+      })
+    },
+    getItemContent (url) {
+      axios.get(`http://localhost:7001/news/getArticleListByPage/${url}/1`).then(res => {
+        console.log(res.data)
       })
     },
     loadMore () {
@@ -65,6 +70,17 @@ export default {
         this.loading = false
       }, 2500)
     }
+  },
+  watch: {
+    selected (newVal, oldVal) {
+      if (newVal !== '首页') {
+        this.navList.forEach(element => {
+          if (newVal === element.itemName) {
+            this.getItemContent(element.navUrl)
+          }
+        })
+      }
+    }
   }
 }
 </script>
@@ -73,10 +89,14 @@ export default {
 .news
   position: relative
   width: 100%
-  top: 40px
-  padding-bottom: 55px
+  // padding-bottom: 55px
   .content
+    padding-top 3px
     .swipe
       height 215px
       position relative
+      .title
+        position absolute
+        top 20px
+        background #ccc
 </style>
