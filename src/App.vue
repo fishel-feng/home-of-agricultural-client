@@ -67,9 +67,9 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 .container
-  bottom: 55px
+  margin-bottom 55px
 .tail
   position fixed
 </style>

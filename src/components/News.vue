@@ -1,19 +1,36 @@
 <template>
   <div class="news">
-    <ul
-      class="main"
-      v-infinite-scroll="loadMore"
-      infinite-scroll-disabled="loading"
-      infinite-scroll-distance="10">
-      <li>
-        <mt-swipe class="swipe" :auto="4000">
-          <mt-swipe-item class="swipe-item" v-for="(item,index) in scroll" :key="index">
-            <img class="image" :src="item.imageUrl" alt="" width="100%" height="100%">
-          </mt-swipe-item>
-        </mt-swipe>
-      </li>
-      <li v-for="(item,index) in list" :key="index">gberiuhgueuib<br><br>{{ item }}</li>
-    </ul>
+    <mt-navbar class="nav" v-model="selected">
+      <mt-tab-item id="1">选项一</mt-tab-item>
+      <mt-tab-item id="2">选项二</mt-tab-item>
+      <mt-tab-item id="3">选项三</mt-tab-item>
+    </mt-navbar>
+    <mt-tab-container class="content" v-model="selected">
+      <mt-tab-container-item id="1">
+        <ul
+          class="main"
+          v-infinite-scroll="loadMore"
+          infinite-scroll-disabled="loading"
+          infinite-scroll-distance="10">
+          <li>
+            <mt-swipe class="swipe" :auto="4000">
+              <mt-swipe-item class="swipe-item" v-for="(item,index) in scroll" :key="index">
+                <img class="image" :src="item.imageUrl" alt="" width="100%" height="100%">
+              </mt-swipe-item>
+            </mt-swipe>
+          </li>
+          <li v-for="item in newslist" :key="item.rank">
+            {{item.rank}} {{item.title}}
+          </li>
+        </ul>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="2">
+        <mt-cell v-for="n in 4" :title="'测试 ' + n" />
+      </mt-tab-container-item>
+      <mt-tab-container-item id="3">
+        <mt-cell v-for="n in 6" :title="'选项 ' + n" />
+      </mt-tab-container-item>
+    </mt-tab-container>
   </div>
 </template>
 
@@ -24,7 +41,8 @@ export default {
     return {
       msg: 'Welcome to 新闻页面',
       scroll: [],
-      list: [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6]
+      newslist: [],
+      selected: '1'
     }
   },
   mounted () {
@@ -32,20 +50,17 @@ export default {
   },
   methods: {
     initData () {
-      axios({
-        method: 'get',
-        url: 'http://127.0.0.1:7001/news/getArticleIndex'
-        // headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}
-      }).then(res => {
+      axios.get('http://127.0.0.1:7001/news/getArticleIndex').then(res => {
         this.scroll = res.data.data.scroll
+        this.newslist = res.data.data.todayNews
       })
     },
     loadMore () {
       this.loading = true
       setTimeout(() => {
-        let last = this.list[this.list.length - 1]
+        let last = this.newslist[this.newslist.length - 1]
         for (let i = 1; i <= 10; i++) {
-          this.list.push(last + i)
+          this.newslist.push(last + i)
         }
         this.loading = false
       }, 2500)
@@ -60,12 +75,8 @@ export default {
   width: 100%
   top: 40px
   padding-bottom: 55px
-  .swipe
-    height 215px
-    position relative
-    .swipe-item
-      .image
-        position absolute
-        left auto
-        right auto
+  .content
+    .swipe
+      height 215px
+      position relative
 </style>
