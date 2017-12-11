@@ -23,25 +23,6 @@
           </li>
         </ul>
       </mt-tab-container-item>
-      <mt-tab-container-item v-for="(nav,index) in navList.slice(1)" :key="index" :id="nav.itemName">
-        <ul
-          class="main"
-          v-infinite-scroll="loadMore"
-          infinite-scroll-disabled="loading"
-          infinite-scroll-distance="10">
-          <li v-for="(item,index) in newsList" :key="index" @click="getInfo(item.articleId)">
-            <div class="list-item">
-              <h2 class="title">{{item.title}}</h2>
-              <p class="desc">{{item.desc}}</p>
-              <span class="date">{{item.date}}</span>
-              <span class="read">
-                <img src="../assets/svg/read.svg" alt="" height="8px">
-                {{item.read}}
-              </span>
-            </div>
-          </li>
-        </ul>
-      </mt-tab-container-item>
     </mt-tab-container>
   </div>
 </template>
@@ -98,6 +79,7 @@ export default {
         this.navList.forEach(element => {
           if (newVal === element.itemName) {
             this.getContent(element.navUrl, 1)
+            // this.$router.push(`/news/${element.navUrl}`)
           }
         })
       }
@@ -108,9 +90,10 @@ export default {
 
 <style lang="stylus" scoped>
 .news
+  margin-top 40px
+  margin-bottom 55px
   position: relative
   width: 100%
-  // padding-bottom: 55px
   .content
     padding-top 3px
     .swipe

@@ -1,6 +1,6 @@
 <template>
-  <transition name="slide">
-    {{$route.params.id}}
+  <transition name="slide" class="article-info">
+    bjrsbbnkldn
   </transition>
 </template>
 

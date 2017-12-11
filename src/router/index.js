@@ -1,30 +1,89 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import News from '@/components/News'
-import Wiki from '@/components/Wiki'
-// import Question from '@/components/Question'
-// import Circles from '@/components/Circles'
-// import Me from '@/components/Me'
-import ArticleInfo from '@/components/ArticleInfo'
 
 Vue.use(Router)
+
+const Index = (resolve) => {
+  import('@/views/index').then((module) => {
+    resolve(module)
+  })
+}
+
+const News = (resolve) => {
+  import('@/components/News').then((module) => {
+    resolve(module)
+  })
+}
+
+const Wiki = (resolve) => {
+  import('@/components/Wiki').then((module) => {
+    resolve(module)
+  })
+}
+
+const Question = (resolve) => {
+  import('@/components/Question').then((module) => {
+    resolve(module)
+  })
+}
+
+const Circles = (resolve) => {
+  import('@/components/Circles').then((module) => {
+    resolve(module)
+  })
+}
+
+const Me = (resolve) => {
+  import('@/components/Me').then((module) => {
+    resolve(module)
+  })
+}
+
+// const ArticleList = (resolve) => {
+//   import('@/components/ArticleList').then((module) => {
+//     resolve(module)
+//   })
+// }
+
+// const ArticleInfo = (resolve) => {
+//   import('@/components/ArticleInfo').then((module) => {
+//     resolve(module)
+//   })
+// }
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'News',
-      component: News
-    },
-    {
-      path: '/wiki',
-      name: 'Wiki',
-      component: Wiki
-    },
-    {
-      path: '/articleInfo/:id',
-      name: 'ArticleInfo',
-      component: ArticleInfo
+      name: 'Index',
+      component: Index,
+      children: [
+        {
+          path: '/news',
+          name: 'News',
+          component: News
+        },
+        {
+          path: '/wiki',
+          name: 'Wiki',
+          component: Wiki
+        },
+        {
+          path: '/question',
+          name: 'Question',
+          component: Question
+        },
+        {
+          path: '/circles',
+          name: 'Circles',
+          component: Circles
+        },
+        {
+          path: '/me',
+          name: 'Me',
+          component: Me
+        }
+      ]
     }
   ]
 })
