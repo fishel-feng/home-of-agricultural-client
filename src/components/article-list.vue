@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     initData () {
-      // this.listId = this.$route.params.listId
+      this.listId = this.$route.params.listId
       this.getContent(1)
     },
     getContent (page) {
@@ -47,11 +47,8 @@ export default {
         this.newsList = res.data.data.articles
       })
     },
-    getInfo (id) {
-      this.$router.push({
-        path: `/news/${this.listId}/${id}`
-      })
-      console.log(id)
+    getInfo (articleId) {
+      this.$router.push(`/news/${this.listId}/${articleId}`)
     },
     loadMore () {
       // this.loading = true
@@ -66,6 +63,7 @@ export default {
   },
   watch: {
     '$route' (to, from) {
+      this.initData()
       this.listId = to.path.slice(6)
     }
   }
@@ -74,9 +72,7 @@ export default {
 
 <style lang="stylus" scoped>
 .article-list
-  position: relative
   width: 100%
-  // padding-bottom: 55px
   .content
     padding-top 3px
     .list-item

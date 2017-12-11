@@ -3,87 +3,85 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const Index = (resolve) => {
-  import('@/views/index').then((module) => {
-    resolve(module)
-  })
-}
-
 const News = (resolve) => {
-  import('@/components/News').then((module) => {
+  import('@/components/news').then((module) => {
     resolve(module)
   })
 }
 
 const Wiki = (resolve) => {
-  import('@/components/Wiki').then((module) => {
+  import('@/components/wiki').then((module) => {
     resolve(module)
   })
 }
 
 const Question = (resolve) => {
-  import('@/components/Question').then((module) => {
+  import('@/components/question').then((module) => {
     resolve(module)
   })
 }
 
 const Circles = (resolve) => {
-  import('@/components/Circles').then((module) => {
+  import('@/components/circles').then((module) => {
     resolve(module)
   })
 }
 
 const Me = (resolve) => {
-  import('@/components/Me').then((module) => {
+  import('@/components/me').then((module) => {
     resolve(module)
   })
 }
 
-// const ArticleList = (resolve) => {
-//   import('@/components/ArticleList').then((module) => {
-//     resolve(module)
-//   })
-// }
+const ArticleList = (resolve) => {
+  import('@/components/article-list').then((module) => {
+    resolve(module)
+  })
+}
 
-// const ArticleInfo = (resolve) => {
-//   import('@/components/ArticleInfo').then((module) => {
-//     resolve(module)
-//   })
-// }
+const ArticleInfo = (resolve) => {
+  import('@/components/article-info').then((module) => {
+    resolve(module)
+  })
+}
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Index',
-      component: Index,
+      redirect: '/news'
+    },
+    {
+      path: '/news',
+      component: News,
       children: [
         {
-          path: '/news',
-          name: 'News',
-          component: News
-        },
-        {
-          path: '/wiki',
-          name: 'Wiki',
-          component: Wiki
-        },
-        {
-          path: '/question',
-          name: 'Question',
-          component: Question
-        },
-        {
-          path: '/circles',
-          name: 'Circles',
-          component: Circles
-        },
-        {
-          path: '/me',
-          name: 'Me',
-          component: Me
+          path: ':listId',
+          component: ArticleList,
+          children: [
+            {
+              path: ':articleId',
+              component: ArticleInfo
+            }
+          ]
         }
       ]
+    },
+    {
+      path: '/wiki',
+      component: Wiki
+    },
+    {
+      path: '/question',
+      component: Question
+    },
+    {
+      path: '/circles',
+      component: Circles
+    },
+    {
+      path: '/me',
+      component: Me
     }
   ]
 })
