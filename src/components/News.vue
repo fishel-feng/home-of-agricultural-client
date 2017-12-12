@@ -4,22 +4,26 @@
       <mt-tab-item @click.native="getList(nav)" v-for="nav in navList" :key="nav.itemName" :id="nav.itemName">{{nav.itemName}}</mt-tab-item>
     </mt-navbar>
     <div class="content">
-      <ul
-        v-if="selected==='首页'"
-        v-infinite-scroll="loadMore"
-        infinite-scroll-disabled="loading"
-        infinite-scroll-distance="10">
+      <ul v-if="selected==='首页'">
         <li>
           <mt-swipe class="swipe" :auto="4000">
-            <mt-swipe-item class="swipe-item" v-for="(item,index) in scroll" :key="index">
+            <mt-swipe-item @click.native="getInfo(item.articleId)" class="swipe-item" v-for="(item,index) in scroll" :key="index">
               <span class="title">{{item.title}}</span>
               <img class="image" :src="item.imageUrl" alt="" width="100%" height="100%">
             </mt-swipe-item>
           </mt-swipe>
         </li>
-        <li v-for="item in hotList" :key="item.rank">
-          {{item.rank}} {{item.title}}
-        </li>
+        <div class="main-wrapper">
+          <div class="today-hot-wrapper">
+            <div class="today-hot">
+              <img src="../assets/svg/hot.svg" alt="" width="20px">
+              今日热点
+            </div>
+          </div>
+          <li @click="getInfo(item.articleId)" v-for="item in hotList" :key="item.rank" class="list-wrapper">
+              {{item.rank}} {{item.title}}
+          </li>
+        </div>
       </ul>
     </div>
     <router-view></router-view>
@@ -56,27 +60,21 @@ export default {
       }
       this.$router.push('/news')
     },
-    // getInfo (id) {
-    //   this.$router.push({
-    //     path: `/articleInfo/${id}`
-    //   })
-    //   console.log(id)
-    // },
-    loadMore () {
-      this.loading = true
-      setTimeout(() => {
-        let last = this.hotList[this.hotList.length - 1]
-        for (let i = 1; i <= 10; i++) {
-          this.hotList.push(last + i)
-        }
-        this.loading = false
-      }, 2500)
+    getInfo (id) {
+      this.$router.push({
+        path: `/news/index/${id}`
+      })
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+// .fixed
+//   position fixed
+//   margin-top 40px
+//   margin-bottom 55px
+//   width: 100%
 .news
   margin-top 40px
   margin-bottom 55px
@@ -88,6 +86,21 @@ export default {
       position relative
       .title
         position absolute
+        padding 5px
         top 20px
-        background #ccc
+        background rgba(204,204,204,0.5)
+    .main-wrapper
+      background rgba(153,255,255,0.3)
+      padding 10px
+      .today-hot-wrapper
+        font-size 20px
+        padding 20px
+        .today-hot
+          margin 5px
+          background #9cf
+          text-align center
+      .list-wrapper
+        padding 10px
+        font-size 16px
+        margin 20px
 </style>
