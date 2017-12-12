@@ -68,8 +68,8 @@ export default {
     loadMore () {
       this.loading = true
       this.showLoading = true
+      this.getContent(++this.page)
       setTimeout(() => {
-        this.getContent(++this.page)
         this.loading = false
         this.showLoading = false
       }, 2500)
