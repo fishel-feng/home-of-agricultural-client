@@ -1,7 +1,7 @@
 <template>
   <transition name="slide" class="article-info">
     <div class="article-info">
-      <mt-header title="文章详情">
+      <mt-header fixed title="文章详情">
         <router-link to="/" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
@@ -81,6 +81,7 @@ export default {
   z-index 100
   background: #fff
   .content-wrapper
+    margin-top 40px
     padding 10px
     .title
       font-size 18px
