@@ -1,4 +1,7 @@
+import {loadToken} from '@/common/js/cache'
 
-const state = {}
+const state = {
+  token: loadToken()
+}
 
 export default state
