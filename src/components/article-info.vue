@@ -6,8 +6,11 @@
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
-      <div class="content-wrapper">
+      <div class="content-wrapper" ref="wrapper">
         <div class="title">{{article.title}}</div>
+        <div class="btn-wrapper">
+          <mt-button type="primary" size="small" class="btn">收藏文章</mt-button>
+        </div>
         <div class="note">
           <span class="from">{{article.from}}</span>
           <span class="time">{{article.time}}</span>
@@ -15,8 +18,16 @@
         </div>
         <div class="desc">{{article.desc}}</div>
         <hr>
-        <ul>
-          <li v-for="(item,index) in article.content" :key="index">{{item}}</li>
+        <ul class="article-content">
+          <li v-for="(item,index) in article.content" :key="index">
+            <div v-if="hasImage(item)">
+              <!-- 无效？？？ -->
+              <img :src="getImageUrl()" width="200px">
+            </div>
+            <div v-else>
+              {{item}}<br><br>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
@@ -24,12 +35,8 @@
 </template>
 
 <script>
-import Scroll from '@/components/scroll'
 import axios from 'axios'
 export default {
-  components: {
-    Scroll
-  },
   data () {
     return {
       articleId: '',
@@ -43,9 +50,17 @@ export default {
     initData () {
       this.articleId = this.$route.params.articleId
       axios.get(`http://localhost:7001/news/getArticleInfo/${this.articleId}`).then(res => {
-        this.article = res.data.data
-        console.log(this.article)
+        if (res && res.data.code === 200) {
+          this.article = res.data.data
+        }
       })
+    },
+    hasImage (item) {
+      return (item === '' && this.article.images.length)
+    },
+    getImageUrl () {
+      let url = this.article.images.shift()
+      return url
     }
   }
 }
@@ -58,18 +73,26 @@ export default {
   transform: translate3d(100%, 0, 0)
 .article-info
   position fixed
+  overflow-y:auto
   top 0
   bottom 0
   left 0
   right 0
   z-index 100
-  background: #ffffff
+  background: #fff
   .content-wrapper
     padding 10px
     .title
       font-size 18px
+      margin-bottom 20px
+    .btn-wrapper
+      height 20px
+      position relative
+      padding 5px
+      .btn
+        position absolute
+        right 0
     .note
-      overflow hidden
       padding 15px
       font-size 10px
       .from
@@ -81,4 +104,9 @@ export default {
       font-size 14px
       line-height 20px
       background #eee
+    .article-content
+      font-size 15px
+      padding 10px
+      text-indent 30px
+      line-height 20px
 </style>

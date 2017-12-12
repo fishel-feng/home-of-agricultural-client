@@ -79,7 +79,6 @@ export default {
 <style lang="stylus" scoped>
 .news
   margin-bottom 55px
-  position: relative
   width: 100%
   .content
     padding-top 3px

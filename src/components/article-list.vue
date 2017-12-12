@@ -44,7 +44,9 @@ export default {
     },
     getContent (page) {
       axios.get(`http://localhost:7001/news/getArticleListByPage/${this.listId}/${page}`).then(res => {
-        this.newsList = res.data.data.articles
+        if (res && res.data.code === 200) {
+          this.newsList = res.data.data.articles
+        }
       })
     },
     getInfo (articleId) {
@@ -71,23 +73,20 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.article-list
-  width: 100%
-  .content
-    padding-top 3px
-    .list-item
-      display block
-      overflow hidden
-      padding 15px
-      color black
-      .title
-        font-size 18px
-      .desc
-        margin 5px
-        font-size 12px
-      .date
-        font-size 12px
-      .read
-        float right
-        font-size 12px
+.content
+  padding-top 3px
+  .list-item
+    display block
+    padding 15px
+    color black
+    .title
+      font-size 18px
+    .desc
+      margin 5px
+      font-size 12px
+    .date
+      font-size 12px
+    .read
+      float right
+      font-size 12px
 </style>
