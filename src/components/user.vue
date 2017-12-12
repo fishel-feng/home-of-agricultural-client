@@ -1,6 +1,7 @@
 <template>
   <div class="news">
     {{msg}}
+    <router-view></router-view>
   </div>
 </template>
 

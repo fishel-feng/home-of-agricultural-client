@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import axios from 'axios'
 export default {
   data () {
@@ -41,6 +42,11 @@ export default {
       article: {},
       isCollected: false
     }
+  },
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
   },
   mounted () {
     this.initData()

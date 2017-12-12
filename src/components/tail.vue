@@ -13,8 +13,8 @@
     <mt-tab-item id="circles">
       <img slot="icon" src="../assets/svg/circle.svg"> 农友圈
     </mt-tab-item>
-    <mt-tab-item id="me">
-      <img slot="icon" src="../assets/svg/me.svg"> 我的
+    <mt-tab-item id="user">
+      <img slot="icon" src="../assets/svg/user.svg"> 我的
     </mt-tab-item>
   </mt-tabbar>
 </div>

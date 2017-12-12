@@ -27,8 +27,8 @@ const Circles = (resolve) => {
   })
 }
 
-const Me = (resolve) => {
-  import('@/components/me').then((module) => {
+const User = (resolve) => {
+  import('@/components/user').then((module) => {
     resolve(module)
   })
 }
@@ -41,6 +41,12 @@ const ArticleList = (resolve) => {
 
 const ArticleInfo = (resolve) => {
   import('@/components/article-info').then((module) => {
+    resolve(module)
+  })
+}
+
+const SignIn = (resolve) => {
+  import('@/components/sign-in').then((module) => {
     resolve(module)
   })
 }
@@ -80,8 +86,18 @@ export default new Router({
       component: Circles
     },
     {
-      path: '/me',
-      component: Me
+      path: '/user',
+      component: User
+      // children: [
+      //   {
+      //     path: '/signIn',
+      //     component: SignIn
+      //   }
+      // ]
+    },
+    {
+      path: '/signIn',
+      component: SignIn
     }
   ]
 })
