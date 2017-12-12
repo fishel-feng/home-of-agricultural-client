@@ -22,14 +22,9 @@
         <div class="desc">{{article.desc}}</div>
         <hr>
         <ul class="article-content">
-          <li v-for="(item,index) in article.content" :key="index">
-            <div v-if="hasImage(item)">
-              <!-- 无效？？？ -->
-              <img :src="getImageUrl()" width="200px">
-            </div>
-            <div v-else>
-              {{item}}<br><br>
-            </div>
+          <li v-for="(item,index) in article.articleInfo" :key="index">
+            <div v-if="item.type === 'word'">{{item.content}}</div>
+            <div v-if="item.type === 'image'"><img :src="item.content" alt="" width="100%"></div>
           </li>
         </ul>
       </div>
@@ -61,13 +56,6 @@ export default {
     },
     addCollection () {
       // todo 检查登录状态，判断收藏状态,未登录 弹出登录提示，登录 请求接口改变收藏状态
-    },
-    hasImage (item) {
-      return (item === '' && this.article.images.length)
-    },
-    getImageUrl () {
-      let url = this.article.images.shift()
-      return url
     }
   }
 }
@@ -111,6 +99,5 @@ export default {
     .article-content
       font-size 15px
       padding 10px
-      text-indent 30px
       line-height 20px
 </style>

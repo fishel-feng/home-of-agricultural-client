@@ -66,15 +66,15 @@ export default {
       })
     }
   }
+  // watch: {
+  //   '$route' (to, from) {
+  //     // todo 回退网页选中状态异常
+  //   }
+  // }
 }
 </script>
 
 <style lang="stylus" scoped>
-// .fixed
-//   position fixed
-//   margin-top 40px
-//   margin-bottom 55px
-//   width: 100%
 .news
   margin-top 40px
   margin-bottom 55px
