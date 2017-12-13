@@ -1,27 +1,23 @@
 <template>
   <div class="article-list">
-    <mt-tab-container class="content">
-      <mt-tab-container-item>
-        <ul
-          v-infinite-scroll="loadMore"
-          infinite-scroll-disabled="loading"
-          infinite-scroll-distance="10">
-          <li class="list-item" v-for="(item,index) in newsList" :key="index" @click="getInfo(item.articleId)">
-              <h2 class="title">{{item.title}}</h2>
-              <p class="desc">{{item.desc}}</p>
-              <span class="date">{{item.date}}</span>
-              <span class="read">
-                <img src="../assets/svg/read.svg" alt="" height="8px">
-                {{item.read}}
-              </span>
-          </li>
-          <div class="load-wrapper">
-            <div class="load-more" v-show="!showLoading" v-text="hasMore"></div>
-            <mt-spinner class="loading" type="triple-bounce" v-show="showLoading"></mt-spinner>
-          </div>
-        </ul>
-      </mt-tab-container-item>
-    </mt-tab-container>
+    <ul
+      v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="10">
+      <li class="list-item" v-for="(item,index) in newsList" :key="index" @click="getInfo(item.articleId)">
+          <h2 class="title">{{item.title}}</h2>
+          <p class="desc">{{item.desc}}</p>
+          <span class="date">{{item.date}}</span>
+          <span class="read">
+            <img src="../assets/svg/read.svg" alt="" height="8px">
+            {{item.read}}
+          </span>
+      </li>
+      <div class="load-wrapper">
+        <div class="load-more" v-show="!showLoading" v-text="hasMore"></div>
+        <mt-spinner class="loading" type="triple-bounce" v-show="showLoading"></mt-spinner>
+      </div>
+    </ul>
     <router-view></router-view>
   </div>
 </template>
@@ -87,7 +83,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.content
+.article-list
   padding-top 3px
   .list-item
     display block

@@ -1,10 +1,10 @@
 <template>
-  <div class="circle-list">
+  <div class="question-list">
     <ul
       v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="10">
-      <li class="item-wrapper" v-for="(item, index) in circles" :key="index">
+      <!-- <li class="item-wrapper" v-for="(item, index) in circles" :key="index">
         <div class="head-image">
           <img :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="50px">
         </div>
@@ -40,7 +40,7 @@
             </div>
           </div>
         </div>
-      </li>
+      </li> -->
       <div class="load-wrapper">
         <div class="load-more" v-show="!showLoading" v-text="hasMore"></div>
         <mt-spinner class="loading" type="triple-bounce" v-show="showLoading"></mt-spinner>
@@ -50,64 +50,63 @@
 </template>
 
 <script>
-import moment from 'moment'
-import axios from 'axios'
-export default {
-  data () {
-    return {
-      msg: 'Welcome to 农友圈页面',
-      type: 'all',
-      page: 0,
-      circles: [],
-      isLiked: false,
-      showLoading: false,
-      hasMore: '上拉加载更多'
-    }
-  },
-  mounted () {
-    this.getData(this.page)
-  },
-  methods: {
-    loadMore () {
-      this.loading = true
-      this.showLoading = true
-      this.getData(this.page)
-      setTimeout(() => {
-        this.loading = false
-        this.showLoading = false
-      }, 6500)
-    },
-    getData (page) {
-      axios.get(`http://localhost:7001/circle/getCircleList/${page}`).then(res => {
-        if (res && res.data.code === 200) {
-          if (page === 0) {
-            this.circles = res.data.data.circleList
-            this.page++
-          } else {
-            if (res.data.data.circleList.length) {
-              this.circles.push(...res.data.data.circleList)
-              this.page++
-            } else {
-              this.hasMore = '已无更多新闻'
-            }
-          }
-        }
-      })
-    },
-    getText (time) {
-      return moment(time).format('YYYY-MM-DD HH:mm:ss')
-    }
-  },
-  watch: {
-    '$route' (to, from) {
-      this.type = this.$route.params.type
-    }
-  }
-}
+// import moment from 'moment'
+// import axios from 'axios'
+// export default {
+//   data () {
+//     return {
+//       msg: 'Welcome to 农友圈页面',
+//       type: 'all',
+//       page: 0,
+//       questions: [],
+//       showLoading: false,
+//       hasMore: '上拉加载更多'
+//     }
+//   },
+//   mounted () {
+//     this.getData(this.page)
+//   },
+//   methods: {
+//     loadMore () {
+//       this.loading = true
+//       this.showLoading = true
+//       this.getData(this.page)
+//       setTimeout(() => {
+//         this.loading = false
+//         this.showLoading = false
+//       }, 6500)
+//     },
+//     getData (page) {
+//       axios.get(`http://localhost:7001/question/getQuestionList/${page}`).then(res => {
+//         if (res && res.data.code === 200) {
+//           if (page === 0) {
+//             this.questions = res.data.data.circleList
+//             this.page++
+//           } else {
+//             if (res.data.data.circleList.length) {
+//               this.circles.push(...res.data.data.circleList)
+//               this.page++
+//             } else {
+//               this.hasMore = '已无更多新闻'
+//             }
+//           }
+//         }
+//       })
+//     },
+//     getText (time) {
+//       return moment(time).format('YYYY-MM-DD HH:mm:ss')
+//     }
+//   },
+//   watch: {
+//     '$route' (to, from) {
+//       this.type = this.$route.params.type
+//     }
+//   }
+// }
 </script>
 
 <style lang="stylus" scoped>
-.circle-list
+.question-list
   padding-top 3px
   .item-wrapper
     min-height: 10px
