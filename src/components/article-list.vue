@@ -1,21 +1,15 @@
 <template>
-  <div class="article-list">
-    <list-view :data="newsList" :showLoading="showLoading" :loadMore="hasMore" :loading="true" @load="loadMore">
-      <li
-        slot="item"
-        slot-scope="props"
-        @click="getInfo"
-        class="list-item">
-        <h2 class="title">{{props.item.title}}</h2>
-        <p class="desc">{{props.item.desc}}</p>
-        <span class="date">{{props.item.date}}</span>
-        <span class="read">
-          <img src="../assets/svg/read.svg" alt="" height="8px">
-          {{props.item.read}}
-        </span>
-      </li>
-    </list-view>
-  </div>
+  <list-view class="article-list" :data="newsList" :showLoading="showLoading" :loading="true" @load="loadMore">
+    <li slot="item" slot-scope="props" @click="getInfo(props.item)" class="list-item">
+      <h2 class="title">{{props.item.title}}</h2>
+      <p class="desc">{{props.item.desc}}</p>
+      <span class="date">{{props.item.date}}</span>
+      <span class="read">
+        <img src="../assets/svg/read.svg" alt="" height="8px">
+        {{props.item.read}}
+      </span>
+    </li>
+  </list-view>
 </template>
 
 <script>
@@ -27,8 +21,7 @@ export default {
       newsList: [],
       listId: '',
       page: 1,
-      showLoading: false,
-      hasMore: '上拉加载更多'
+      showLoading: false
     }
   },
   components: {

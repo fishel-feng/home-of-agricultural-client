@@ -1,55 +1,47 @@
 <template>
-  <div class="circle-list">
-    <ul
-      v-infinite-scroll="loadMore"
-      infinite-scroll-disabled="loading"
-      infinite-scroll-distance="10">
-      <li class="item-wrapper" v-for="(item, index) in circles" :key="index">
-        <div class="head-image">
-          <img :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="50px">
-        </div>
-        <div class="circle-content">
-          <div class="nick-name">{{item.nickName}}</div>
-          <div class="circle-text">{{item.content}}</div>
-          <div class="circle-image">
-            <li  v-for="(image,innerIndex) in item.images" :key="innerIndex">
-              <img :src="`http://localhost:7001/public/circle/${image}`" width="80px" height="80px" alt="">
-            </li>
-          </div>
-          <div class="circle-tail">
-            <div class="circle-mark">
-              <span v-text="getText(item.time)"></span>
-              <div>
-                <span class="btn-info">{{item.likeCount}}人觉得很赞</span>&nbsp;
-                <span class="btn-info">{{item.commentCount}}条评论</span>
-              </div>
-            </div>
-            <div class="circle-action">
-              <span v-if="!isLiked">
-                <img src="../assets/svg/like.svg" alt="" width="14px">
-                赞&nbsp;
-              </span>
-              <span v-if="isLiked">
-                <img src="../assets/svg/liked.svg" alt="" width="14px">
-                取消赞&nbsp;&nbsp;
-              </span>
-              <span>
-                <img src="../assets/svg/comment.svg" alt="" width="14px">
-                评论
-              </span>
-            </div>
-          </div>
-        </div>
-      </li>
-      <div class="load-wrapper">
-        <div class="load-more" v-show="!showLoading" v-text="hasMore"></div>
-        <mt-spinner class="loading" type="triple-bounce" v-show="showLoading"></mt-spinner>
+  <list-view class="circle-list" :data="circles" :showLoading="showLoading" :loading="true" @load="loadMore">
+    <li slot="item" slot-scope="props" @click="getInfo(props.item)" class="list-item">
+      <div class="head-image">
+        <img :src="`http://localhost:7001/public/headImage/${props.item.headImage}`" width="50px">
       </div>
-    </ul>
-  </div>
+      <div class="circle-content">
+        <div class="nick-name">{{props.item.nickName}}</div>
+        <div class="circle-text">{{props.item.content}}</div>
+        <div class="circle-image">
+          <li  v-for="(image,innerIndex) in props.item.images" :key="innerIndex">
+            <img :src="`http://localhost:7001/public/circle/${image}`" width="80px" height="80px" alt="">
+          </li>
+        </div>
+        <div class="circle-tail">
+          <div class="circle-mark">
+            <span v-text="getText(props.item.time)"></span>
+            <div>
+              <span class="btn-info">{{props.item.likeCount}}人觉得很赞</span>&nbsp;
+              <span class="btn-info">{{props.item.commentCount}}条评论</span>
+            </div>
+          </div>
+          <div class="circle-action">
+            <span v-if="!isLiked">
+              <img src="../assets/svg/like.svg" alt="" width="14px">
+              赞&nbsp;
+            </span>
+            <span v-if="isLiked">
+              <img src="../assets/svg/liked.svg" alt="" width="14px">
+              取消赞&nbsp;&nbsp;
+            </span>
+            <span>
+              <img src="../assets/svg/comment.svg" alt="" width="14px">
+              评论
+            </span>
+          </div>
+        </div>
+      </div>
+    </li>
+  </list-view>
 </template>
 
 <script>
+import ListView from '@/components/list-view'
 import moment from 'moment'
 import axios from 'axios'
 export default {
@@ -60,9 +52,11 @@ export default {
       page: 0,
       circles: [],
       isLiked: false,
-      showLoading: false,
-      hasMore: '上拉加载更多'
+      showLoading: false
     }
+  },
+  components: {
+    ListView
   },
   mounted () {
     this.getData(this.page)
@@ -109,7 +103,7 @@ export default {
 <style lang="stylus" scoped>
 .circle-list
   padding-top 3px
-  .item-wrapper
+  .list-item
     min-height: 10px
     display flex
     .head-image
@@ -140,10 +134,4 @@ export default {
         .circle-action
           padding 10px
           display flex
-  .load-wrapper
-    position relative
-    width 100%
-    height 30px
-    text-align center
-    font-size 14px
 </style>
