@@ -1,6 +1,6 @@
 <template>
   <div class="news">
-    <mt-navbar class="nav" v-model="selected">
+    <mt-navbar fixed class="nav" v-model="selected">
       <mt-tab-item @click.native="getList(nav)" v-for="nav in navList" :key="nav.itemName" :id="nav.itemName">{{nav.itemName}}</mt-tab-item>
     </mt-navbar>
     <div class="content">
@@ -79,6 +79,8 @@ export default {
   margin-top 40px
   margin-bottom 55px
   width: 100%
+  .nav
+    width 100%
   .content
     padding-top 3px
     .swipe

@@ -10,7 +10,7 @@
     <mt-tab-item id="question">
       <img slot="icon" src="../assets/svg/question.svg"> 问专家
     </mt-tab-item>
-    <mt-tab-item id="circles">
+    <mt-tab-item id="circles/all">
       <img slot="icon" src="../assets/svg/circle.svg"> 农友圈
     </mt-tab-item>
     <mt-tab-item id="user">

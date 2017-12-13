@@ -1,41 +1,47 @@
 <template>
-  <div class="news" @click="clickMe">
-    {{msg}}
-    <!-- <message-box title="sdf"></message-box> -->
+  <div class="circle">
+    <mt-navbar v-model="selected">
+      <mt-tab-item id="all">全部动态</mt-tab-item>
+      <mt-tab-item id="attention">关注的人</mt-tab-item>
+    </mt-navbar>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { MessageBox } from 'mint-ui'
+// import axios from 'axios'
 export default {
   data () {
     return {
-      msg: 'Welcome to 农友圈页面'
+      msg: 'Welcome to 农友圈页面',
+      selected: 'all'
     }
   },
-  components: {
-    MessageBox
+  mounted () {
+    this.loadData('all')
   },
   methods: {
-    clickMe () {
-      MessageBox({
-        title: '提示',
-        message: '确定执行此操作?',
-        showCancelButton: true
-      })
-      // MessageBox.confirm('您还未登录，是否立即登录').then(action => {
-      //   console.log(action)
-      // })
-      // this.$refs.messageBox.confirm('您还未登录，是否立即登录').then(action => {
-      //   console.log(action)
-      // })
+    loadData (type) {
+      this.$router.push(`/circles/${type}`)
+    }
+  },
+  watch: {
+    selected (newVal, oldVal) {
+      this.$router.push(`/circles/${newVal}`)
+    },
+    '$route' (to, from) {
+      if (to.path === '/circles/all') {
+        this.selected = 'all'
+      } else if (to.path === '/circles/attention') {
+        this.selected = 'attention'
+      }
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.news
+.circle
   position: fixed
   width: 100%
   top: 40px

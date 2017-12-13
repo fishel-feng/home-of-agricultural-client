@@ -45,6 +45,12 @@ const ArticleInfo = (resolve) => {
   })
 }
 
+const CircleList = (resolve) => {
+  import('@/components/circle-list').then((module) => {
+    resolve(module)
+  })
+}
+
 const SignIn = (resolve) => {
   import('@/components/sign-in').then((module) => {
     resolve(module)
@@ -83,7 +89,13 @@ export default new Router({
     },
     {
       path: '/circles',
-      component: Circles
+      component: Circles,
+      children: [
+        {
+          path: ':type',
+          component: CircleList
+        }
+      ]
     },
     {
       path: '/user',
