@@ -65,12 +65,16 @@ export default {
         path: `/news/index/${id}`
       })
     }
+  },
+  watch: {
+    '$route' (to, from) {
+      this.navList.forEach(element => {
+        if (to.path.substring(6) === element.navUrl) {
+          this.selected = element.itemName
+        }
+      })
+    }
   }
-  // watch: {
-  //   '$route' (to, from) {
-  //     // todo 回退网页选中状态异常
-  //   }
-  // }
 }
 </script>
 

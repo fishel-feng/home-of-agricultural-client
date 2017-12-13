@@ -1,20 +1,8 @@
 <template>
 <div id="tail">
-  <mt-tabbar @click.native="select" v-model="selected" class="tail">
-    <mt-tab-item id="news">
-        <img slot="icon" src="../assets/svg/home.svg"> 新闻
-    </mt-tab-item>
-    <mt-tab-item id="wiki">
-      <img slot="icon" src="../assets/svg/wiki.svg"> 百科
-    </mt-tab-item>
-    <mt-tab-item id="question">
-      <img slot="icon" src="../assets/svg/question.svg"> 问专家
-    </mt-tab-item>
-    <mt-tab-item id="circles/all">
-      <img slot="icon" src="../assets/svg/circle.svg"> 农友圈
-    </mt-tab-item>
-    <mt-tab-item id="user">
-      <img slot="icon" src="../assets/svg/user.svg"> 我的
+  <mt-tabbar v-model="selected" class="tail">
+    <mt-tab-item @click.native="select(item)" :id="item.id" v-for="(item,index) in tailList" :key="index">
+        <img slot="icon" :src="`http://127.0.0.1:7001/public/svg/${item.image}.svg`"> {{item.text}}
     </mt-tab-item>
   </mt-tabbar>
 </div>
@@ -22,14 +10,46 @@
 
 <script>
 export default {
+  props: {
+    selected: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
-      selected: 'news'
+      tailList: [
+        {
+          id: 'news',
+          text: '新闻',
+          image: 'home'
+        },
+        {
+          id: 'wiki',
+          text: '百科',
+          image: 'wiki'
+        },
+        {
+          id: 'question',
+          text: '问专家',
+          image: 'question'
+        },
+        {
+          id: 'circles/all',
+          text: '农友圈',
+          image: 'circle'
+        },
+        {
+          id: 'user',
+          text: '我的',
+          image: 'user'
+        }
+      ]
     }
   },
   methods: {
-    select () {
-      this.$emit('select', this.selected)
+    select (item) {
+      this.$emit('select', item)
     }
   }
 }
