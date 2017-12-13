@@ -1,29 +1,26 @@
 <template>
   <div class="article-list">
-    <ul
-      v-infinite-scroll="loadMore"
-      infinite-scroll-disabled="loading"
-      infinite-scroll-distance="10">
-      <li class="list-item" v-for="(item,index) in newsList" :key="index" @click="getInfo(item.articleId)">
-          <h2 class="title">{{item.title}}</h2>
-          <p class="desc">{{item.desc}}</p>
-          <span class="date">{{item.date}}</span>
-          <span class="read">
-            <img src="../assets/svg/read.svg" alt="" height="8px">
-            {{item.read}}
-          </span>
+    <list-view :data="newsList" :showLoading="showLoading" :loadMore="hasMore" :loading="true" @load="loadMore">
+      <li
+        slot="item"
+        slot-scope="props"
+        @click="getInfo"
+        class="list-item">
+        <h2 class="title">{{props.item.title}}</h2>
+        <p class="desc">{{props.item.desc}}</p>
+        <span class="date">{{props.item.date}}</span>
+        <span class="read">
+          <img src="../assets/svg/read.svg" alt="" height="8px">
+          {{props.item.read}}
+        </span>
       </li>
-      <div class="load-wrapper">
-        <div class="load-more" v-show="!showLoading" v-text="hasMore"></div>
-        <mt-spinner class="loading" type="triple-bounce" v-show="showLoading"></mt-spinner>
-      </div>
-    </ul>
-    <router-view></router-view>
+    </list-view>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import ListView from '@/components/list-view'
 export default {
   data () {
     return {
@@ -33,6 +30,9 @@ export default {
       showLoading: false,
       hasMore: '上拉加载更多'
     }
+  },
+  components: {
+    ListView
   },
   mounted () {
     this.initData()
@@ -60,8 +60,8 @@ export default {
         }
       })
     },
-    getInfo (articleId) {
-      this.$router.push(`/news/${this.listId}/${articleId}`)
+    getInfo (article) {
+      this.$router.push(`/news/${this.listId}/${article.articleId}`)
     },
     loadMore () {
       this.loading = true
@@ -99,10 +99,4 @@ export default {
     .read
       float right
       font-size 12px
-  .load-wrapper
-    position relative
-    width 100%
-    height 30px
-    text-align center
-    font-size 14px
 </style>

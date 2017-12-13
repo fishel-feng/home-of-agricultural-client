@@ -2,13 +2,11 @@
   <div class="list-view">
     <ul
       v-infinite-scroll="loadMore"
-      infinite-scroll-disabled="loading"
-      infinite-scroll-distance="10">
-      <li class="list-item" v-for="(item,index) in data" :key="index" @click="selectItem(item)">
-        <slot></slot>
-      </li>
+      :infinite-scroll-disabled="loading"
+      :infinite-scroll-distance="distance">
+      <slot name="item" v-for="item in data" :item="item"></slot>
       <div class="load-wrapper">
-        <div class="load-more" v-show="!showLoading" v-text="loadMore"></div>
+        <div class="load-more" v-show="!showLoading" v-text="moreText"></div>
         <mt-spinner class="loading" type="triple-bounce" v-show="showLoading"></mt-spinner>
       </div>
     </ul>
@@ -27,14 +25,22 @@ export default {
       type: Boolean,
       default: false
     },
-    loadMore: {
+    moreText: {
       type: String,
       default: '已无更多内容'
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    distance: {
+      type: Number,
+      default: 10
     }
   },
   methods: {
-    selectItem(item) {
-      this.$emit('select', item)
+    loadMore () {
+      this.$emit('load')
     }
   }
 }
@@ -43,10 +49,10 @@ export default {
 <style lang="stylus" scoped>
 .list-view
   padding-top 3px
-  .list-item
-    display block
-    padding 15px
-    color black
+  // .list-item
+  //   display block
+  //   padding 15px
+  //   color black
   .load-wrapper
     position relative
     width 100%
