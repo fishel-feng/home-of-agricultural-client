@@ -52,9 +52,11 @@ export default {
         if (res && res.data.code === 200) {
           if (page === 1) {
             this.newsList = res.data.data.articles
+            this.page++
           } else {
             if (res.data.data.articles.length) {
               this.newsList.push(...res.data.data.articles)
+              this.page++
             } else {
               this.hasMore = '已无更多新闻'
             }
@@ -68,11 +70,11 @@ export default {
     loadMore () {
       this.loading = true
       this.showLoading = true
-      this.getContent(++this.page)
+      this.getContent(this.page)
       setTimeout(() => {
         this.loading = false
         this.showLoading = false
-      }, 2500)
+      }, 6500)
     }
   },
   watch: {

@@ -17,14 +17,6 @@ export default {
       selected: 'all'
     }
   },
-  mounted () {
-    this.loadData('all')
-  },
-  methods: {
-    loadData (type) {
-      this.$router.push(`/circles/${type}`)
-    }
-  },
   watch: {
     selected (newVal, oldVal) {
       this.$router.push(`/circles/${newVal}`)
@@ -42,6 +34,7 @@ export default {
 
 <style lang="stylus" scoped>
 .circle
+  overflow-y:auto
   position: fixed
   width: 100%
   top: 40px
