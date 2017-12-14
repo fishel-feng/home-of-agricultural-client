@@ -57,6 +57,12 @@ const SignIn = (resolve) => {
   })
 }
 
+const signUp = (resolve) => {
+  import('@/components/sign-up').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -110,6 +116,10 @@ export default new Router({
     {
       path: '/signIn',
       component: SignIn
+    },
+    {
+      path: '/signUp',
+      component: signUp
     }
   ]
 })

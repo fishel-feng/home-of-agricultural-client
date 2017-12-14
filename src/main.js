@@ -6,8 +6,11 @@ import 'mint-ui/lib/style.css'
 import App from './App'
 import router from './router'
 import store from './store'
+import JsEncrypt from 'jsencrypt/bin/jsencrypt'
 
 import '@/assets/stylus/index.styl'
+
+Vue.prototype.$jsEncrypt = JsEncrypt
 
 Vue.use(MintUI)
 
