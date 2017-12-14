@@ -1,5 +1,5 @@
 <template>
-  <div class="news">
+  <div class="user">
     {{msg}}
     <router-view></router-view>
   </div>
@@ -9,14 +9,15 @@
 export default {
   data () {
     return {
-      msg: 'Welcome to 我的页面'
+      msg: 'Welcome to 我的页面',
+      popupVisible: false
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.news
+.user
   position: fixed
   width: 100%
   top: 40px

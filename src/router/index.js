@@ -57,8 +57,8 @@ const SignIn = (resolve) => {
   })
 }
 
-const signUp = (resolve) => {
-  import('@/components/sign-up').then((module) => {
+const UserForm = (resolve) => {
+  import('@/components/user-form').then((module) => {
     resolve(module)
   })
 }
@@ -106,12 +106,6 @@ export default new Router({
     {
       path: '/user',
       component: User
-      // children: [
-      //   {
-      //     path: '/signIn',
-      //     component: SignIn
-      //   }
-      // ]
     },
     {
       path: '/signIn',
@@ -119,7 +113,11 @@ export default new Router({
     },
     {
       path: '/signUp',
-      component: signUp
+      component: UserForm
+    },
+    {
+      path: '/resetPassword',
+      component: UserForm
     }
   ]
 })
