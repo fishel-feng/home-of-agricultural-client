@@ -1,4 +1,5 @@
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import { MessageBox } from 'mint-ui'
 import axios from 'axios'
 
 export const loginMixin = {
@@ -21,6 +22,30 @@ export const loginMixin = {
         this.saveAttentions(user.attentions)
         this.saveFollowings(user.followings)
       })
+    }
+  }
+}
+
+export const accountTestMixin = {
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
+  },
+  methods: {
+    verifyLogin () {
+      if (!this.token) {
+        MessageBox.confirm('登录可体验更多功能', {
+          title: '未登录',
+          confirmButtonText: '现在登录',
+          cancelButtonText: '以后再说'
+        }).then(action => {
+          this.$router.push('/signIn')
+        }).catch(e => {
+        })
+        return false
+      }
+      return true
     }
   }
 }

@@ -5,13 +5,13 @@ const mutations = {
     state.token = token
   },
   [types.SET_COLLECTIONS] (state, collections) {
-    state.token = collections
+    state.collections = collections
   },
   [types.SET_ATTENTIONS] (state, attentions) {
-    state.token = attentions
+    state.attentions = attentions
   },
   [types.SET_FOLLOWINGS] (state, followings) {
-    state.token = followings
+    state.followings = followings
   }
 }
 

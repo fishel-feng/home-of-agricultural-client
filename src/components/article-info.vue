@@ -10,8 +10,8 @@
         <div class="title">{{article.title}}</div>
         <div class="head-wrapper">
           <div class="btn-wrapper">
-            <mt-button type="primary" v-if="!isCollected" :disabled="isCollected" size="small" class="btn" @click.native="addCollection">收藏文章</mt-button>
-            <mt-button type="primary" v-if="isCollected" :disabled="isCollected" size="small" class="btn" @click.native="deleteCollection">取消收藏</mt-button>
+            <mt-button type="primary" v-if="!isCollected" size="small" class="btn" @click.native="addToCollection">收藏文章</mt-button>
+            <mt-button type="primary" v-if="isCollected" size="small" class="btn" @click.native="deleteFromCollection">取消收藏</mt-button>
           </div>
           <div class="note">
             <span class="from">{{article.from}}</span>
@@ -33,10 +33,12 @@
 </template>
 
 <script>
-import { MessageBox } from 'mint-ui'
-import {mapGetters} from 'vuex'
+import { accountTestMixin } from '@/common/js/mixin'
+import { Toast } from 'mint-ui'
+import { mapGetters, mapActions } from 'vuex'
 import axios from 'axios'
 export default {
+  mixins: [accountTestMixin],
   data () {
     return {
       articleId: '',
@@ -46,6 +48,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'collections',
       'token'
     ])
   },
@@ -53,6 +56,10 @@ export default {
     this.initData()
   },
   methods: {
+    ...mapActions([
+      'addCollection',
+      'deleteCollection'
+    ]),
     initData () {
       this.articleId = this.$route.params.articleId
       axios.get(`http://localhost:7001/news/getArticleInfo/${this.articleId}`).then(res => {
@@ -60,26 +67,60 @@ export default {
           this.article = res.data.data
         }
       })
+      this.testCollectionState()
     },
-    verifyLogin () {
-      if (!this.token) {
-        MessageBox.confirm('登录可体验更多功能', {
-          title: '未登录',
-          confirmButtonText: '现在登录',
-          cancelButtonText: '以后再说'
-        }).then(action => {
-          this.$router.push('/signIn')
-        }).catch(e => {
+    testCollectionState () {
+      if (this.collections.length) {
+        this.collections.forEach(element => {
+          if (element.articleId === this.articleId) {
+            this.isCollected = true
+          }
         })
-        return false
       }
-      return true
     },
-    addCollection () {
-      // todo 检查登录状态，判断收藏状态,未登录 弹出登录提示，登录 请求接口改变收藏状态
+    addToCollection () {
       if (this.verifyLogin()) {
-        console.log(0)
+        const articleId = this.articleId
+        const title = this.article.title
+        axios.post('http://localhost:7001/news/addToCollections', {
+          articleId,
+          title
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.addCollection({articleId, title})
+            Toast({
+              message: '收藏成功',
+              position: 'bottom',
+              duration: 3000
+            })
+            this.isCollected = true
+          }
+        })
       }
+    },
+    deleteFromCollection () {
+      const articleId = this.articleId
+      axios.post('http://localhost:7001/news/deleteFromCollections', {
+        articleId
+      }, {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.deleteCollection(articleId)
+          Toast({
+            message: '取消收藏成功',
+            position: 'bottom',
+            duration: 3000
+          })
+          this.isCollected = false
+        }
+      })
     }
   }
 }
