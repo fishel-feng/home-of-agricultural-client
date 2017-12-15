@@ -25,7 +25,7 @@
 import { encryptPassword } from '@/common/js/util'
 import { mapMutations } from 'vuex'
 import axios from 'axios'
-import { Toast } from 'mint-ui'
+import { Toast, MessageBox } from 'mint-ui'
 const TIME_COUNT = 10
 export default {
   data () {
@@ -41,7 +41,12 @@ export default {
     }
   },
   mounted () {
-    this.isNew = this.$route.path === '/signUp'
+    this.isNew = (this.$route.path === '/signUp')
+  },
+  watch: {
+    '$route' (to, from) {
+      this.isNew = (this.$route.path === '/signUp')
+    }
   },
   methods: {
     disabledButton () {
@@ -141,10 +146,24 @@ export default {
               duration: 5000
             })
             this.setToken(res.data.data.token)
-            this.$router.go(-1)
+            MessageBox.confirm('注册成功，是否完善个人信息', {
+              closeOnClickModal: false,
+              confirmButtonText: '现在',
+              cancelButtonText: '以后'
+            }).then(action => {
+              this.$router.replace('/user')
+            }).catch(e => {
+              this.$router.go(-1)
+            })
           } else if (res.data.code === 457) {
             Toast({
               message: '验证码错误',
+              position: 'bottom',
+              duration: 5000
+            })
+          } else if (res.data.code === 455) {
+            Toast({
+              message: '此手机号已被注册',
               position: 'bottom',
               duration: 5000
             })
@@ -166,7 +185,7 @@ export default {
               position: 'bottom',
               duration: 5000
             })
-            this.$router.replace('/signIn')
+            this.$router.go(-1)
           } else if (res.data.code === 457) {
             Toast({
               message: '验证码错误',

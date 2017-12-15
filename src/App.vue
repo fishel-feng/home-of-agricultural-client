@@ -19,6 +19,7 @@ export default {
   name: 'app',
   data () {
     return {
+      oldSelect: '',
       selected: 'news',
       title: '新闻',
       tailList: [
@@ -57,9 +58,14 @@ export default {
   },
   methods: {
     selectItem (item) {
-      this.selected = item.id
-      this.title = item.text
-      this.$router.push('/' + this.selected)
+      if (this.verifyLogin()) {
+        this.selected = item.id
+        this.title = item.text
+        this.$router.push('/' + this.selected)
+      } else {
+        // todo 停止跳转逻辑
+        // this.selected = this.oldSelect
+      }
     },
     verifyLogin () {
       if (!this.token) {
@@ -71,7 +77,9 @@ export default {
           this.$router.push('/signIn')
         }).catch(e => {
         })
+        return false
       }
+      return true
     }
   },
   watch: {
@@ -82,6 +90,9 @@ export default {
           this.title = element.text
         }
       })
+    },
+    selected (newVal, oldVal) {
+      this.oldSelect = oldVal
     }
   }
 }

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { MessageBox } from 'mint-ui'
+// import { MessageBox } from 'mint-ui'
 export default {
   data () {
     return {
@@ -20,14 +20,14 @@ export default {
     // }).catch(e => {
     //   console.log(e)
     // })
-    MessageBox.confirm('登录可体验更多功能', {
-      title: '未登录',
-      confirmButtonText: '现在登录',
-      cancelButtonText: '以后再说'
-    }).then(action => {
-      console.log(0)
-    }).catch(e => {
-    })
+    // MessageBox.confirm('登录可体验更多功能', {
+    //   title: '未登录',
+    //   confirmButtonText: '现在登录',
+    //   cancelButtonText: '以后再说'
+    // }).then(action => {
+    //   console.log(0)
+    // }).catch(e => {
+    // })
   }
 }
 </script>
