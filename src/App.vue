@@ -4,7 +4,7 @@
   <keep-alive>
     <router-view></router-view>
   </keep-alive>
-  <mt-tabbar v-model="selected" class="tail">
+  <mt-tabbar v-model="selected" class="tail-tab">
     <mt-tab-item @click.native="selectItem(item)" :id="item.id" v-for="(item,index) in tailList" :key="index">
       <img slot="icon" :src="`http://127.0.0.1:7001/public/svg/${item.image}.svg`"> {{item.text}}
     </mt-tab-item>
@@ -99,6 +99,6 @@ export default {
 </script>
 
 <style lang="stylus">
-.tail
+.tail-tab
   position fixed
 </style>

@@ -71,13 +71,13 @@ export default {
   transform: translate3d(100%, 0, 0)
 .sign-in
   position fixed
-  overflow-y:auto
+  overflow-y auto
   top 0
   bottom 0
   left 0
   right 0
   z-index 100
-  background: #fff
+  background #fff
   padding 20px
   .form-wrapper
     margin-top 40px

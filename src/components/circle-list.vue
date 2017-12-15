@@ -104,7 +104,7 @@ export default {
 .circle-list
   padding-top 3px
   .list-item
-    min-height: 10px
+    min-height 10px
     display flex
     .head-image
       padding 10px
@@ -112,15 +112,15 @@ export default {
     .circle-content
       font-size 14px
       padding 10px
-      flex: auto;
-      display: flex;
-      flex-direction: column;
+      flex auto
+      display flex
+      flex-direction column
       line-height 18px
       .nick-name
         color #f63
       .circle-image
-        display: flex;
-        flex-wrap: wrap
+        display flex
+        flex-wrap wrap
         justify-content space-between
       .circle-tail
         font-size 10px
@@ -128,7 +128,7 @@ export default {
         justify-content space-between
         .circle-mark
           display flex
-          flex-direction: column;
+          flex-direction column
           .btn-info
             color #9cf
         .circle-action

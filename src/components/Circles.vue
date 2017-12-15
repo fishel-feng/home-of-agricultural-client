@@ -34,9 +34,9 @@ export default {
 
 <style lang="stylus" scoped>
 .circle
-  overflow-y:auto
-  position: fixed
-  width: 100%
-  top: 40px
-  bottom: 55px
+  overflow-y auto
+  position fixed
+  width 100%
+  top 40px
+  bottom 55px
 </style>

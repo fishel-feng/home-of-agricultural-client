@@ -25,10 +25,10 @@ export default {
 
 <style lang="stylus" scoped>
 .news
-  position: fixed
-  width: 100%
-  top: 40px
-  bottom: 55px
+  position fixed
+  width 100%
+  top 40px
+  bottom 55px
   .listItem
     overflow hidden
     padding 10px

@@ -49,10 +49,6 @@ export default {
 <style lang="stylus" scoped>
 .list-view
   padding-top 3px
-  // .list-item
-  //   display block
-  //   padding 15px
-  //   color black
   .load-wrapper
     position relative
     width 100%
