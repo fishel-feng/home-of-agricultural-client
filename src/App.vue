@@ -6,13 +6,15 @@
   </keep-alive>
   <mt-tabbar v-model="selected" class="tail">
     <mt-tab-item @click.native="selectItem(item)" :id="item.id" v-for="(item,index) in tailList" :key="index">
-        <img slot="icon" :src="`http://127.0.0.1:7001/public/svg/${item.image}.svg`"> {{item.text}}
+      <img slot="icon" :src="`http://127.0.0.1:7001/public/svg/${item.image}.svg`"> {{item.text}}
     </mt-tab-item>
   </mt-tabbar>
 </div>
 </template>
 
 <script>
+import { MessageBox } from 'mint-ui'
+import { mapGetters } from 'vuex'
 export default {
   name: 'app',
   data () {
@@ -48,11 +50,28 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
+  },
   methods: {
     selectItem (item) {
       this.selected = item.id
       this.title = item.text
       this.$router.push('/' + this.selected)
+    },
+    verifyLogin () {
+      if (!this.token) {
+        MessageBox.confirm('登录可体验更多功能', {
+          title: '未登录',
+          confirmButtonText: '现在登录',
+          cancelButtonText: '以后再说'
+        }).then(action => {
+          this.$router.push('/signIn')
+        }).catch(e => {
+        })
+      }
     }
   },
   watch: {
