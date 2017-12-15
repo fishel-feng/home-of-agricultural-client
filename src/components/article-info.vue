@@ -10,8 +10,8 @@
         <div class="title">{{article.title}}</div>
         <div class="head-wrapper">
           <div class="btn-wrapper">
-            <mt-button type="primary" v-text="isCollected?'取消收藏':'收藏文章'" :disabled="isCollected" size="small" class="btn" @click.native="addCollection">
-            </mt-button>
+            <mt-button type="primary" v-if="!isCollected" :disabled="isCollected" size="small" class="btn" @click.native="addCollection">收藏文章</mt-button>
+            <mt-button type="primary" v-if="isCollected" :disabled="isCollected" size="small" class="btn" @click.native="deleteCollection">取消收藏</mt-button>
           </div>
           <div class="note">
             <span class="from">{{article.from}}</span>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { MessageBox } from 'mint-ui'
 import {mapGetters} from 'vuex'
 import axios from 'axios'
 export default {
@@ -60,8 +61,25 @@ export default {
         }
       })
     },
+    verifyLogin () {
+      if (!this.token) {
+        MessageBox.confirm('登录可体验更多功能', {
+          title: '未登录',
+          confirmButtonText: '现在登录',
+          cancelButtonText: '以后再说'
+        }).then(action => {
+          this.$router.push('/signIn')
+        }).catch(e => {
+        })
+        return false
+      }
+      return true
+    },
     addCollection () {
       // todo 检查登录状态，判断收藏状态,未登录 弹出登录提示，登录 请求接口改变收藏状态
+      if (this.verifyLogin()) {
+        console.log(0)
+      }
     }
   }
 }

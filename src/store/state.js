@@ -1,7 +1,8 @@
 import {loadToken} from '@/common/js/cache'
 
 const state = {
-  token: loadToken()
+  token: loadToken(),
+  collections: []
 }
 
 export default state
