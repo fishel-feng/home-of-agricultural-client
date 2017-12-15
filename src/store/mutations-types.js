@@ -1,1 +1,7 @@
 export const SET_TOKEN = 'SET_TOKEN'
+
+export const SET_COLLECTIONS = 'SET_COLLECTIONS'
+
+export const SET_ATTENTIONS = 'SET_ATTENTIONS'
+
+export const SET_FOLLOWINGS = 'SET_FOLLOWINGS'

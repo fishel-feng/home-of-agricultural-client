@@ -1,10 +1,17 @@
 import * as types from './mutations-types'
-import { saveToken } from '@/common/js/cache'
 
 const mutations = {
   [types.SET_TOKEN] (state, token) {
-    saveToken(token)
     state.token = token
+  },
+  [types.SET_COLLECTIONS] (state, collections) {
+    state.token = collections
+  },
+  [types.SET_ATTENTIONS] (state, attentions) {
+    state.token = attentions
+  },
+  [types.SET_FOLLOWINGS] (state, followings) {
+    state.token = followings
   }
 }
 

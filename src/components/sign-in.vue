@@ -20,11 +20,12 @@
 </template>
 
 <script>
+import { loginMixin } from '@/common/js/mixin'
 import { encryptPassword } from '@/common/js/util'
-import { mapMutations } from 'vuex'
 import axios from 'axios'
 import { Toast } from 'mint-ui'
 export default {
+  mixins: [loginMixin],
   data () {
     return {
       phone: '',
@@ -32,9 +33,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({
-      setToken: 'SET_TOKEN'
-    }),
     signIn () {
       if (!this.phone || !/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(this.phone) || !this.password) {
         Toast({
@@ -56,7 +54,8 @@ export default {
             duration: 5000
           })
         } else if (res.data.code === 200) {
-          this.setToken(res.data.data.token)
+          const token = res.data.data.token
+          this.initUserInfo(token)
           this.$router.go(-1)
         }
       })

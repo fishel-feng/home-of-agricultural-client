@@ -22,12 +22,14 @@
 </template>
 
 <script>
+import { loginMixin } from '@/common/js/mixin'
 import { encryptPassword } from '@/common/js/util'
-import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 import axios from 'axios'
 import { Toast, MessageBox } from 'mint-ui'
 const TIME_COUNT = 10
 export default {
+  mixins: [loginMixin],
   data () {
     return {
       captcha: '',
@@ -64,9 +66,9 @@ export default {
         }, 1000)
       }
     },
-    ...mapMutations({
-      setToken: 'SET_TOKEN'
-    }),
+    ...mapActions([
+      'addToken'
+    ]),
     sendCode () {
       if (this.phone && /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(this.phone)) {
         this.disabledButton()
@@ -145,7 +147,8 @@ export default {
               position: 'bottom',
               duration: 5000
             })
-            this.setToken(res.data.data.token)
+            const token = res.data.data.token
+            this.initUserInfo(token)
             MessageBox.confirm('注册成功，是否完善个人信息', {
               closeOnClickModal: false,
               confirmButtonText: '现在',
