@@ -1,7 +1,10 @@
 <template>
   <list-view class="question-list" :data="questions" :showLoading="showLoading" :loading="true" @load="loadMore">
     <li slot="item" slot-scope="props" @click="getInfo(props.item)" class="list-item">
-
+      <div>问题标题</div>
+      <div>问题内容详情</div>
+      <div>解决状态</div>
+      <div>回答数</div>
     </li>
   </list-view>
 </template>
@@ -12,11 +15,8 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      msg: 'Welcome to 农友圈页面',
-      type: 'all',
       page: 0,
       questions: [],
-      isLiked: false,
       showLoading: false
     }
   },
@@ -37,17 +37,17 @@ export default {
       }, 6500)
     },
     getData (page) {
-      axios.get(`http://localhost:7001/circle/getCircleList/${page}`).then(res => {
+      axios.get(`http://localhost:7001/question/getQuestionList/${page}`).then(res => {
         if (res && res.data.code === 200) {
           if (page === 0) {
-            this.circles = res.data.data.circleList
+            this.questions = res.data.data
             this.page++
           } else {
-            if (res.data.data.circleList.length) {
-              this.circles.push(...res.data.data.circleList)
+            if (res.data.data.length) {
+              this.questions.push(...res.data.data)
               this.page++
             } else {
-              this.hasMore = '已无更多新闻'
+              this.hasMore = '已无更多问题'
             }
           }
         }
@@ -60,41 +60,4 @@ export default {
 <style lang="stylus" scoped>
 .question-list
   padding-top 3px
-  .item-wrapper
-    min-height 10px
-    display flex
-    .head-image
-      padding 10px
-      flex none
-    .circle-content
-      font-size 14px
-      padding 10px
-      flex auto
-      display flex
-      flex-direction column
-      line-height 18px
-      .nick-name
-        color #f63
-      .circle-image
-        display flex
-        flex-wrap wrap
-        justify-content space-between
-      .circle-tail
-        font-size 10px
-        display flex
-        justify-content space-between
-        .circle-mark
-          display flex
-          flex-direction column
-          .btn-info
-            color #9cf
-        .circle-action
-          padding 10px
-          display flex
-  .load-wrapper
-    position relative
-    width 100%
-    height 30px
-    text-align center
-    font-size 14px
 </style>
