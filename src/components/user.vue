@@ -1,8 +1,13 @@
 <template>
   <div class="user">
     <div class="head">
-      <div>z</div>
-      <div>z</div>
+      <img src="../assets/svg/hot.svg" height="80px" width="80px" alt="">
+      <div class="desc">
+        <div>姓名</div>
+        <div>
+          个性签名
+        </div>
+      </div>
     </div>
     <div class="center">
       <mt-cell title="我的收藏" to="//github.com" is-link value="带链接"></mt-cell>
@@ -46,7 +51,13 @@ export default {
   top 40px
   bottom 55px
   .head
+    display flex
     padding 15px
+    .desc
+      padding 10px
+      display flex
+      flex-direction column
+      justify-content space-around
   .center
     padding 15px
   .foot

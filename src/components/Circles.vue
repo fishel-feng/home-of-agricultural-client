@@ -5,6 +5,7 @@
       <mt-tab-item id="attention">关注的人</mt-tab-item>
     </mt-navbar>
     <router-view></router-view>
+    <div class="btn-add">+</div>
   </div>
 </template>
 
@@ -39,4 +40,16 @@ export default {
   width 100%
   top 40px
   bottom 55px
+  .btn-add
+    font-size 30px
+    text-align center
+    line-height 45px
+    width 50px
+    height 50px
+    border-radius 50%
+    position fixed
+    right 10px
+    bottom 65px
+    color #fff
+    background-color #26a2ff
 </style>
