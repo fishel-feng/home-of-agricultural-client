@@ -57,6 +57,12 @@ const CircleList = (resolve) => {
   })
 }
 
+const CircleAdd = (resolve) => {
+  import('@/components/circle-add').then((module) => {
+    resolve(module)
+  })
+}
+
 const SignIn = (resolve) => {
   import('@/components/sign-in').then((module) => {
     resolve(module)
@@ -130,6 +136,10 @@ export default new Router({
     {
       path: '/resetPassword',
       component: UserForm
+    },
+    {
+      path: '/addCircle',
+      component: CircleAdd
     }
   ]
 })
