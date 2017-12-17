@@ -52,13 +52,8 @@ export default {
 
 <style lang="stylus" scoped>
 .user
-  overflow-y auto
-  display flex
-  flex-direction column
-  position fixed
-  width 100%
-  top 40px
-  bottom 55px
+  margin-bottom 55px
+  width: 100%
   .head
     display flex
     min-height 80px

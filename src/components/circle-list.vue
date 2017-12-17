@@ -2,10 +2,10 @@
   <list-view class="circle-list" :data="circles" :showLoading="showLoading" :loading="true" @load="loadMore">
     <li slot="item" slot-scope="props" class="list-item">
       <div class="head-image">
-        <img @click="getUserCard(props.item)" :src="`http://localhost:7001/public/headImage/${props.item.headImage}`" width="50px">
+        <img @click="getUserCard(props.item.userId)" :src="`http://localhost:7001/public/headImage/${props.item.headImage}`" width="50px">
       </div>
       <div class="circle-content">
-        <div @click="getUserCard(props.item)" class="nick-name">{{props.item.nickName}}</div>
+        <div @click="getUserCard(props.item.userId)" class="nick-name">{{props.item.nickName}}</div>
         <div class="circle-text">{{props.item.content}}</div>
         <div class="circle-image">
           <li  v-for="(image,innerIndex) in props.item.images" :key="innerIndex">
@@ -16,8 +16,8 @@
           <div class="circle-mark">
             <span v-text="getText(props.item.time)"></span>
             <div>
-              <span class="btn-info">{{props.item.likeCount}}人觉得很赞</span>&nbsp;
-              <span class="btn-info">{{props.item.commentCount}}条评论</span>
+              <span @click="getLikeList(props.item._id)" class="btn-info">{{props.item.likeCount}}人觉得很赞</span>&nbsp;
+              <span @click="getCommentList(props.item._id)" class="btn-info">{{props.item.commentCount}}条评论</span>
             </div>
           </div>
           <div class="circle-action">
@@ -91,15 +91,14 @@ export default {
     getText (time) {
       return moment(time).format('YYYY-MM-DD HH:mm:ss')
     },
-    getUserCard (item) {
-      // todo 前往用户信息页面
-      this.$router.push(`/user/${item.userId}`)
+    getUserCard (userId) {
+      this.$router.push(`/user/${userId}`)
     },
-    getCommentList () {
-      //
+    getCommentList (circleId) {
+      this.$router.push(`/circles/comment/${circleId}`)
     },
-    getLikeList () {
-      //
+    getLikeList (circleId) {
+      this.$router.push(`/circles/like/${circleId}`)
     },
     giveLike () {
       //

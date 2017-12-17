@@ -93,6 +93,18 @@ const CircleAdd = (resolve) => {
   })
 }
 
+const CommentList = (resolve) => {
+  import('@/components/comment-list').then((module) => {
+    resolve(module)
+  })
+}
+
+const LikeList = (resolve) => {
+  import('@/components/like-list').then((module) => {
+    resolve(module)
+  })
+}
+
 const SignIn = (resolve) => {
   import('@/components/sign-in').then((module) => {
     resolve(module)
@@ -160,6 +172,26 @@ export default new Router({
         {
           path: ':type',
           component: CircleList
+        },
+        {
+          path: 'comment',
+          component: CircleList,
+          children: [
+            {
+              path: ':circleId',
+              component: CommentList
+            }
+          ]
+        },
+        {
+          path: 'like',
+          component: CircleList,
+          children: [
+            {
+              path: ':circleId',
+              component: LikeList
+            }
+          ]
         }
       ]
     },

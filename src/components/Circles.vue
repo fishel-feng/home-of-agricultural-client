@@ -40,11 +40,8 @@ export default {
 
 <style lang="stylus" scoped>
 .circle
-  overflow-y auto
-  position fixed
-  width 100%
-  top 40px
-  bottom 55px
+  margin-bottom 55px
+  width: 100%
   .btn-add
     font-size 30px
     text-align center
