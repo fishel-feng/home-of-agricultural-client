@@ -14,12 +14,14 @@
       <mt-cell title="我的动态" to="//github.com" is-link value="带链接"></mt-cell>
       <mt-cell title="我的提问" to="//github.com" is-link value="带链接"></mt-cell>
       <mt-cell title="我关注的问题" to="//github.com" is-link value="带链接"></mt-cell>
-      <mt-cell title="我关注的人" to="//github.com" is-link value="带链接"></mt-cell>
+      <mt-cell title="我回答的问题" to="//github.com" is-link value="带链接"></mt-cell>
+      <mt-cell title="我关注的人" to="/user/follower" is-link value="带链接"></mt-cell>
       <mt-cell title="关注我的人" to="//github.com" is-link value="带链接"></mt-cell>
     </div>
     <div class="foot">
       <mt-cell title="关于我们" to="//github.com" is-link value="带链接"></mt-cell>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 

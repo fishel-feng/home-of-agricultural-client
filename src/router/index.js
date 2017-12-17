@@ -45,6 +45,18 @@ const User = (resolve) => {
   })
 }
 
+const FollowingList = (resolve) => {
+  import('@/components/following-list').then((module) => {
+    resolve(module)
+  })
+}
+
+const FollowerList = (resolve) => {
+  import('@/components/follower-list').then((module) => {
+    resolve(module)
+  })
+}
+
 const ArticleList = (resolve) => {
   import('@/components/article-list').then((module) => {
     resolve(module)
@@ -135,7 +147,17 @@ export default new Router({
     },
     {
       path: '/user',
-      component: User
+      component: User,
+      children: [
+        {
+          path: 'following',
+          component: FollowingList
+        },
+        {
+          path: 'follower',
+          component: FollowerList
+        }
+      ]
     },
     {
       path: '/signIn',

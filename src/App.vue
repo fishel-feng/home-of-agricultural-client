@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-  <mt-header fixed :title="title"></mt-header>
+  <mt-header :title="title"></mt-header>
   <keep-alive>
     <router-view></router-view>
   </keep-alive>
