@@ -10,16 +10,19 @@
       </div>
     </div>
     <div class="center">
-      <mt-cell title="我的收藏" to="//github.com" is-link value="带链接"></mt-cell>
-      <mt-cell title="我的动态" to="//github.com" is-link value="带链接"></mt-cell>
-      <mt-cell title="我的提问" to="//github.com" is-link value="带链接"></mt-cell>
-      <mt-cell title="我关注的问题" to="//github.com" is-link value="带链接"></mt-cell>
-      <mt-cell title="我回答的问题" to="//github.com" is-link value="带链接"></mt-cell>
-      <mt-cell title="我关注的人" to="/user/follower" is-link value="带链接"></mt-cell>
-      <mt-cell title="关注我的人" to="//github.com" is-link value="带链接"></mt-cell>
+      <mt-cell title="我的收藏" to="//github.com" is-link :value="collectionCount"></mt-cell>
+      <mt-cell title="我的动态" to="//github.com" is-link :value="circleCount"></mt-cell>
+      <mt-cell title="我的提问" to="//github.com" is-link :value="questionCount"></mt-cell>
+      <mt-cell title="我关注的问题" to="//github.com" is-link :value="attentionCount"></mt-cell>
+      <mt-cell title="我回答的问题" to="//github.com" is-link :value="answerCount"></mt-cell>
+      <mt-cell title="我关注的人" to="/user/follower" is-link :value="followingCount"></mt-cell>
+      <mt-cell title="关注我的人" to="//github.com" is-link :value="followerCount"></mt-cell>
     </div>
     <div class="foot">
-      <mt-cell title="关于我们" to="//github.com" is-link value="带链接"></mt-cell>
+      <mt-cell title="关于我们" to="/about" is-link></mt-cell>
+    </div>
+    <div class="btn-wrapper">
+      <mt-button class="btn-logout" type="danger">退出登录</mt-button>
     </div>
     <router-view></router-view>
   </div>
@@ -31,8 +34,13 @@
 export default {
   data () {
     return {
-      msg: 'Welcome to 我的页面',
-      popupVisible: false
+      followingCount: 0,
+      followerCount: 0,
+      answerCount: 0,
+      questionCount: 0,
+      attentionCount: 0,
+      circleCount: 0,
+      collectionCount: 0
     }
   },
   methods: {
@@ -46,6 +54,7 @@ export default {
 
 <style lang="stylus" scoped>
 .user
+  overflow-y auto
   display flex
   flex-direction column
   position fixed
@@ -54,6 +63,7 @@ export default {
   bottom 55px
   .head
     display flex
+    min-height 80px
     padding 15px
     .desc
       padding 10px
@@ -64,4 +74,9 @@ export default {
     padding 15px
   .foot
     padding 15px
+  .btn-wrapper
+    text-align center
+    padding 15px
+    .btn-logout
+      width 100%
 </style>

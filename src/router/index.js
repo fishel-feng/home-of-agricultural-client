@@ -93,6 +93,12 @@ const UserForm = (resolve) => {
   })
 }
 
+const About = (resolve) => {
+  import('@/components/about').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -174,6 +180,10 @@ export default new Router({
     {
       path: '/addCircle',
       component: CircleAdd
+    },
+    {
+      path: '/about',
+      component: About
     }
   ]
 })

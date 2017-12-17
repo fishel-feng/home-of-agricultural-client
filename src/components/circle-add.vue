@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide">
+  <!-- <transition name="top"> -->
     <div class="circle-add">
       <mt-header fixed title="发表动态">
         <router-link to="/" slot="left">
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
