@@ -4,9 +4,7 @@
       <img src="../assets/svg/hot.svg" height="80px" width="80px" alt="">
       <div class="desc">
         <div>姓名</div>
-        <div>
-          个性签名
-        </div>
+        <div>个性签名</div>
       </div>
     </div>
     <div class="center">
@@ -16,7 +14,7 @@
       <mt-cell title="我关注的问题" to="//github.com" is-link :value="attentionCount"></mt-cell>
       <mt-cell title="我回答的问题" to="//github.com" is-link :value="answerCount"></mt-cell>
       <mt-cell title="我关注的人" to="/user/follower" is-link :value="followingCount"></mt-cell>
-      <mt-cell title="关注我的人" to="//github.com" is-link :value="followerCount"></mt-cell>
+      <mt-cell title="关注我的人" to="/user/following" is-link :value="followerCount"></mt-cell>
     </div>
     <div class="foot">
       <mt-cell title="关于我们" to="/about" is-link></mt-cell>

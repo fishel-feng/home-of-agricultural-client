@@ -33,6 +33,12 @@ const QuestionInfo = (resolve) => {
   })
 }
 
+const QuestionAdd = (resolve) => {
+  import('@/components/question-add').then((module) => {
+    resolve(module)
+  })
+}
+
 const Circles = (resolve) => {
   import('@/components/circles').then((module) => {
     resolve(module)
@@ -41,6 +47,12 @@ const Circles = (resolve) => {
 
 const User = (resolve) => {
   import('@/components/user').then((module) => {
+    resolve(module)
+  })
+}
+
+const UserCard = (resolve) => {
+  import('@/components/user-card').then((module) => {
     resolve(module)
   })
 }
@@ -162,6 +174,10 @@ export default new Router({
         {
           path: 'follower',
           component: FollowerList
+        },
+        {
+          path: ':id',
+          component: UserCard
         }
       ]
     },
@@ -180,6 +196,10 @@ export default new Router({
     {
       path: '/addCircle',
       component: CircleAdd
+    },
+    {
+      path: '/addQuestion',
+      component: QuestionAdd
     },
     {
       path: '/about',

@@ -4,7 +4,7 @@
   <keep-alive>
     <router-view></router-view>
   </keep-alive>
-  <mt-tabbar v-model="selected" class="tail-tab">
+  <mt-tabbar v-show="showTabbar" v-model="selected" class="tail-tab">
     <mt-tab-item @click.native="selectItem(item)" :id="item.id" v-for="(item,index) in tailList" :key="index">
       <img slot="icon" :src="`http://127.0.0.1:7001/public/svg/${item.image}.svg`"> {{item.text}}
     </mt-tab-item>
@@ -19,6 +19,7 @@ export default {
   name: 'app',
   data () {
     return {
+      showTabbar: true,
       oldSelect: '',
       selected: 'news',
       title: '新闻',
@@ -90,6 +91,11 @@ export default {
           this.title = element.text
         }
       })
+      if (to.path.startsWith('/user') && to.path.length > 5) {
+        this.showTabbar = false
+      } else {
+        this.showTabbar = true
+      }
     },
     selected (newVal, oldVal) {
       this.oldSelect = oldVal

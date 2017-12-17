@@ -1,11 +1,11 @@
 <template>
   <list-view class="circle-list" :data="circles" :showLoading="showLoading" :loading="true" @load="loadMore">
-    <li slot="item" slot-scope="props" @click="getInfo(props.item)" class="list-item">
+    <li slot="item" slot-scope="props" class="list-item">
       <div class="head-image">
-        <img :src="`http://localhost:7001/public/headImage/${props.item.headImage}`" width="50px">
+        <img @click="getUserCard(props.item)" :src="`http://localhost:7001/public/headImage/${props.item.headImage}`" width="50px">
       </div>
       <div class="circle-content">
-        <div class="nick-name">{{props.item.nickName}}</div>
+        <div @click="getUserCard(props.item)" class="nick-name">{{props.item.nickName}}</div>
         <div class="circle-text">{{props.item.content}}</div>
         <div class="circle-image">
           <li  v-for="(image,innerIndex) in props.item.images" :key="innerIndex">
@@ -90,6 +90,25 @@ export default {
     },
     getText (time) {
       return moment(time).format('YYYY-MM-DD HH:mm:ss')
+    },
+    getUserCard (item) {
+      // todo 前往用户信息页面
+      this.$router.push(`/user/${item.userId}`)
+    },
+    getCommentList () {
+      //
+    },
+    getLikeList () {
+      //
+    },
+    giveLike () {
+      //
+    },
+    cancelLike () {
+      //
+    },
+    giveComment () {
+      //
     }
   },
   watch: {

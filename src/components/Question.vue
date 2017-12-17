@@ -1,7 +1,7 @@
 <template>
   <div class="question">
     <router-view></router-view>
-    <div class="btn-add">问</div>
+    <div @click="addQuestion" class="btn-add">问</div>
   </div>
 </template>
 
@@ -15,6 +15,9 @@ export default {
   methods: {
     main_log (val) {
       console.log('main_log', val)
+    },
+    addQuestion () {
+      this.$router.push('/addQuestion')
     }
   }
 }
