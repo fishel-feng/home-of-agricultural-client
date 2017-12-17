@@ -1,10 +1,10 @@
 <template>
   <list-view class="question-list" :data="questions" :showLoading="showLoading" :loading="true" @load="loadMore">
     <li slot="item" slot-scope="props" @click="getInfo(props.item)" class="list-item">
-      <div>问题标题</div>
-      <div>问题内容详情</div>
-      <div>解决状态</div>
-      <div>回答数</div>
+      <div>{{props.item.title}}</div>
+      <div>{{props.item.desc}}</div>
+      <div>{{props.item.finishState?'已解决':'未解决'}}</div>
+      <div>{{props.item.answerCount}}</div>
     </li>
   </list-view>
 </template>

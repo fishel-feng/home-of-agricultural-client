@@ -27,6 +27,12 @@ const QuestionList = (resolve) => {
   })
 }
 
+const QuestionInfo = (resolve) => {
+  import('@/components/question-info').then((module) => {
+    resolve(module)
+  })
+}
+
 const Circles = (resolve) => {
   import('@/components/circles').then((module) => {
     resolve(module)
@@ -107,7 +113,13 @@ export default new Router({
       children: [
         {
           path: ':tag',
-          component: QuestionList
+          component: QuestionList,
+          children: [
+            {
+              path: ':questionId',
+              component: QuestionInfo
+            }
+          ]
         }
       ]
     },

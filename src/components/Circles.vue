@@ -5,7 +5,7 @@
       <mt-tab-item id="attention">关注的人</mt-tab-item>
     </mt-navbar>
     <router-view></router-view>
-    <div class="btn-add">+</div>
+    <div class="btn-add" @click="addCircle">+</div>
   </div>
 </template>
 
@@ -16,6 +16,11 @@ export default {
     return {
       msg: 'Welcome to 农友圈页面',
       selected: 'all'
+    }
+  },
+  methods: {
+    addCircle () {
+      this.$router.push('/addCircle')
     }
   },
   watch: {

@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide" class="article-info">
+  <transition name="slide">
     <div class="article-info">
       <mt-header fixed title="文章详情">
         <router-link to="/" slot="left">
