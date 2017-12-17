@@ -29,7 +29,7 @@
               <img src="../assets/svg/liked.svg" alt="" width="14px">
               取消赞&nbsp;&nbsp;
             </span>
-            <span>
+            <span @click="giveComment(props.item._id)">
               <img src="../assets/svg/comment.svg" alt="" width="14px">
               评论
             </span>
@@ -106,8 +106,8 @@ export default {
     cancelLike () {
       //
     },
-    giveComment () {
-      //
+    giveComment (circleId) {
+      this.$router.push(`/addComment?id=${circleId}`)
     }
   },
   watch: {

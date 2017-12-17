@@ -99,6 +99,12 @@ const CommentList = (resolve) => {
   })
 }
 
+const CommentAdd = (resolve) => {
+  import('@/components/comment-add').then((module) => {
+    resolve(module)
+  })
+}
+
 const LikeList = (resolve) => {
   import('@/components/like-list').then((module) => {
     resolve(module)
@@ -232,6 +238,10 @@ export default new Router({
     {
       path: '/addQuestion',
       component: QuestionAdd
+    },
+    {
+      path: '/addComment',
+      component: CommentAdd
     },
     {
       path: '/about',
