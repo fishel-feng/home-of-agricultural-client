@@ -21,11 +21,11 @@
             </div>
           </div>
           <div class="circle-action">
-            <span v-if="!isLiked">
+            <span v-if="!isLiked" @click="giveLike">
               <img src="../assets/svg/like.svg" alt="" width="14px">
               赞&nbsp;
             </span>
-            <span v-if="isLiked">
+            <span v-if="isLiked" @click="cancelLike">
               <img src="../assets/svg/liked.svg" alt="" width="14px">
               取消赞&nbsp;&nbsp;
             </span>
@@ -102,9 +102,11 @@ export default {
     },
     giveLike () {
       //
+      this.isLiked = true
     },
     cancelLike () {
       //
+      this.isLiked = false
     },
     giveComment (circleId) {
       this.$router.push(`/addComment?id=${circleId}`)

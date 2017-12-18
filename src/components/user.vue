@@ -68,7 +68,6 @@ export default {
   .foot
     padding 15px
   .btn-wrapper
-    text-align center
     padding 15px
     .btn-logout
       width 100%

@@ -1,5 +1,16 @@
 <template>
   <div class="question">
+    <mt-navbar v-model="selected">
+      <mt-tab-item id="1">选项</mt-tab-item>
+      <mt-tab-item id="2">选项</mt-tab-item>
+      <mt-tab-item id="3">选项</mt-tab-item>
+      <mt-tab-item id="3">选项</mt-tab-item>
+      <mt-tab-item id="3">选项</mt-tab-item>
+      <mt-tab-item id="3">选项</mt-tab-item>
+      <mt-tab-item id="3">选项</mt-tab-item>
+      <mt-tab-item id="3">选项</mt-tab-item>
+      <mt-tab-item @click.native="selectItem">+</mt-tab-item>
+    </mt-navbar>
     <router-view></router-view>
     <div @click="addQuestion" class="btn-add">问</div>
   </div>
@@ -9,7 +20,8 @@
 export default {
   data () {
     return {
-      msg: 'Welcome to 问专家页面'
+      msg: 'Welcome to 问专家页面',
+      selected: 1
     }
   },
   methods: {
@@ -18,6 +30,9 @@ export default {
     },
     addQuestion () {
       this.$router.push('/addQuestion')
+    },
+    selectItem () {
+      this.$router.push('/question/selectItem')
     }
   }
 }
@@ -25,7 +40,7 @@ export default {
 
 <style lang="stylus" scoped>
 .question
-  margin-top 40px
+  // margin-top 40px
   margin-bottom 55px
   width: 100%
   .btn-add

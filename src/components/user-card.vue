@@ -1,13 +1,14 @@
 <template>
-  <!-- <transition name="slide"> -->
+  <transition name="slide">
     <div class="user-card">
       <mt-header title="用户资料">
         <router-link to="/" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
+      <img src="../assets/svg/hot.svg" alt="">
     </div>
-  <!-- </transition> -->
+  </transition>
 </template>
 
 <script>

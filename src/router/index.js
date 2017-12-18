@@ -39,6 +39,12 @@ const QuestionAdd = (resolve) => {
   })
 }
 
+const SelectItem = (resolve) => {
+  import('@/components/select-item').then((module) => {
+    resolve(module)
+  })
+}
+
 const Circles = (resolve) => {
   import('@/components/circles').then((module) => {
     resolve(module)
@@ -160,6 +166,10 @@ export default new Router({
       component: Question,
       children: [
         {
+          path: 'selectItem',
+          component: SelectItem
+        },
+        {
           path: ':tag',
           component: QuestionList,
           children: [
@@ -175,10 +185,6 @@ export default new Router({
       path: '/circles',
       component: Circles,
       children: [
-        {
-          path: ':type',
-          component: CircleList
-        },
         {
           path: 'comment',
           component: CircleList,
@@ -198,6 +204,10 @@ export default new Router({
               component: LikeList
             }
           ]
+        },
+        {
+          path: ':type',
+          component: CircleList
         }
       ]
     },
@@ -205,6 +215,10 @@ export default new Router({
       path: '/user',
       component: User,
       children: [
+        {
+          path: 'collections'
+          // todo
+        },
         {
           path: 'following',
           component: FollowingList

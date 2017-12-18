@@ -18,7 +18,7 @@
       <div class="image-wrapper">
         <div class="image-button">
           <a href="javascript:;" class="file">
-            <img src="../assets/svg/add.svg" width="100px" height="100px" alt="">
+            <img src="../assets/svg/add.svg" width="90px" height="90px" alt="">
             <input type="file" name="" id="">
           </a>
         </div>
@@ -75,8 +75,8 @@ export default {
       overflow hidden
       input
         display block
-        width 100px
-        height 100px
+        width 90px
+        height 90px
         position absolute
         right 0
         top 0
