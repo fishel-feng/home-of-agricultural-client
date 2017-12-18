@@ -1,6 +1,11 @@
 <template>
 <div id="app">
-  <mt-header :title="title"></mt-header>
+  <mt-header :title="title">
+    <div slot="right" @click="showMessageCenter">
+      <mt-badge v-if="messageCount!==0" type="error" size="small" class="tip">{{messageCount}}</mt-badge>
+      <img src="./assets/svg/message.svg" width="20px">
+    </div>
+  </mt-header>
   <keep-alive>
     <router-view></router-view>
   </keep-alive>
@@ -22,6 +27,7 @@ export default {
       oldSelect: '',
       selected: 'news',
       title: '新闻',
+      messageCount: 0,
       tailList: [
         {
           id: 'news',
@@ -80,6 +86,9 @@ export default {
         return false
       }
       return true
+    },
+    showMessageCenter () {
+      this.$router.push('/message')
     }
   },
   watch: {
@@ -99,6 +108,9 @@ export default {
 </script>
 
 <style lang="stylus">
+.tip
+  position relative
+  top -5px
 .tail-tab
   position fixed
 </style>

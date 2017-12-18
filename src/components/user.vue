@@ -8,11 +8,11 @@
       </div>
     </div>
     <div class="center">
-      <mt-cell title="我的收藏" to="//github.com" is-link :value="collectionCount"></mt-cell>
-      <mt-cell title="我的动态" to="//github.com" is-link :value="circleCount"></mt-cell>
-      <mt-cell title="我的提问" to="//github.com" is-link :value="questionCount"></mt-cell>
-      <mt-cell title="我关注的问题" to="//github.com" is-link :value="attentionCount"></mt-cell>
-      <mt-cell title="我回答的问题" to="//github.com" is-link :value="answerCount"></mt-cell>
+      <mt-cell title="我的收藏" to="/user/collections" is-link :value="collectionCount"></mt-cell>
+      <mt-cell title="我的动态" to="/user/circles" is-link :value="circleCount"></mt-cell>
+      <mt-cell title="我的提问" to="/user/questions" is-link :value="questionCount"></mt-cell>
+      <mt-cell title="我关注的问题" to="/user/attentions" is-link :value="attentionCount"></mt-cell>
+      <mt-cell title="我回答的问题" to="/user/answers" is-link :value="answerCount"></mt-cell>
       <mt-cell title="我关注的人" to="/user/follower" is-link :value="followingCount"></mt-cell>
       <mt-cell title="关注我的人" to="/user/following" is-link :value="followerCount"></mt-cell>
     </div>

@@ -135,6 +135,12 @@ const About = (resolve) => {
   })
 }
 
+const MessageCenter = (resolve) => {
+  import('@/components/message-center').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -220,6 +226,22 @@ export default new Router({
           // todo
         },
         {
+          path: 'circles'
+          // todo
+        },
+        {
+          path: 'questions'
+          // todo
+        },
+        {
+          path: 'attentions'
+          // todo
+        },
+        {
+          path: 'answers'
+          // todo
+        },
+        {
           path: 'following',
           component: FollowingList
         },
@@ -260,6 +282,10 @@ export default new Router({
     {
       path: '/about',
       component: About
+    },
+    {
+      path: '/message',
+      component: MessageCenter
     }
   ]
 })

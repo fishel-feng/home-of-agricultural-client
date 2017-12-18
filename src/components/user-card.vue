@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide">
+  <!-- <transition name="slide"> -->
     <div class="user-card">
       <mt-header title="用户资料">
         <router-link to="/" slot="left">
@@ -7,8 +7,19 @@
         </router-link>
       </mt-header>
       <img src="../assets/svg/hot.svg" alt="">
+      <div>昵称</div>
+      <div>个人简介</div>
+      <div>地址</div>
+      <div>性别</div>
+      <div>年龄</div>
+      <div>职业</div>
+      <div>提问数</div>
+      <div>回答数</div>
+      <div>最近动态</div>
+      <div>粉丝</div>
+      <div>关注</div>
     </div>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
