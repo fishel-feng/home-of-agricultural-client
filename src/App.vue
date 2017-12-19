@@ -2,8 +2,10 @@
 <div id="app">
   <mt-header :title="title">
     <div slot="right" @click="showMessageCenter">
-      <mt-badge v-if="messageCount!==0" type="error" size="small" class="tip">{{messageCount}}</mt-badge>
-      <img src="./assets/svg/message.svg" width="20px">
+      <div class="icon-wrapper">
+        <div v-show="messageCount!==0" class="dot"></div>
+        <img class="message-icon" src="./assets/svg/message.svg" height="20px" width="20px">
+      </div>
     </div>
   </mt-header>
   <keep-alive>
@@ -108,9 +110,25 @@ export default {
 </script>
 
 <style lang="stylus">
-.tip
+// .tip
+//   position relative
+//   top -5px
+.icon-wrapper
   position relative
-  top -5px
+  .dot
+    position absolute
+    width 4px
+    height 4px
+    background red
+    border 2px red solid
+    border-radius 50%
+    right 2px
+    top -12px
+  .message-icon
+    display block
+    bottom -8px
+    right 3px
+    position absolute
 .tail-tab
   position fixed
 </style>
