@@ -3,8 +3,12 @@ import {loadToken} from '@/common/js/cache'
 const state = {
   token: loadToken(),
   collections: [],
+  circles: [],
+  questions: [],
   attentions: [],
-  followings: []
+  answers: [],
+  followings: [],
+  followers: []
 }
 
 export default state

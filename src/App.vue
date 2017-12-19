@@ -1,11 +1,9 @@
 <template>
 <div id="app">
   <mt-header :title="title">
-    <div slot="right" @click="showMessageCenter">
-      <div class="icon-wrapper">
-        <div v-show="messageCount!==0" class="dot"></div>
-        <img class="message-icon" src="./assets/svg/message.svg" height="20px" width="20px">
-      </div>
+    <div class="icon-wrapper" slot="right" @click="showMessageCenter">
+      <div v-show="messageCount!==0" class="dot"></div>
+      <img class="message-icon" src="./assets/svg/message.svg" height="20px" width="20px">
     </div>
   </mt-header>
   <keep-alive>
@@ -110,9 +108,6 @@ export default {
 </script>
 
 <style lang="stylus">
-// .tip
-//   position relative
-//   top -5px
 .icon-wrapper
   position relative
   .dot
@@ -124,6 +119,7 @@ export default {
     border-radius 50%
     right 2px
     top -12px
+    z-index 1
   .message-icon
     display block
     bottom -8px

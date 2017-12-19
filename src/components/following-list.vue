@@ -12,6 +12,7 @@
 </template>
 
 <script>
+// import { mapActions } from 'vuex'
 import PersonList from '@/components/person-list'
 export default {
   data () {
@@ -21,6 +22,9 @@ export default {
   },
   components: {
     PersonList
+  },
+  methods: {
+    //
   }
 }
 </script>

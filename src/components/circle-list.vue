@@ -2,7 +2,7 @@
   <list-view class="circle-list" :data="circles" :showLoading="showLoading" :loading="true" @load="loadMore">
     <li slot="item" slot-scope="props" class="list-item">
       <div class="head-image">
-        <img @click="getUserCard(props.item.userId)" :src="`http://localhost:7001/public/headImage/${props.item.headImage}`" width="50px">
+        <img @click="getUserCard(props.item.userId)" :src="`http://localhost:7001/public/headImage/${props.item.headImage}`" width="50px" height="50px">
       </div>
       <div class="circle-content">
         <div @click="getUserCard(props.item.userId)" class="nick-name">{{props.item.nickName}}</div>

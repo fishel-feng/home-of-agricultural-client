@@ -5,10 +5,6 @@ export const addToken = function ({commit}, token) {
   commit(types.SET_TOKEN, saveToken(token))
 }
 
-export const saveCollections = function ({commit}, collections) {
-  commit(types.SET_COLLECTIONS, collections)
-}
-
 export const addCollection = function ({commit, state}, article) {
   let collections = state.collections.slice()
   collections.push(article)
@@ -24,10 +20,13 @@ export const deleteCollection = function ({commit, state}, articleId) {
   commit(types.SET_COLLECTIONS, collections)
 }
 
-export const saveAttentions = function ({commit}, attentions) {
-  commit(types.SET_COLLECTIONS, attentions)
-}
-
-export const saveFollowings = function ({commit}, followings) {
-  commit(types.SET_COLLECTIONS, followings)
+export const saveUserInfo = function ({commit}, userInfo) {
+  console.log(userInfo)
+  commit(types.SET_COLLECTIONS, userInfo.collections)
+  commit(types.SET_CIRCLES, userInfo.circles)
+  commit(types.SET_QUESTIONS, userInfo.questions)
+  commit(types.SET_ATTENTIONS, userInfo.attentions)
+  commit(types.SET_ANSWERS, userInfo.answers)
+  commit(types.SET_FOLLOWINGS, userInfo.followings)
+  commit(types.SET_FOLLOWERS, userInfo.followers)
 }

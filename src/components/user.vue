@@ -1,10 +1,10 @@
 <template>
   <div class="user">
     <div class="head">
-      <img src="../assets/svg/hot.svg" height="80px" width="80px" alt="">
+      <img :src="`http://localhost:7001/public/headImage/${headImage}`" height="80px" width="80px" alt="">
       <div class="desc">
-        <div>姓名</div>
-        <div>个性签名</div>
+        <div>{{nickName}}</div>
+        <div>{{description}}</div>
       </div>
     </div>
     <div class="center">
@@ -27,11 +27,16 @@
 </template>
 
 <script>
-// import axios from 'axios'
-// import { MessageBox } from 'mint-ui'
+import { accountTestMixin } from '@/common/js/mixin'
+import { mapActions } from 'vuex'
+import axios from 'axios'
 export default {
+  mixins: [accountTestMixin],
   data () {
     return {
+      nickName: '',
+      description: '',
+      headImage: '',
       followingCount: 0,
       followerCount: 0,
       answerCount: 0,
@@ -42,10 +47,35 @@ export default {
     }
   },
   methods: {
-    //
+    getData () {
+      if (this.verifyLogin()) {
+        axios.get('http://localhost:7001/user/getUserIndex', {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          const user = res.data.data.user
+          console.log(res.data)
+          this.collectionCount = user.collectionCount
+          this.circleCount = user.circleCount
+          this.questionCount = user.questionCount
+          this.attentionCount = user.attentionCount
+          this.answerCount = user.answerCount
+          this.followingCount = user.followingCount
+          this.followerCount = user.followerCount
+          this.nickName = user.nickName
+          this.description = user.description
+          this.headImage = user.headImage
+          this.saveUserInfo(user)
+        })
+      }
+    },
+    ...mapActions([
+      'saveUserInfo'
+    ])
   },
   mounted () {
-    //
+    this.getData()
   }
 }
 </script>
