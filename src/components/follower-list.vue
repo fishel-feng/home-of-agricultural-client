@@ -1,30 +1,27 @@
 <template>
-  <transition name="slide">
+  <!-- <transition name="slide"> -->
     <div class="follower-list">
       <mt-header title="关注我的人">
         <router-link to="/" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
-      <person-list :data="data"></person-list>
+      <person-list :data="followers"></person-list>
     </div>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
-// import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import PersonList from '@/components/person-list'
 export default {
-  data () {
-    return {
-      data: []
-    }
-  },
   components: {
     PersonList
   },
-  methods: {
-    //
+  computed: {
+    ...mapGetters([
+      'followers'
+    ])
   }
 }
 </script>

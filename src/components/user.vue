@@ -13,8 +13,8 @@
       <mt-cell title="我的提问" to="/user/questions" is-link :value="questionCount"></mt-cell>
       <mt-cell title="我关注的问题" to="/user/attentions" is-link :value="attentionCount"></mt-cell>
       <mt-cell title="我回答的问题" to="/user/answers" is-link :value="answerCount"></mt-cell>
-      <mt-cell title="我关注的人" to="/user/follower" is-link :value="followingCount"></mt-cell>
-      <mt-cell title="关注我的人" to="/user/following" is-link :value="followerCount"></mt-cell>
+      <mt-cell title="我关注的人" to="/user/followings" is-link :value="followingCount"></mt-cell>
+      <mt-cell title="关注我的人" to="/user/followers" is-link :value="followerCount"></mt-cell>
     </div>
     <div class="foot">
       <mt-cell title="关于我们" to="/about" is-link></mt-cell>

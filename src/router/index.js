@@ -242,11 +242,11 @@ export default new Router({
           // todo
         },
         {
-          path: 'following',
+          path: 'followings',
           component: FollowingList
         },
         {
-          path: 'follower',
+          path: 'followers',
           component: FollowerList
         },
         {

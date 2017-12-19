@@ -1,8 +1,8 @@
 <template>
   <div class="person-list">
     <ul>
-      <li class="item" v-for="item in data">
-        <img :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="60px" alt="">
+      <li class="item" v-for="item in data" @click="showUserCard(item.userId)">
+        <img :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="70px" height="70px" alt="">
         <div class="text">
           <div class="nick-name">{{item.nickName}}</div>
           <div>{{item.description}}</div>
@@ -19,22 +19,26 @@ export default {
       type: Array,
       default: []
     }
+  },
+  methods: {
+    showUserCard (userId) {
+      this.$router.push(`/user/${userId}`)
+    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.person-list
+.item
   padding 10px
-  .item
-    height 80px
+  min-height 70px
+  display flex
+  .text
     display flex
-    .text
-      display flex
-      flex-direction column
-      justify-content space-around
-      padding 10px
-      font-size 12px
-      .nick-name
-        font-size 16px
+    flex-direction column
+    justify-content space-around
+    margin-left 10px
+    font-size 12px
+    .nick-name
+      font-size 16px
 </style>
