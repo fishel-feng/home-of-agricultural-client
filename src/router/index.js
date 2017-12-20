@@ -21,8 +21,8 @@ const Question = (resolve) => {
   })
 }
 
-const QuestionList = (resolve) => {
-  import('@/components/question-list').then((module) => {
+const QuestionType = (resolve) => {
+  import('@/components/question-type').then((module) => {
     resolve(module)
   })
 }
@@ -59,6 +59,30 @@ const User = (resolve) => {
 
 const UserCard = (resolve) => {
   import('@/components/user-card').then((module) => {
+    resolve(module)
+  })
+}
+
+const UserCollection = (resolve) => {
+  import('@/components/user-collection').then((module) => {
+    resolve(module)
+  })
+}
+
+const UserQuestion = (resolve) => {
+  import('@/components/user-question').then((module) => {
+    resolve(module)
+  })
+}
+
+const UserAttention = (resolve) => {
+  import('@/components/user-attention').then((module) => {
+    resolve(module)
+  })
+}
+
+const UserAnswer = (resolve) => {
+  import('@/components/user-answer').then((module) => {
     resolve(module)
   })
 }
@@ -177,7 +201,7 @@ export default new Router({
         },
         {
           path: ':tag',
-          component: QuestionList,
+          component: QuestionType,
           children: [
             {
               path: ':questionId',
@@ -222,24 +246,24 @@ export default new Router({
       component: User,
       children: [
         {
-          path: 'collections'
-          // todo
+          path: 'collections',
+          component: UserCollection
         },
         {
           path: 'circles'
           // todo
         },
         {
-          path: 'questions'
-          // todo
+          path: 'questions',
+          component: UserQuestion
         },
         {
-          path: 'attentions'
-          // todo
+          path: 'attentions',
+          component: UserAttention
         },
         {
-          path: 'answers'
-          // todo
+          path: 'answers',
+          component: UserAnswer
         },
         {
           path: 'followings',

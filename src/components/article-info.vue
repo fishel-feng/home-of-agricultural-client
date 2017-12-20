@@ -55,6 +55,11 @@ export default {
   mounted () {
     this.initData()
   },
+  watch: {
+    '$route' (to, from) {
+      this.initData()
+    }
+  },
   methods: {
     ...mapActions([
       'addCollection',

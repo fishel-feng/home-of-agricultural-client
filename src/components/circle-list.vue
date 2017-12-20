@@ -22,16 +22,15 @@
           </div>
           <div class="circle-action">
             <span v-if="!isLiked" @click="giveLike">
-              <img src="../assets/svg/like.svg" alt="" width="14px">
-              赞&nbsp;
+              赞 <img src="../assets/svg/like.svg" alt="" width="14px">
+              &nbsp;
             </span>
             <span v-if="isLiked" @click="cancelLike">
-              <img src="../assets/svg/liked.svg" alt="" width="14px">
-              取消赞&nbsp;&nbsp;
+              取消赞 <img src="../assets/svg/liked.svg" alt="" width="14px">
+              &nbsp;&nbsp;
             </span>
             <span @click="giveComment(props.item._id)">
-              <img src="../assets/svg/comment.svg" alt="" width="14px">
-              评论
+              评论 <img src="../assets/svg/comment.svg" alt="" width="14px">
             </span>
           </div>
         </div>
@@ -154,4 +153,7 @@ export default {
         .circle-action
           padding 10px
           display flex
+          img
+            position relative
+            top 2px
 </style>
