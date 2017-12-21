@@ -8,6 +8,10 @@
       </mt-header>
       <mt-field placeholder="在此输入问题标题" v-model="title"></mt-field>
       <mt-field placeholder="在此输入问题详细描述" type="textarea" rows="6" v-model="content"></mt-field>
+      <div class="tag-wrapper">
+        <div>问题标签：{{tag}}</div>
+        <mt-button @click.native="addItem" type="primary" size="small">选择问题标签</mt-button>
+      </div>
       <div class="image-wrapper">
         <div class="image-button">
           <a href="javascript:;" class="file">
@@ -26,7 +30,13 @@ export default {
   data () {
     return {
       content: '',
-      title: ''
+      title: '',
+      tag: ''
+    }
+  },
+  methods: {
+    addItem () {
+      //
     }
   },
   computed: {
@@ -52,12 +62,11 @@ export default {
   z-index 100
   margin-top 50px
   background #fff
-  .hint
-    color #4b4b4b
-    padding 20px
+  .tag-wrapper
     display flex
     justify-content space-between
-    margin-top 20px
+    padding 5px 20px
+    align-items: center
   .image-wrapper
     display flex
     flex-wrap wrap

@@ -69,6 +69,12 @@ const UserCollection = (resolve) => {
   })
 }
 
+const UserCircle = (resolve) => {
+  import('@/components/user-circle').then((module) => {
+    resolve(module)
+  })
+}
+
 const UserQuestion = (resolve) => {
   import('@/components/user-question').then((module) => {
     resolve(module)
@@ -250,8 +256,8 @@ export default new Router({
           component: UserCollection
         },
         {
-          path: 'circles'
-          // todo
+          path: 'circles',
+          component: UserCircle
         },
         {
           path: 'questions',

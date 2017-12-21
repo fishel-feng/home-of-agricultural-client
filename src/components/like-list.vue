@@ -6,21 +6,33 @@
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
-      <person-list :data="data"></person-list>
+      <person-list :data="likes"></person-list>
     </div>
   </transition>
 </template>
 
 <script>
+import axios from 'axios'
 import PersonList from '@/components/person-list'
 export default {
   data () {
     return {
-      data: []
+      likes: []
     }
   },
   components: {
     PersonList
+  },
+  mounted () {
+    this.initData()
+  },
+  methods: {
+    initData () {
+      const circleId = this.$route.params.circleId
+      axios.get(`http://localhost:7001/circle/getLikeList/${circleId}`).then(res => {
+        this.likes = res.data.data.likes
+      })
+    }
   }
 }
 </script>

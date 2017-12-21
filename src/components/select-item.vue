@@ -8,9 +8,9 @@
       </mt-header>
       <mt-checklist
         align="right"
-        title="请选择问题分类，最多选择八项"
+        title="请选择问题分类，最多选择8项"
         v-model="value"
-        :max="8"
+        :max="maxNum"
         :options="['选项A', '选项B', '选项C']">
       </mt-checklist>
       <div class="btn-wrapper">
@@ -24,7 +24,8 @@
 export default {
   data () {
     return {
-      value: ['选项A']
+      maxNum: 8,
+      value: []
     }
   }
 }
