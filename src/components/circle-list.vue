@@ -1,7 +1,7 @@
 <template>
   <div class="circle-list">
     <mt-loadmore :top-method="loadTop" ref="loadmore">
-      <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="disableLoading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
+      <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
         <li v-for="item in circles" class="list-item">
           <div class="head-image">
             <img @click="getUserCard(item.userId)" :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="50px" height="50px">
@@ -54,8 +54,8 @@ import moment from 'moment'
 export default {
   data () {
     return {
+      loading: false,
       circles: [],
-      disableLoading: false,
       showLoading: false,
       isLiked: false
     }
@@ -63,10 +63,18 @@ export default {
   mounted () {
     this.initData()
   },
+  deactivated () {
+    this.loading = true
+  },
+  activated () {
+    this.loading = false
+  },
   methods: {
     initData () {
       axios.get('http://127.0.0.1:7001/circle/getCircleList/' + new Date().toISOString()).then(res => {
-        this.circles = res.data.data.circleList
+        if (res.data.code === 200) {
+          this.circles = res.data.data.circleList
+        }
       })
     },
     loadTop () {
@@ -76,7 +84,15 @@ export default {
       }, 1000)
     },
     loadMore () {
-      console.log('加载')
+      this.loading = true
+      axios.get('http://127.0.0.1:7001/circle/getCircleList/' + this.circles[this.circles.length - 1].time).then(res => {
+        if (res.data.code === 200) {
+          if (res.data.data.circleList.length) {
+            this.circles.push(...res.data.data.circleList)
+            this.loading = false
+          }
+        }
+      })
     },
     getText (time) {
       return moment(time).format('YYYY-MM-DD HH:mm:ss')

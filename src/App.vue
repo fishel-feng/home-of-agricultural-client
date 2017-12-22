@@ -64,19 +64,12 @@ export default {
     ])
   },
   methods: {
-    // _selectItem () {
-
-    // },
     selectItem (item) {
-      // this.verifyLogin(this._selectItem)
-      // if (this.verifyLogin()) {
-      //   this.selected = item.id
-      //   this.title = item.text
-      this.$router.push('/' + this.selected)
-      // } else {
-      //   // todo 停止跳转逻辑
-      //   // this.selected = this.oldSelect
-      // }
+      this.verifyLogin(() => {
+        this.selected = item.id
+        this.title = item.text
+        this.$router.push('/' + this.selected)
+      })
     },
     showMessageCenter () {
       this.$router.push('/message')

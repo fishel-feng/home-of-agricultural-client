@@ -1,12 +1,8 @@
 <template>
   <div class="wiki">
-    <div ref="wrapper">
-      <mt-loadmore :top-method="loadTop" ref="loadmore">
-        <ul>
-          <li v-for="item in list">{{ item }}</li>
-        </ul>
-      </mt-loadmore>
-    </div>
+    <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50" infinite-scroll-immediate-check="false">
+      <li v-for="item in list" class="item">{{ item }}</li>
+    </ul>
   </div>
 </template>
 
@@ -14,22 +10,32 @@
 export default {
   data () {
     return {
-      list: []
+      list: [],
+      loading: false,
+      allLoaded: false,
+      wrapperHeight: 0
     }
+  },
+  deactivated () {
+    this.loading = true
+  },
+  activated () {
+    this.loading = false
   },
   methods: {
-    loadTop () {
+    loadMore () {
+      // this.loading = true
+      console.log(0)
       setTimeout(() => {
-        // 这里发送请求
-        let firstValue = this.list[0]
+        let last = this.list[this.list.length - 1]
         for (let i = 1; i <= 10; i++) {
-          this.list.unshift(firstValue - i)
+          this.list.push(last + i)
         }
-        this.$refs.loadmore.onTopLoaded()
-      }, 1500)
+        // this.loading = false
+      }, 2500)
     }
   },
-  created () {
+  mounted () {
     for (let i = 1; i <= 20; i++) {
       this.list.push(i)
     }
@@ -41,4 +47,7 @@ export default {
 .wiki
   margin-bottom 55px
   width: 100%
+  .item
+    height 40px
+    background #ccc
 </style>

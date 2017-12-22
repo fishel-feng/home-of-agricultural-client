@@ -10,8 +10,9 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import { accountTestMixin } from '@/common/js/mixin'
 export default {
+  mixins: [accountTestMixin],
   data () {
     return {
       msg: 'Welcome to 农友圈页面',
@@ -25,7 +26,13 @@ export default {
   },
   watch: {
     selected (newVal, oldVal) {
-      this.$router.push(`/circles/${newVal}`)
+      if (newVal === 'attention') {
+        this.verifyLogin(() => {
+          this.$router.push(`/circles/attention`)
+        })
+      } else {
+        this.$router.push(`/circles/all`)
+      }
     },
     '$route' (to, from) {
       if (to.path === '/circles/all') {
