@@ -48,34 +48,32 @@ export default {
   },
   methods: {
     getData () {
-      if (this.verifyLogin()) {
-        axios.get('http://localhost:7001/user/getUserIndex', {
-          headers: {
-            Authorization: this.token
-          }
-        }).then(res => {
-          const user = res.data.data.user
-          console.log(res.data)
-          this.collectionCount = user.collectionCount
-          this.circleCount = user.circleCount
-          this.questionCount = user.questionCount
-          this.attentionCount = user.attentionCount
-          this.answerCount = user.answerCount
-          this.followingCount = user.followingCount
-          this.followerCount = user.followerCount
-          this.nickName = user.nickName
-          this.description = user.description
-          this.headImage = user.headImage
-          this.saveUserInfo(user)
-        })
-      }
+      axios.get('http://localhost:7001/user/getUserIndex', {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        const user = res.data.data.user
+        console.log(res.data)
+        this.collectionCount = user.collectionCount
+        this.circleCount = user.circleCount
+        this.questionCount = user.questionCount
+        this.attentionCount = user.attentionCount
+        this.answerCount = user.answerCount
+        this.followingCount = user.followingCount
+        this.followerCount = user.followerCount
+        this.nickName = user.nickName
+        this.description = user.description
+        this.headImage = user.headImage
+        this.saveUserInfo(user)
+      })
     },
     ...mapActions([
       'saveUserInfo'
     ])
   },
   mounted () {
-    this.getData()
+    this.verifyLogin(this.getData)
   }
 }
 </script>

@@ -6,16 +6,37 @@
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
-      <!--  -->
+      <div class="circle-wrapper">
+
+      </div>
     </div>
   </transition>
 </template>
 
 <script>
+import { accountTestMixin } from '@/common/js/mixin'
+import axios from 'axios'
 export default {
+  mixins: [accountTestMixin],
   data () {
     return {
       circles: []
+    }
+  },
+  mounted () {
+    this.verifyLogin(this.initData())
+  },
+  methods: {
+    initData () {
+      axios.get('http://localhost:7001/user/getCircles', {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.circles = res.data.data
+        }
+      })
     }
   }
 }

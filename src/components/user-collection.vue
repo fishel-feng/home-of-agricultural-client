@@ -24,7 +24,7 @@ export default {
     }
   },
   mounted () {
-    this.initData()
+    this.verifyLogin(this.initData)
   },
   watch: {
     '$route' (to, from) {
@@ -33,15 +33,13 @@ export default {
   },
   methods: {
     initData () {
-      if (this.verifyLogin()) {
-        axios.get('http://localhost:7001/user/getCollections', {
-          headers: {
-            Authorization: this.token
-          }
-        }).then(res => {
-          this.collections = res.data.data.collections
-        })
-      }
+      axios.get('http://localhost:7001/user/getCollections', {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        this.collections = res.data.data.collections
+      })
     },
     showArticleInfo (articleId) {
       this.$router.push(`/news/user/${articleId}`)

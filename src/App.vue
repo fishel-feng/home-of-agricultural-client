@@ -18,9 +18,10 @@
 </template>
 
 <script>
-import { MessageBox } from 'mint-ui'
+import { accountTestMixin } from '@/common/js/mixin'
 import { mapGetters } from 'vuex'
 export default {
+  mixins: [accountTestMixin],
   name: 'app',
   data () {
     return {
@@ -63,29 +64,19 @@ export default {
     ])
   },
   methods: {
+    // _selectItem () {
+
+    // },
     selectItem (item) {
-      if (this.verifyLogin()) {
-        this.selected = item.id
-        this.title = item.text
-        this.$router.push('/' + this.selected)
-      } else {
-        // todo 停止跳转逻辑
-        // this.selected = this.oldSelect
-      }
-    },
-    verifyLogin () {
-      if (!this.token) {
-        MessageBox.confirm('登录可体验更多功能', {
-          title: '未登录',
-          confirmButtonText: '现在登录',
-          cancelButtonText: '以后再说'
-        }).then(action => {
-          this.$router.push('/signIn')
-        }).catch(e => {
-        })
-        return false
-      }
-      return true
+      // this.verifyLogin(this._selectItem)
+      // if (this.verifyLogin()) {
+      //   this.selected = item.id
+      //   this.title = item.text
+      this.$router.push('/' + this.selected)
+      // } else {
+      //   // todo 停止跳转逻辑
+      //   // this.selected = this.oldSelect
+      // }
     },
     showMessageCenter () {
       this.$router.push('/message')

@@ -33,7 +33,7 @@ export const accountTestMixin = {
     ])
   },
   methods: {
-    verifyLogin () {
+    verifyLogin (callback) {
       if (!this.token) {
         MessageBox.confirm('登录可体验更多功能', {
           title: '未登录',
@@ -43,9 +43,9 @@ export const accountTestMixin = {
           this.$router.push('/signIn')
         }).catch(e => {
         })
-        return false
+      } else {
+        callback(this.token)
       }
-      return true
     }
   }
 }

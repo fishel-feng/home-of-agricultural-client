@@ -83,29 +83,30 @@ export default {
         })
       }
     },
+    _addToCollection () {
+      const articleId = this.articleId
+      const title = this.article.title
+      axios.post('http://localhost:7001/news/addToCollections', {
+        articleId,
+        title
+      }, {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.addCollection({articleId, title})
+          Toast({
+            message: '收藏成功',
+            position: 'bottom',
+            duration: 3000
+          })
+          this.isCollected = true
+        }
+      })
+    },
     addToCollection () {
-      if (this.verifyLogin()) {
-        const articleId = this.articleId
-        const title = this.article.title
-        axios.post('http://localhost:7001/news/addToCollections', {
-          articleId,
-          title
-        }, {
-          headers: {
-            Authorization: this.token
-          }
-        }).then(res => {
-          if (res.data.code === 200) {
-            this.addCollection({articleId, title})
-            Toast({
-              message: '收藏成功',
-              position: 'bottom',
-              duration: 3000
-            })
-            this.isCollected = true
-          }
-        })
-      }
+      this.verifyLogin(this._addToCollection)
     },
     deleteFromCollection () {
       const articleId = this.articleId

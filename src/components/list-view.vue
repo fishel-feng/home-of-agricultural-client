@@ -3,7 +3,8 @@
     <ul
       v-infinite-scroll="loadMore"
       :infinite-scroll-disabled="loading"
-      :infinite-scroll-distance="distance">
+      :infinite-scroll-distance="distance"
+      infinite-scroll-immediate-check="false">
       <slot name="item" v-for="item in data" :item="item"></slot>
       <div class="load-wrapper">
         <div class="load-more" v-show="!showLoading" v-text="moreText"></div>
@@ -36,6 +37,10 @@ export default {
     distance: {
       type: Number,
       default: 10
+    },
+    disableScroll: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
