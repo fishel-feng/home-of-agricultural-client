@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { Toast } from 'mint-ui'
 import axios from 'axios'
 import moment from 'moment'
 export default {
@@ -61,7 +62,7 @@ export default {
     }
   },
   mounted () {
-    this.initData()
+    this.getAllData(new Date().toISOString())
   },
   deactivated () {
     this.loading = true
@@ -70,29 +71,46 @@ export default {
     this.loading = false
   },
   methods: {
-    initData () {
-      axios.get('http://127.0.0.1:7001/circle/getCircleList/' + new Date().toISOString()).then(res => {
+    getAllData (lastTime, callback) {
+      axios.get('http://127.0.0.1:7001/circle/getCircleList/' + lastTime).then(res => {
         if (res.data.code === 200) {
-          this.circles = res.data.data.circleList
+          if (this.circles.length) {
+            if (!res.data.data.circleList.length || this.circles[0]._id === res.data.data.circleList[0]._id) {
+              Toast({
+                message: '无更多动态',
+                position: 'bottom',
+                duration: 1000
+              })
+              if (callback) {
+                callback()
+              }
+              this.showLoading = false
+              return
+            } else {
+              this.circles.push(...res.data.data.circleList)
+              this.loading = false
+            }
+          } else {
+            this.circles = res.data.data.circleList
+            this.loading = false
+            if (callback) {
+              callback()
+            }
+          }
         }
+        this.showLoading = false
       })
     },
+    getAttentionData () {
+      //
+    },
     loadTop () {
-      setTimeout(() => {
-        console.log('刷新')
-        this.$refs.loadmore.onTopLoaded()
-      }, 1000)
+      this.getAllData(new Date().toISOString(), this.$refs.loadmore.onTopLoaded)
     },
     loadMore () {
       this.loading = true
-      axios.get('http://127.0.0.1:7001/circle/getCircleList/' + this.circles[this.circles.length - 1].time).then(res => {
-        if (res.data.code === 200) {
-          if (res.data.data.circleList.length) {
-            this.circles.push(...res.data.data.circleList)
-            this.loading = false
-          }
-        }
-      })
+      this.showLoading = true
+      this.getAllData(this.circles[this.circles.length - 1].time)
     },
     getText (time) {
       return moment(time).format('YYYY-MM-DD HH:mm:ss')
