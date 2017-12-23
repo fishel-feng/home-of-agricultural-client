@@ -41,7 +41,7 @@ export default {
           image: 'wiki'
         },
         {
-          id: 'question',
+          id: 'question/all',
           text: '问专家',
           image: 'question'
         },

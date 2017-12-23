@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex'
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -28,10 +30,36 @@ export default {
       value: []
     }
   },
+  computed: {
+    ...mapGetters([
+      'tags'
+    ])
+  },
+  mounted () {
+    this.initData()
+  },
   methods: {
     submit () {
-      //
-    }
+      this.setTags(this.value)
+      // todo 登录发请求
+      this.$router.go(-1)
+    },
+    initData () {
+      axios.get('http://localhost:7001/questions/getTags').then(res => {
+        if (res.data.code === 200) {
+          res.data.data.forEach(element => {
+            this.options.push({
+              label: element.tagName,
+              value: element
+            })
+          })
+        }
+      })
+      this.value = this.tags
+    },
+    ...mapMutations({
+      setTags: 'SET_TAGS'
+    })
   }
 }
 </script>

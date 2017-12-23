@@ -1,22 +1,22 @@
 <template>
   <div class="question-type">
-    <div>ged</div>
-    <div>ged</div>
-    <div>ged</div>
-    <div>ged</div>
-    <div>ged</div>
+    <question-list :data="questions"></question-list>
   </div>
 </template>
 
 <script>
+import QuestionList from '@/components/question-list'
 import axios from 'axios'
 export default {
   data () {
     return {
       page: 0,
-      questions: [],
+      questions: [1],
       showLoading: false
     }
+  },
+  components: {
+    QuestionList
   },
   mounted () {
     this.getData(this.page)

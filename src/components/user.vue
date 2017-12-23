@@ -17,6 +17,7 @@
       <mt-cell title="关注我的人" to="/user/followers" is-link :value="followerCount"></mt-cell>
     </div>
     <div class="foot">
+      <mt-cell title="专家认证" to="/certification" is-link></mt-cell>
       <mt-cell title="关于我们" to="/about" is-link></mt-cell>
     </div>
     <div class="btn-wrapper">
