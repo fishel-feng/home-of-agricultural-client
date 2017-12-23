@@ -11,7 +11,7 @@
             <div class="circle-text">{{item.content}}</div>
             <div class="circle-image">
               <li  v-for="(image,innerIndex) in item.images" :key="innerIndex">
-                <img :src="`http://localhost:7001/public/circle/${image}`" width="80px" height="80px" alt="">
+                <img @click.stop="showBigImage(image)" :src="`http://localhost:7001/public/circle/${image}`" width="80px" height="80px" alt="">
               </li>
             </div>
             <div class="circle-tail">
@@ -45,6 +45,9 @@
       </ul>
     </mt-loadmore>
     <router-view></router-view>
+    <div @click="hideImage" v-if="showImage" class="image-wrapper">
+      <img class="big-image" :src="currentImage" alt="">
+    </div>
   </div>
 </template>
 
@@ -56,6 +59,8 @@ import moment from 'moment'
 export default {
   data () {
     return {
+      currentImage: '',
+      showImage: false,
       loading: false,
       circles: [],
       showLoading: false,
@@ -164,6 +169,13 @@ export default {
     },
     giveComment (circleId) {
       this.$router.push(`/addComment?id=${circleId}`)
+    },
+    showBigImage (image) {
+      this.currentImage = `http://localhost:7001/public/circle/${image}`
+      this.showImage = true
+    },
+    hideImage () {
+      this.showImage = false
     }
   }
 }
@@ -217,4 +229,16 @@ export default {
     height 30px
     text-align center
     font-size 14px
+  .image-wrapper
+    display flex
+    align-items center
+    position fixed
+    background rgba(0, 0, 0, 0.8)
+    z-index 200
+    top 0
+    right 0
+    left 0
+    bottom 0
+    .big-image
+      width 100%
 </style>
