@@ -54,6 +54,8 @@ export default {
   margin-bottom 55px
   width: 100%
   .btn-add
+    font-weight bold
+    font-size 20px
     text-align center
     line-height 50px
     width 50px
