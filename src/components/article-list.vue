@@ -77,16 +77,20 @@ export default {
 
 <style lang="stylus" scoped>
 .article-list
+  background #ccc
   padding-top 3px
   .list-item
+    background #fff
+    margin-bottom 3px
     display block
     padding 15px
-    color black
     .title
+      font-weight bold
       font-size 18px
     .desc
       margin 5px
-      font-size 12px
+      font-size 14px
+      color #4b4b4b
     .date
       font-size 12px
     .read

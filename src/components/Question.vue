@@ -51,7 +51,6 @@ export default {
 
 <style lang="stylus" scoped>
 .question
-  // margin-top 40px
   margin-bottom 55px
   width: 100%
   .btn-add

@@ -52,9 +52,11 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.list-view
-  padding-top 3px
+// .list-view
+  // padding-top 3px
   .load-wrapper
+    padding-top 10px
+    background #fff
     position relative
     width 100%
     height 30px

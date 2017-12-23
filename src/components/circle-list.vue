@@ -2,7 +2,7 @@
   <div class="circle-list">
     <mt-loadmore :top-method="loadTop" ref="loadmore">
       <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
-        <li v-for="item in circles" class="list-item">
+        <li v-for="(item, index) in circles" :key="index" class="list-item">
           <div class="head-image">
             <img @click="getUserCard(item.userId)" :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="50px" height="50px">
           </div>
@@ -171,8 +171,11 @@ export default {
 
 <style lang="stylus" scoped>
 .circle-list
+  background #ccc
   padding-top 3px
   .list-item
+    background #fff
+    margin-bottom 3px
     min-height 10px
     display flex
     .head-image
@@ -207,6 +210,8 @@ export default {
             position relative
             top 2px
   .load-wrapper
+    padding-top 10px
+    background #fff
     position relative
     width 100%
     height 30px

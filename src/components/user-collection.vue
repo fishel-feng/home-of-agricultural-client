@@ -6,9 +6,9 @@
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
-      <div v-for="item in collections">
-        <mt-cell :title="item.title" @click.native="showArticleInfo(item.articleId)"></mt-cell>
-      </div>
+      <ul class="wrapper">
+        <li class="titleList" v-for="(item,index) in collections" :key="index" @click="showArticleInfo(item.articleId)">{{item.title}}</li>
+      </ul>
     </div>
   </transition>
 </template>
@@ -63,5 +63,11 @@ export default {
   z-index 100
   background #fff
   padding-top 40px
+  .wrapper
+    background #ccc
+    .titleList
+      background #fff
+      margin-bottom 3px
+      padding 10px
 </style>
 

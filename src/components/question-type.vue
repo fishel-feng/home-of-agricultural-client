@@ -11,7 +11,7 @@ export default {
   data () {
     return {
       page: 0,
-      questions: [1],
+      questions: [1, 2, 3, 4, 5, 5],
       showLoading: false
     }
   },
@@ -53,6 +53,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.question-type
-  padding-top 3px
+// .question-type
+//   padding-top 3px
 </style>

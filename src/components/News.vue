@@ -85,8 +85,11 @@ export default {
   .nav
     width 100%
   .content
-    padding-top 3px
+    // background #ccc
+    margin-top 6px
     .swipe
+      background #ccc
+      padding-top 3px
       height 215px
       position relative
       .title
