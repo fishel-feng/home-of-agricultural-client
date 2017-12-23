@@ -49,3 +49,21 @@ export const accountTestMixin = {
     }
   }
 }
+
+export const showImageMixin = {
+  data () {
+    return {
+      currentImage: '',
+      showImage: false
+    }
+  },
+  methods: {
+    showBigImage (src) {
+      this.currentImage = src
+      this.showImage = true
+    },
+    hideImage () {
+      this.showImage = false
+    }
+  }
+}

@@ -53,6 +53,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-// .question-type
-//   padding-top 3px
+.question-type
+  background #ccc
+  padding-top 3px
 </style>

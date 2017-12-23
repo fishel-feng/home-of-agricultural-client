@@ -6,7 +6,7 @@
         <div class="title">问题标题问题标题问题标题问题标题问题标题问题标题</div>
         <div class="content">问题内容问题内容问题内容问题内容问题内容问题内容问题内容问题内容问题内容问题内容</div>
         <div class="image">
-          <img @click.stop="showBigImage" src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071007.png" width="100px" height="100px" alt="">
+          <img @click.stop="showBigImage('http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071007.png')" src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071007.png" width="100px" height="100px" alt="">
           <img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071007.png" width="100px" height="100px" alt="">
           <img src="../assets/svg/hot.svg" width="100px" alt="">
           <img src="../assets/svg/hot.svg" width="100px" alt="">
@@ -29,7 +29,9 @@
 </template>
 
 <script>
+import { showImageMixin } from '@/common/js/mixin'
 export default {
+  mixins: [ showImageMixin ],
   props: {
     data: {
       type: Array,
@@ -40,22 +42,9 @@ export default {
       default: false
     }
   },
-  data () {
-    return {
-      currentImage: '',
-      showImage: false
-    }
-  },
   methods: {
     showQuestionInfo (id) {
       // console.log(0)
-    },
-    showBigImage () {
-      this.currentImage = 'http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071007.png'
-      this.showImage = true
-    },
-    hideImage () {
-      this.showImage = false
     }
   }
 }
@@ -63,7 +52,6 @@ export default {
 
 <style lang="stylus" scoped>
 .question-list
-  padding-top 3px
   background #ccc
   .item
     position relative

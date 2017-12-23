@@ -31,7 +31,6 @@ export default {
 .slide-enter, .slide-leave-to
   transform: translate3d(100%, 0, 0)
 .user-question
-  margin-top -3px
   position fixed
   overflow-y auto
   top 0

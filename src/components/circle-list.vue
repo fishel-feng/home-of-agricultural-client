@@ -11,7 +11,7 @@
             <div class="circle-text">{{item.content}}</div>
             <div class="circle-image">
               <li  v-for="(image,innerIndex) in item.images" :key="innerIndex">
-                <img @click.stop="showBigImage(image)" :src="`http://localhost:7001/public/circle/${image}`" width="80px" height="80px" alt="">
+                <img @click.stop="showBigImage(`http://localhost:7001/public/circle/${image}`)" :src="`http://localhost:7001/public/circle/${image}`" width="80px" height="80px" alt="">
               </li>
             </div>
             <div class="circle-tail">
@@ -52,15 +52,15 @@
 </template>
 
 <script>
+import { showImageMixin } from '@/common/js/mixin'
 import { mapGetters } from 'vuex'
 import { Toast } from 'mint-ui'
 import axios from 'axios'
 import moment from 'moment'
 export default {
+  mixins: [ showImageMixin ],
   data () {
     return {
-      currentImage: '',
-      showImage: false,
       loading: false,
       circles: [],
       showLoading: false,
@@ -169,13 +169,6 @@ export default {
     },
     giveComment (circleId) {
       this.$router.push(`/addComment?id=${circleId}`)
-    },
-    showBigImage (image) {
-      this.currentImage = `http://localhost:7001/public/circle/${image}`
-      this.showImage = true
-    },
-    hideImage () {
-      this.showImage = false
     }
   }
 }

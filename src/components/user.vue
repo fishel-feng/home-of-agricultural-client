@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="head">
-      <img :src="`http://localhost:7001/public/headImage/${headImage}`" height="80px" width="80px" alt="">
+      <img @click="showBigImage(`http://localhost:7001/public/headImage/${headImage}`)" :src="`http://localhost:7001/public/headImage/${headImage}`" height="80px" width="80px" alt="">
       <div class="desc">
         <div>{{nickName}}</div>
         <div>{{description}}</div>
@@ -24,15 +24,18 @@
       <mt-button class="btn-logout" type="danger">退出登录</mt-button>
     </div>
     <router-view></router-view>
+    <div @click="hideImage" v-if="showImage" class="image-wrapper">
+      <img class="big-image" :src="currentImage" alt="">
+    </div>
   </div>
 </template>
 
 <script>
-import { accountTestMixin } from '@/common/js/mixin'
+import { accountTestMixin, showImageMixin } from '@/common/js/mixin'
 import { mapActions } from 'vuex'
 import axios from 'axios'
 export default {
-  mixins: [accountTestMixin],
+  mixins: [accountTestMixin, showImageMixin],
   data () {
     return {
       nickName: '',
@@ -99,5 +102,17 @@ export default {
   .btn-wrapper
     padding 15px
     .btn-logout
+      width 100%
+  .image-wrapper
+    display flex
+    align-items center
+    position fixed
+    background rgba(0, 0, 0, 0.8)
+    z-index 200
+    top 0
+    right 0
+    left 0
+    bottom 0
+    .big-image
       width 100%
 </style>
