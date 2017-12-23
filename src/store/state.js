@@ -8,7 +8,8 @@ const state = {
   attentions: [],
   answers: [],
   followings: [],
-  followers: []
+  followers: [],
+  tags: []
 }
 
 export default state

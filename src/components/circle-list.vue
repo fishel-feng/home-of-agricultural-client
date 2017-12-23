@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { Toast } from 'mint-ui'
 import axios from 'axios'
 import moment from 'moment'
@@ -58,11 +59,15 @@ export default {
       loading: false,
       circles: [],
       showLoading: false,
-      isLiked: false
+      isLiked: false,
+      baseUrl: 'http://127.0.0.1:7001/circle/getCircleList/'
     }
   },
   mounted () {
-    this.getAllData(new Date().toISOString())
+    if (this.$route.path !== '/circles/all') {
+      this.baseUrl = 'http://127.0.0.1:7001/circle/getAttentionList/'
+    }
+    this.getData()
   },
   deactivated () {
     this.loading = true
@@ -70,47 +75,72 @@ export default {
   activated () {
     this.loading = false
   },
+  watch: {
+    '$route' (to, from) {
+      if (to.path === '/circles/all') {
+        this.baseUrl = 'http://127.0.0.1:7001/circle/getCircleList/'
+      } else {
+        this.baseUrl = 'http://127.0.0.1:7001/circle/getAttentionList/'
+      }
+      this.getData()
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
+  },
   methods: {
-    getAllData (lastTime, callback) {
-      axios.get('http://127.0.0.1:7001/circle/getCircleList/' + lastTime).then(res => {
+    getData (callback) {
+      axios.get(this.baseUrl + new Date().toISOString(), {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
         if (res.data.code === 200) {
-          if (this.circles.length) {
-            if (!res.data.data.circleList.length || this.circles[0]._id === res.data.data.circleList[0]._id) {
+          if (this.circles.length && res.data.data.circleList.length && this.circles[0]._id === res.data.data.circleList[0]._id) {
+            if (callback) {
               Toast({
                 message: '无更多动态',
                 position: 'bottom',
                 duration: 1000
               })
-              if (callback) {
-                callback()
-              }
-              this.showLoading = false
-              return
-            } else {
-              this.circles.push(...res.data.data.circleList)
-              this.loading = false
+              callback()
             }
           } else {
             this.circles = res.data.data.circleList
             this.loading = false
-            if (callback) {
-              callback()
-            }
           }
         }
-        this.showLoading = false
       })
     },
-    getAttentionData () {
-      //
-    },
     loadTop () {
-      this.getAllData(new Date().toISOString(), this.$refs.loadmore.onTopLoaded)
+      this.getData(this.$refs.loadmore.onTopLoaded)
     },
     loadMore () {
       this.loading = true
       this.showLoading = true
-      this.getAllData(this.circles[this.circles.length - 1].time)
+      axios.get(this.baseUrl + this.circles[this.circles.length - 1].time, {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          if (!res.data.data.circleList.length) {
+            Toast({
+              message: '无更多动态',
+              position: 'bottom',
+              duration: 1000
+            })
+            this.showLoading = false
+            return
+          } else {
+            this.circles.push(...res.data.data.circleList)
+            this.loading = false
+          }
+        }
+        this.showLoading = false
+      })
     },
     getText (time) {
       return moment(time).format('YYYY-MM-DD HH:mm:ss')

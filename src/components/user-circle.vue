@@ -24,7 +24,7 @@ export default {
     }
   },
   mounted () {
-    this.verifyLogin(this.initData())
+    this.verifyLogin(this.initData)
   },
   methods: {
     initData () {

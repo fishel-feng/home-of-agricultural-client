@@ -1,7 +1,7 @@
 <template>
   <div class="question-list">
     <ul>
-      <li class="item" v-for="item in data" @click="showUserCard(item.userId)">
+      <li class="item" v-for="(item,index) in data" :key="index" @click="showUserCard(item.userId)">
         <div>问题标题</div>
         <div>问题内容</div>
         <div>标签</div>

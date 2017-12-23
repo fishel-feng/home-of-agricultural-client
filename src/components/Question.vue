@@ -1,14 +1,8 @@
 <template>
   <div class="question">
-    <mt-navbar v-model="selected">
-      <mt-tab-item id="1">选项</mt-tab-item>
-      <mt-tab-item id="2">选项</mt-tab-item>
-      <mt-tab-item id="3">选项</mt-tab-item>
-      <mt-tab-item id="3">选项</mt-tab-item>
-      <mt-tab-item id="3">选项</mt-tab-item>
-      <mt-tab-item id="3">选项</mt-tab-item>
-      <mt-tab-item id="3">选项</mt-tab-item>
-      <mt-tab-item id="3">选项</mt-tab-item>
+    <mt-navbar v-for="(item,index) in items" :key="index" v-model="selected">
+      <mt-tab-item id="all">全部</mt-tab-item>
+      <mt-tab-item :id="item.id">{{item.name}}</mt-tab-item>
       <mt-tab-item @click.native="selectItem">+</mt-tab-item>
     </mt-navbar>
     <router-view></router-view>
@@ -20,7 +14,7 @@
 export default {
   data () {
     return {
-      msg: 'Welcome to 问专家页面',
+      items: [{id: 2, name: 'xx'}],
       selected: 1
     }
   },

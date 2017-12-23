@@ -1,16 +1,14 @@
 <template>
-  <list-view class="question-type" :data="questions" :showLoading="showLoading" :loading="true" @load="loadMore">
-    <li slot="item" slot-scope="props" @click="getInfo(props.item)" class="list-item">
-      <div>{{props.item.title}}</div>
-      <div>{{props.item.desc}}</div>
-      <div>{{props.item.finishState?'已解决':'未解决'}}</div>
-      <div>{{props.item.answerCount}}</div>
-    </li>
-  </list-view>
+  <div class="question-type">
+    <div>ged</div>
+    <div>ged</div>
+    <div>ged</div>
+    <div>ged</div>
+    <div>ged</div>
+  </div>
 </template>
 
 <script>
-import ListView from '@/components/list-view'
 import axios from 'axios'
 export default {
   data () {
@@ -19,9 +17,6 @@ export default {
       questions: [],
       showLoading: false
     }
-  },
-  components: {
-    ListView
   },
   mounted () {
     this.getData(this.page)

@@ -24,6 +24,9 @@ const mutations = {
   },
   [types.SET_FOLLOWERS] (state, followers) {
     state.followers = followers
+  },
+  [types.SET_TAGS] (state, tags) {
+    state.tags = tags
   }
 }
 
