@@ -46,8 +46,27 @@ export default {
       loading: false
     }
   },
+  deactivated () {
+    this.loading = true
+  },
+  activated () {
+    this.loading = false
+  },
   mounted () {
-    this.verifyLogin(this.getData)
+    if (this.$route.path.startsWith('/user')) {
+      this.verifyLogin(this.getData)
+    } else {
+      this.getData()
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      if (this.$route.path.startsWith('/user')) {
+        this.verifyLogin(this.getData)
+      } else {
+        this.getData()
+      }
+    }
   },
   methods: {
     showQuestionInfo (id) {
