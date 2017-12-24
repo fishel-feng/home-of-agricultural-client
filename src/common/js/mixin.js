@@ -44,7 +44,7 @@ export const accountTestMixin = {
         }).catch(e => {
         })
       } else {
-        callback(this.token)
+        callback()
       }
     }
   }

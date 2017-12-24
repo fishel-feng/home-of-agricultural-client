@@ -53,24 +53,24 @@ export default {
     this.loading = false
   },
   mounted () {
-    if (this.$route.path.startsWith('/user')) {
+    if (this.$route.path === '/user/attentions' || this.$route.path === '/user/questions' || this.$route.path === '/user/answers') {
       this.verifyLogin(this.getData)
-    } else {
+    } else if (this.$route.path.startsWith('/question')) {
       this.getData()
     }
   },
   watch: {
     '$route' (to, from) {
-      if (this.$route.path.startsWith('/user')) {
+      if (this.$route.path === '/user/attentions' || this.$route.path === '/user/questions' || this.$route.path === '/user/answers') {
         this.verifyLogin(this.getData)
-      } else {
+      } else if (this.$route.path.startsWith('/question')) {
         this.getData()
       }
     }
   },
   methods: {
     showQuestionInfo (id) {
-      this.$router.push(this.$route.path + '/' + id)
+      this.$router.push('/question/all/' + id)
     },
     loadTop () {
       this.getData(this.$refs.loadmore.onTopLoaded)
@@ -87,7 +87,7 @@ export default {
           if (res.data.code === 200) {
             if (!res.data.data.questions.length) {
               Toast({
-                message: '无更多动态',
+                message: '无更多问题',
                 position: 'bottom',
                 duration: 1000
               })

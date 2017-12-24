@@ -52,29 +52,29 @@
 </template>
 
 <script>
-import { showImageMixin } from '@/common/js/mixin'
-import { mapGetters } from 'vuex'
+import { showImageMixin, accountTestMixin } from '@/common/js/mixin'
 import { Toast } from 'mint-ui'
 import axios from 'axios'
 import moment from 'moment'
 export default {
-  mixins: [ showImageMixin ],
+  mixins: [ showImageMixin, accountTestMixin ],
+  props: {
+    baseUrl: String
+  },
   data () {
     return {
       loading: false,
       circles: [],
       showLoading: false,
-      isLiked: false,
-      baseUrl: 'http://127.0.0.1:7001/circle/getCircleList/'
+      isLiked: false
     }
   },
   mounted () {
-    if (this.$route.path !== '/circles/all') {
-      this.baseUrl = 'http://127.0.0.1:7001/circle/getAttentionList/'
-    } else {
-      this.baseUrl = 'http://127.0.0.1:7001/circle/getCircleList/'
+    if (this.$route.path === '/circles/all') {
+      this.getData()
+    } else if (this.$route.path === '/circles/attention' || this.$route.path === '/user/circles') {
+      this.verifyLogin(this.getData)
     }
-    this.getData()
   },
   deactivated () {
     this.loading = true
@@ -84,19 +84,12 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      if (to.path === '/circles/all') {
-        this.baseUrl = 'http://127.0.0.1:7001/circle/getCircleList/'
+      if (this.$route.path === '/circles/all') {
         this.getData()
-      } else if (to.path === '/circles/attention') {
-        this.baseUrl = 'http://127.0.0.1:7001/circle/getAttentionList/'
-        this.getData()
+      } else if (this.$route.path === '/circles/attention' || this.$route.path === '/user/circles') {
+        this.verifyLogin(this.getData)
       }
     }
-  },
-  computed: {
-    ...mapGetters([
-      'token'
-    ])
   },
   methods: {
     getData (callback) {
@@ -182,7 +175,6 @@ export default {
 <style lang="stylus" scoped>
 .circle-list
   background #ccc
-  padding-top 3px
   .list-item
     background #fff
     margin-bottom 3px

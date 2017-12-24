@@ -123,6 +123,12 @@ const CircleList = (resolve) => {
   })
 }
 
+const CircleType = (resolve) => {
+  import('@/components/circle-type').then((module) => {
+    resolve(module)
+  })
+}
+
 const CircleAdd = (resolve) => {
   import('@/components/circle-add').then((module) => {
     resolve(module)
@@ -243,7 +249,7 @@ export default new Router({
         },
         {
           path: ':type',
-          component: CircleList
+          component: CircleType
         }
       ]
     },

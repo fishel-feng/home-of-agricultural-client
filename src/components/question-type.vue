@@ -17,10 +17,10 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      if (to.path !== '/question/all') {
-        this.baseUrl = 'http://localhost:7001/question/getQuestionList/' + to.path.slice(10) + '/'
-      } else {
+      if (to.path === '/question/all') {
         this.baseUrl = 'http://localhost:7001/question/getAllQuestionList/'
+      } else if (to.path.startsWith('/question')) {
+        this.baseUrl = 'http://localhost:7001/question/getQuestionList/' + to.path.slice(10) + '/'
       }
     }
   }
