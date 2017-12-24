@@ -5,38 +5,55 @@
         <router-link to="/" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
+        <div slot="right" @click="submit">
+          提问
+        </div>
       </mt-header>
       <mt-field placeholder="在此输入问题标题" v-model="title"></mt-field>
       <mt-field placeholder="在此输入问题详细描述" type="textarea" rows="6" v-model="content"></mt-field>
       <div class="tag-wrapper">
-        <div>问题标签：{{tag}}</div>
-        <mt-button @click.native="addItem" type="primary" size="small">选择问题标签</mt-button>
+        <div>问题标签：{{value}}</div>
+        <mt-button @click.native="tagRadio = true" type="primary" size="small">选择问题标签</mt-button>
       </div>
-      <div class="image-wrapper">
-        <div class="image-button">
-          <a href="javascript:;" class="file">
-            <img src="../assets/svg/add.svg" width="90px" height="90px" alt="">
-            <input type="file" name="" id="">
-          </a>
-        </div>
-      </div>
-      <!-- TODO 标签 -->
+      <uploader :src="'/api/imgs'"></uploader>
+      <mt-popup @click.native="tagRadio = false" v-model="tagRadio" class="tag-radio">
+        <mt-radio align="right" v-model="value" :options="options"></mt-radio>
+      </mt-popup>
     </div>
   <!-- </transition> -->
 </template>
 
 <script>
+import Uploader from '@/components/uploader'
+import axios from 'axios'
 export default {
   data () {
     return {
+      options: [],
+      value: '',
+      tagRadio: false,
       content: '',
-      title: '',
-      tag: ''
+      title: ''
     }
   },
+  components: {
+    Uploader
+  },
+  mounted () {
+    this.getTag()
+  },
   methods: {
-    addItem () {
+    submit () {
       //
+    },
+    getTag () {
+      axios.get('http://localhost:7001/questions/getTags').then(res => {
+        if (res.data.code === 200) {
+          res.data.data.forEach(element => {
+            this.options.push(element.tagName)
+          })
+        }
+      })
     }
   },
   computed: {
@@ -67,22 +84,9 @@ export default {
     justify-content space-between
     padding 5px 20px
     align-items: center
-  .image-wrapper
-    display flex
-    flex-wrap wrap
-    justify-content space-between
-    padding 20px
-    .file
-      position relative
-      display inline-block
-      background #ddd
-      overflow hidden
-      input
-        display block
-        width 90px
-        height 90px
-        position absolute
-        right 0
-        top 0
-        opacity: 0
+  .tag-radio
+    width 90%
+    overflow-y auto
+    height 80%
+    background-color #fff
 </style>

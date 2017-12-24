@@ -193,11 +193,10 @@ export default {
       .nick-name
         color #f63
       .circle-image
-        display flex
-        flex-wrap wrap
-        justify-content space-between
+        overflow hidden
         img
-          padding 2px
+          margin 5px
+          float left
       .circle-tail
         font-size 10px
         display flex

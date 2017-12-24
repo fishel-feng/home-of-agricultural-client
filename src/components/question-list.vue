@@ -151,12 +151,10 @@ export default {
       color #4b4b4b
     .image
       padding 10px
-      display flex
-      flex-wrap wrap
-      justify-content space-between
-      align-items flex-start
+      overflow hidden
       img
-        margin 3px
+        float left
+        margin 5px
     .tail
       min-height 14px
       display flex

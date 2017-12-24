@@ -5,6 +5,9 @@
         <router-link to="/" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
+        <div slot="right" @click="submit">
+          发表
+        </div>
       </mt-header>
       <mt-field placeholder="输入此刻想法" :attr="{ maxlength: 300 }" type="textarea" rows="6" v-model="content"></mt-field>
       <div class="hint">
@@ -37,6 +40,11 @@ export default {
   computed: {
     rest () {
       return 300 - this.content.length
+    }
+  },
+  methods: {
+    submit () {
+      //
     }
   }
 }
