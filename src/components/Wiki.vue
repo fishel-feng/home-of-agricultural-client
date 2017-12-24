@@ -25,7 +25,7 @@ export default {
   methods: {
     loadMore () {
       // this.loading = true
-      console.log(0)
+      // console.log(0)
       setTimeout(() => {
         let last = this.list[this.list.length - 1]
         for (let i = 1; i <= 10; i++) {

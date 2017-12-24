@@ -71,6 +71,8 @@ export default {
   mounted () {
     if (this.$route.path !== '/circles/all') {
       this.baseUrl = 'http://127.0.0.1:7001/circle/getAttentionList/'
+    } else {
+      this.baseUrl = 'http://127.0.0.1:7001/circle/getCircleList/'
     }
     this.getData()
   },
@@ -84,10 +86,11 @@ export default {
     '$route' (to, from) {
       if (to.path === '/circles/all') {
         this.baseUrl = 'http://127.0.0.1:7001/circle/getCircleList/'
-      } else {
+        this.getData()
+      } else if (to.path === '/circles/attention') {
         this.baseUrl = 'http://127.0.0.1:7001/circle/getAttentionList/'
+        this.getData()
       }
-      this.getData()
     }
   },
   computed: {
@@ -125,27 +128,29 @@ export default {
     loadMore () {
       this.loading = true
       this.showLoading = true
-      axios.get(this.baseUrl + this.circles[this.circles.length - 1].time, {
-        headers: {
-          Authorization: this.token
-        }
-      }).then(res => {
-        if (res.data.code === 200) {
-          if (!res.data.data.circleList.length) {
-            Toast({
-              message: '无更多动态',
-              position: 'bottom',
-              duration: 1000
-            })
-            this.showLoading = false
-            return
-          } else {
-            this.circles.push(...res.data.data.circleList)
-            this.loading = false
+      if (this.circles.length) {
+        axios.get(this.baseUrl + this.circles[this.circles.length - 1].time, {
+          headers: {
+            Authorization: this.token
           }
-        }
-        this.showLoading = false
-      })
+        }).then(res => {
+          if (res.data.code === 200) {
+            if (!res.data.data.circleList.length) {
+              Toast({
+                message: '无更多动态',
+                position: 'bottom',
+                duration: 1000
+              })
+              this.showLoading = false
+              return
+            } else {
+              this.circles.push(...res.data.data.circleList)
+              this.loading = false
+            }
+          }
+          this.showLoading = false
+        })
+      }
     },
     getText (time) {
       return moment(time).format('YYYY-MM-DD HH:mm:ss')

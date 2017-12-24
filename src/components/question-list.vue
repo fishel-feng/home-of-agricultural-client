@@ -1,8 +1,8 @@
 <template>
   <div class="question-list">
     <mt-loadmore :top-method="loadTop" ref="loadmore">
-      <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
-        <li class="item" v-for="(item,index) in data" :key="index" @click="showQuestionInfo(item._id)">
+      <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
+        <li class="item" v-for="(item,index) in questions" :key="index" @click="showQuestionInfo(item._id)">
           <img v-if="item.finishState" class="solve" src="../assets/svg/solve.svg" width="40px" alt="">
           <div class="title">{{item.title}}</div>
           <div class="desc">{{item.desc}}</div>
@@ -31,32 +31,79 @@
 </template>
 
 <script>
-import { showImageMixin } from '@/common/js/mixin'
+import axios from 'axios'
+import { Toast } from 'mint-ui'
+import { showImageMixin, accountTestMixin } from '@/common/js/mixin'
 export default {
-  mixins: [ showImageMixin ],
+  mixins: [ showImageMixin, accountTestMixin ],
   props: {
-    data: {
-      type: Array,
-      default: []
-    },
-    showLoading: {
-      type: Boolean,
-      default: false
-    },
-    loading: {
-      type: Boolean,
-      default: false
+    baseUrl: String
+  },
+  data () {
+    return {
+      questions: [],
+      showLoading: false,
+      loading: false
     }
+  },
+  mounted () {
+    this.verifyLogin(this.getData)
   },
   methods: {
     showQuestionInfo (id) {
       this.$router.push(this.$route.path + '/' + id)
     },
     loadTop () {
-      this.$emit('refresh', this.$refs.loadmore.onTopLoaded)
+      this.getData(this.$refs.loadmore.onTopLoaded)
     },
     loadMore () {
-      this.$emit('load')
+      this.loading = true
+      this.showLoading = true
+      if (this.questions.length) {
+        axios.get(this.baseUrl + this.questions[this.questions.length - 1].time, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            if (!res.data.data.questions.length) {
+              Toast({
+                message: '无更多动态',
+                position: 'bottom',
+                duration: 1000
+              })
+              this.showLoading = false
+            } else {
+              this.circles.push(...res.data.data.circleList)
+              this.loading = false
+            }
+          }
+        })
+      }
+      this.showLoading = false
+    },
+    getData (callback) {
+      axios.get(this.baseUrl + new Date().toISOString(), {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        if (res && res.data.code === 200) {
+          if (this.questions.length && res.data.data.questions.length && this.questions[0]._id === res.data.data.questions[0]._id) {
+            if (callback) {
+              Toast({
+                message: '无更多问题',
+                position: 'bottom',
+                duration: 1000
+              })
+              callback()
+            }
+          } else {
+            this.questions = res.data.data.questions
+            this.loading = false
+          }
+        }
+      })
     }
   }
 }

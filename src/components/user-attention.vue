@@ -6,7 +6,7 @@
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
-      <question-list :data="questions"></question-list>
+      <question-list baseUrl="http://localhost:7001/user/getAttentions/"></question-list>
     </div>
   </transition>
 </template>
@@ -14,11 +14,6 @@
 <script>
 import QuestionList from '@/components/question-list'
 export default {
-  data () {
-    return {
-      questions: []
-    }
-  },
   components: {
     QuestionList
   }
@@ -39,6 +34,6 @@ export default {
   right 0
   z-index 100
   background #fff
-  padding 20px
+  padding-top 40px
 </style>
 

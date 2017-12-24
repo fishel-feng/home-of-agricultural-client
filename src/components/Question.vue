@@ -30,6 +30,7 @@ export default {
   watch: {
     '$route' (to, from) {
       this.items = this.tags
+      this.selected = to.path.slice(10)
     }
   },
   methods: {

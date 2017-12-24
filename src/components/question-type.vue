@@ -34,6 +34,16 @@ export default {
     }
     this.getData()
   },
+  watch: {
+    '$route' (to, from) {
+      if (this.$route.path === '/question/all') {
+        this.baseUrl = 'http://localhost:7001/question/getAllQuestionList/'
+      } else {
+        this.baseUrl = `http://localhost:7001/question/getQuestionList/${this.$route.path.slice(10)}/`
+      }
+      this.getData()
+    }
+  },
   methods: {
     loadTop (callback) {
       this.getData(callback)
@@ -41,11 +51,24 @@ export default {
     loadMore () {
       this.loading = true
       this.showLoading = true
-      this.getData(this.page)
-      setTimeout(() => {
-        this.loading = false
-        this.showLoading = false
-      }, 6500)
+      if (this.questions.length) {
+        axios.get(this.baseUrl + this.questions[this.questions.length - 1].time).then(res => {
+          if (res.data.code === 200) {
+            if (!res.data.data.questions.length) {
+              Toast({
+                message: '无更多动态',
+                position: 'bottom',
+                duration: 1000
+              })
+              this.showLoading = false
+            } else {
+              this.circles.push(...res.data.data.circleList)
+              this.loading = false
+            }
+          }
+        })
+      }
+      this.showLoading = false
     },
     getData (callback) {
       axios.get(this.baseUrl + new Date().toISOString()).then(res => {
