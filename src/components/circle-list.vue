@@ -199,6 +199,8 @@ export default {
         display flex
         flex-wrap wrap
         justify-content space-between
+        img
+          padding 2px
       .circle-tail
         font-size 10px
         display flex

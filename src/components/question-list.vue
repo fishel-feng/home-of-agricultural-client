@@ -1,30 +1,32 @@
 <template>
   <div class="question-list">
-    <ul>
-      <li class="item" v-for="(item,index) in data" :key="index" @click="showQuestionInfo(item._id)">
-        <img v-if="isSolved" class="solve" src="../assets/svg/solve.svg" width="40px" alt="">
-        <div class="title">问题标题问题标题问题标题问题标题问题标题问题标题</div>
-        <div class="content">问题内容问题内容问题内容问题内容问题内容问题内容问题内容问题内容问题内容问题内容</div>
-        <div class="image">
-          <img @click.stop="showBigImage('http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071007.png')" src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071007.png" width="100px" height="100px" alt="">
-          <img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071007.png" width="100px" height="100px" alt="">
-          <img src="../assets/svg/hot.svg" width="100px" alt="">
-          <img src="../assets/svg/hot.svg" width="100px" alt="">
-          <img src="../assets/svg/hot.svg" width="100px" alt="">
-          <img src="../assets/svg/hot.svg" width="100px" alt="">
-        </div>
-        <div class="tail">
-          <div class="tag">
-            <img src="../assets/svg/tag.svg" width="12px" alt="">
-            标签
+    <mt-loadmore :top-method="loadTop" ref="loadmore">
+      <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
+        <li class="item" v-for="(item,index) in data" :key="index" @click="showQuestionInfo(item._id)">
+          <img v-if="item.finishState" class="solve" src="../assets/svg/solve.svg" width="40px" alt="">
+          <div class="title">{{item.title}}</div>
+          <div class="desc">{{item.desc}}</div>
+          <div class="image" v-for="(image,index) in item.images" :key="index">
+            <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/question/${image}`)" :src="`http://127.0.0.1:7001/public/question/${image}`" width="100px" height="100px" alt="">
           </div>
-          <div class="answerCount">回答数量</div>
+          <div class="tail">
+            <div class="tag">
+              <img src="../assets/svg/tag.svg" width="12px" alt="">
+              {{item.tag.tagName}}
+            </div>
+            <div class="answerCount">回答 {{item.answerCount}}</div>
+          </div>
+        </li>
+        <div class="load-wrapper">
+          <div class="load-more" v-show="!showLoading">无更多内容</div>
+          <mt-spinner class="loading" type="triple-bounce" v-show="showLoading"></mt-spinner>
         </div>
-      </li>
-    </ul>
+      </ul>
+    </mt-loadmore>
     <div @click="hideImage" v-if="showImage" class="image-wrapper">
       <img class="big-image" :src="currentImage" alt="">
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -37,14 +39,24 @@ export default {
       type: Array,
       default: []
     },
-    isSolved: {
+    showLoading: {
+      type: Boolean,
+      default: false
+    },
+    loading: {
       type: Boolean,
       default: false
     }
   },
   methods: {
     showQuestionInfo (id) {
-      // console.log(0)
+      this.$router.push(this.$route.path + '/' + id)
+    },
+    loadTop () {
+      this.$emit('refresh', this.$refs.loadmore.onTopLoaded)
+    },
+    loadMore () {
+      this.$emit('load')
     }
   }
 }
@@ -66,7 +78,7 @@ export default {
     .title
       font-size 18px
       font-weight bold
-    .content
+    .desc
       margin  5px
       margin-top 5px
       font-size 14px
@@ -75,13 +87,23 @@ export default {
       padding 10px
       display flex
       flex-wrap wrap
-      justify-content space-around
+      justify-content space-between
       align-items flex-start
+      img
+        margin 3px
     .tail
       min-height 14px
       display flex
       justify-content space-between
       font-size 12px
+  .load-wrapper
+    padding-top 10px
+    background #fff
+    position relative
+    width 100%
+    height 30px
+    text-align center
+    font-size 14px
   .image-wrapper
     display flex
     align-items center

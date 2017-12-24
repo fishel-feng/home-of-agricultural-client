@@ -1,27 +1,43 @@
 <template>
   <div class="question-type">
-    <question-list :data="questions"></question-list>
+    <question-list @refresh="loadTop" @load="loadMore" :data="questions" :showLoading="showLoading" :loading="loading"></question-list>
   </div>
 </template>
 
 <script>
 import QuestionList from '@/components/question-list'
 import axios from 'axios'
+import { Toast } from 'mint-ui'
 export default {
   data () {
     return {
-      page: 0,
-      questions: [1, 2, 3, 4, 5, 5],
+      baseUrl: 'http://localhost:7001/question/getAllQuestionList/',
+      loading: false,
+      questions: [],
       showLoading: false
     }
   },
   components: {
     QuestionList
   },
+  deactivated () {
+    this.loading = true
+  },
+  activated () {
+    this.loading = false
+  },
   mounted () {
-    this.getData(this.page)
+    if (this.$route.path === '/question/all') {
+      this.baseUrl = 'http://localhost:7001/question/getAllQuestionList/'
+    } else {
+      this.baseUrl = `http://localhost:7001/question/getQuestionList/${this.$route.path.slice(10)}/`
+    }
+    this.getData()
   },
   methods: {
+    loadTop (callback) {
+      this.getData(callback)
+    },
     loadMore () {
       this.loading = true
       this.showLoading = true
@@ -31,19 +47,21 @@ export default {
         this.showLoading = false
       }, 6500)
     },
-    getData (page) {
-      axios.get(`http://localhost:7001/question/getQuestionList/${page}`).then(res => {
+    getData (callback) {
+      axios.get(this.baseUrl + new Date().toISOString()).then(res => {
         if (res && res.data.code === 200) {
-          if (page === 0) {
-            this.questions = res.data.data
-            this.page++
-          } else {
-            if (res.data.data.length) {
-              this.questions.push(...res.data.data)
-              this.page++
-            } else {
-              this.hasMore = '已无更多问题'
+          if (this.questions.length && res.data.data.questions.length && this.questions[0]._id === res.data.data.questions[0]._id) {
+            if (callback) {
+              Toast({
+                message: '无更多问题',
+                position: 'bottom',
+                duration: 1000
+              })
+              callback()
             }
+          } else {
+            this.questions = res.data.data.questions
+            this.loading = false
           }
         }
       })
