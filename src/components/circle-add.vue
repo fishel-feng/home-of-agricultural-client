@@ -18,24 +18,21 @@
           剩余{{rest}}字
         </div>
       </div>
-      <div class="image-wrapper">
-        <div class="image-button">
-          <a href="javascript:;" class="file">
-            <img src="../assets/svg/add.svg" width="90px" height="90px" alt="">
-            <input type="file" name="" id="">
-          </a>
-        </div>
-      </div>
+      <uploader :src="'/api/imgs'"></uploader>
     </div>
   <!-- </transition> -->
 </template>
 
 <script>
+import Uploader from '@/components/uploader'
 export default {
   data () {
     return {
       content: ''
     }
+  },
+  components: {
+    Uploader
   },
   computed: {
     rest () {
@@ -71,22 +68,4 @@ export default {
     display flex
     justify-content space-between
     margin-top 20px
-  .image-wrapper
-    display flex
-    flex-wrap wrap
-    justify-content space-between
-    padding 20px
-    .file
-      position relative
-      display inline-block
-      background #ddd
-      overflow hidden
-      input
-        display block
-        width 90px
-        height 90px
-        position absolute
-        right 0
-        top 0
-        opacity: 0
 </style>
