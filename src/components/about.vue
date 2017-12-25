@@ -7,6 +7,10 @@
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
+      <!-- todo -->
+      <img src="../assets/svg/hot.svg" alt="">
+      <div>联系方式</div>
+      <div>&copy;</div>
     </div>
   <!-- </transition> -->
 </template>
@@ -30,7 +34,7 @@ export default {
   left 0
   right 0
   z-index 100
-  margin-top 50px
+  margin-top 40px
   background #fff
 </style>
 

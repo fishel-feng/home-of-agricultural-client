@@ -171,6 +171,12 @@ const About = (resolve) => {
   })
 }
 
+const Certification = (resolve) => {
+  import('@/components/certification').then((module) => {
+    resolve(module)
+  })
+}
+
 const MessageCenter = (resolve) => {
   import('@/components/message-center').then((module) => {
     resolve(module)
@@ -318,6 +324,10 @@ export default new Router({
     {
       path: '/about',
       component: About
+    },
+    {
+      path: '/certification',
+      component: Certification
     },
     {
       path: '/message',
