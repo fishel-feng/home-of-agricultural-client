@@ -85,7 +85,6 @@ export default {
   .nav
     width 100%
   .content
-    // background #ccc
     margin-top 6px
     .swipe
       background #ccc
