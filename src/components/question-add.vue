@@ -12,12 +12,12 @@
       <mt-field placeholder="在此输入问题标题" v-model="title"/>
       <mt-field placeholder="在此输入问题详细描述" type="textarea" rows="6" v-model="content"/>
       <div class="tag-wrapper">
-        <div>问题标签：{{value}}</div>
+        <div>问题标签：{{tag}}</div>
         <mt-button @click.native="tagRadio = true" type="primary" size="small">选择问题标签</mt-button>
       </div>
-      <uploader :src="'http://localhost:7001/test/upload'"></uploader>
+      <uploader @addImage="addImage" @success="uploadSuccess" :src="'http://localhost:7001/question/upload'"/>
       <mt-popup @click.native="tagRadio = false" v-model="tagRadio" class="tag-radio">
-        <mt-radio align="right" v-model="value" :options="options"/>
+        <mt-radio align="right" v-model="tag" :options="tags"/>
       </mt-popup>
     </div>
   <!-- </transition> -->
@@ -26,14 +26,19 @@
 <script>
 import Uploader from '@/components/uploader'
 import axios from 'axios'
+import { accountTestMixin } from '@/common/js/mixin'
 export default {
+  mixins: [ accountTestMixin ],
   data () {
     return {
-      options: [],
+      tag: '',
+      tags: [],
       value: '',
       tagRadio: false,
       content: '',
-      title: ''
+      title: '',
+      hasImage: false,
+      images: []
     }
   },
   components: {
@@ -44,13 +49,33 @@ export default {
   },
   methods: {
     submit () {
-      //
+      axios.post('http://localhost:7001/question/addQuestion', {
+        title: this.title,
+        content: this.content,
+        tag: this.tag,
+        images: this.images
+      }, {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          console.log('success')
+        }
+      })
+    },
+    addImage () {
+      this.hasImage = true
+    },
+    uploadSuccess (images) {
+      this.images = images
+      this.hasImage = false
     },
     getTag () {
       axios.get('http://localhost:7001/questions/getTags').then(res => {
         if (res.data.code === 200) {
           res.data.data.forEach(element => {
-            this.options.push(element.tagName)
+            this.tags.push(element.tagName)
           })
         }
       })

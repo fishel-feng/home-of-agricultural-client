@@ -6,8 +6,10 @@
           <img v-if="item.finishState" class="solve" src="../assets/svg/solve.svg" width="40px" alt="">
           <div class="title">{{item.title}}</div>
           <div class="desc">{{item.desc}}</div>
-          <div class="image" v-for="(image,index) in item.images" :key="index">
-            <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/question/${image}`)" :src="`http://127.0.0.1:7001/public/question/${image}`" width="100px" height="100px" alt="">
+          <div class="image">
+            <div v-for="(image,index) in item.images" :key="index">
+              <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/question/${image}`)" :src="`http://127.0.0.1:7001/public/question/${image}`" width="100px" height="100px" alt="">
+            </div>
           </div>
           <div class="tail">
             <div class="tag">

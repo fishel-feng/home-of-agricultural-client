@@ -26,8 +26,10 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import { accountTestMixin } from '@/common/js/mixin'
+import axios from 'axios'
 export default {
+  mixins: [ accountTestMixin ],
   props: {
     src: {
       type: String,
@@ -52,26 +54,23 @@ export default {
         console.warn('no file!')
         return
       }
+      this.$emit('addImage')
       const formData = new FormData()
       this.files.forEach((item) => {
         formData.append(item.name, item.file)
       })
-      console.log('wait to upload')
-      // const xhr = new XMLHttpRequest()
-      // xhr.upload.addEventListener('progress', this.uploadProgress, false)
-      // xhr.open('POST', this.src, true)
-      // this.uploading = true
-      // xhr.send(formData)
-      // xhr.onload = () => {
-      //   this.uploading = false
-      //   if (xhr.status === 200 || xhr.status === 304) {
-      //     this.status = 'finished'
-      //     console.log('upload success!')
-      //   } else {
-      //     console.log(`error：error code ${xhr.status}`)
-      //   }
-      // }
-      // todo 发送上传请求
+      axios.post(this.src, formData, {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        if (res.data.code === 200 && res.data.data.length) {
+          this.$emit('success', res.data.data)
+          this.status = 'finished'
+        } else {
+          this.status = 'error'
+        }
+      })
     },
     finished () {
       this.files = []
