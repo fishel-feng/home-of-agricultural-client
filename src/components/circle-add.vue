@@ -9,7 +9,7 @@
           发表
         </div>
       </mt-header>
-      <mt-field placeholder="输入此刻想法" :attr="{ maxlength: 300 }" type="textarea" rows="6" v-model="content"></mt-field>
+      <mt-field placeholder="输入此刻想法" :attr="{ maxlength: 300 }" type="textarea" rows="6" v-model="content"/>
       <div class="hint">
         <div>
           最多300字
@@ -18,17 +18,21 @@
           剩余{{rest}}字
         </div>
       </div>
-      <uploader :src="'/api/imgs'"></uploader>
+      <uploader @addImage="addImage" @success="uploadSuccess" :src="'http://localhost:7001/upload/circle'"/>
     </div>
   <!-- </transition> -->
 </template>
 
 <script>
 import Uploader from '@/components/uploader'
+import {accountTestMixin} from '@/common/js/mixin'
 export default {
+  mixins: [ accountTestMixin ],
   data () {
     return {
-      content: ''
+      content: '',
+      hasImage: false,
+      images: []
     }
   },
   components: {
@@ -42,6 +46,13 @@ export default {
   methods: {
     submit () {
       //
+    },
+    addImage () {
+      this.hasImage = true
+    },
+    uploadSuccess (images) {
+      this.images = images
+      this.hasImage = false
     }
   }
 }
