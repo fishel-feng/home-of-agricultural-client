@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Uploader from '@/components/uploader'
 import {accountTestMixin} from '@/common/js/mixin'
 export default {
@@ -45,7 +46,19 @@ export default {
   },
   methods: {
     submit () {
-      //
+      axios.post('http://localhost:7001/circle/addCircle', {
+        content: this.content,
+        images: this.images
+      }, {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        console.log(res.data)
+        if (res.data.code === 200) {
+          console.log('success')
+        }
+      })
     },
     addImage () {
       this.hasImage = true
