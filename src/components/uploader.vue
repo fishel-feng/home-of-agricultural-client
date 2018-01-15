@@ -2,23 +2,23 @@
 <div class="vue-uploader">
   <div class="file-list">
     <section v-for="(file, index) of files" :key="index" class="file-item draggable-item">
-      <img :src="file.src" alt="" ondragstart="return false;">
+      <img :src="file.src" alt="">
       <span class="file-remove" @click="remove(index)">+</span>
     </section>
-    <section v-if="status == 'ready'" class="file-item">
+    <section v-if="status === 'ready'" class="file-item">
       <div @click="add" class="add">
         <span>+</span>
       </div>
     </section>
   </div>
 
-  <section v-if="files.length != 0" class="upload-func">
+  <section v-if="files.length !== 0" class="upload-func">
     <div class="progress-bar">
       <section v-if="uploading" :width="(percent * 100) + '%'">{{(percent * 100) + '%'}}</section>
     </div>
     <div class="operation-box">
-      <mt-button v-if="status == 'ready'" type="primary" size="small" @click.native="submit">上传</mt-button>
-      <mt-button v-if="status == 'finished'" type="primary" size="small" @click.native="finished">完成</mt-button>
+      <mt-button v-if="status === 'ready'" type="primary" size="small" @click.native="submit">上传</mt-button>
+      <mt-button v-if="status === 'finished'" type="primary" size="small" @click.native="finished">完成</mt-button>
     </div>
   </section>
   <input type="file" accept="image/*" @change="fileChanged" ref="file" multiple="multiple">
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+// import axios from 'axios'
 export default {
   props: {
     src: {
@@ -55,20 +56,22 @@ export default {
       this.files.forEach((item) => {
         formData.append(item.name, item.file)
       })
-      const xhr = new XMLHttpRequest()
-      xhr.upload.addEventListener('progress', this.uploadProgress, false)
-      xhr.open('POST', this.src, true)
-      this.uploading = true
-      xhr.send(formData)
-      xhr.onload = () => {
-        this.uploading = false
-        if (xhr.status === 200 || xhr.status === 304) {
-          this.status = 'finished'
-          console.log('upload success!')
-        } else {
-          console.log(`error：error code ${xhr.status}`)
-        }
-      }
+      console.log('wait to upload')
+      // const xhr = new XMLHttpRequest()
+      // xhr.upload.addEventListener('progress', this.uploadProgress, false)
+      // xhr.open('POST', this.src, true)
+      // this.uploading = true
+      // xhr.send(formData)
+      // xhr.onload = () => {
+      //   this.uploading = false
+      //   if (xhr.status === 200 || xhr.status === 304) {
+      //     this.status = 'finished'
+      //     console.log('upload success!')
+      //   } else {
+      //     console.log(`error：error code ${xhr.status}`)
+      //   }
+      // }
+      // todo 发送上传请求
     },
     finished () {
       this.files = []
@@ -127,7 +130,7 @@ export default {
 }
 
 .vue-uploader .file-list {
-  padding: 10px 0px;
+  padding: 10px 0;
 }
 
 .vue-uploader .file-list:after {

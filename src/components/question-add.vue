@@ -9,15 +9,15 @@
           提问
         </div>
       </mt-header>
-      <mt-field placeholder="在此输入问题标题" v-model="title"></mt-field>
-      <mt-field placeholder="在此输入问题详细描述" type="textarea" rows="6" v-model="content"></mt-field>
+      <mt-field placeholder="在此输入问题标题" v-model="title"/>
+      <mt-field placeholder="在此输入问题详细描述" type="textarea" rows="6" v-model="content"/>
       <div class="tag-wrapper">
         <div>问题标签：{{value}}</div>
         <mt-button @click.native="tagRadio = true" type="primary" size="small">选择问题标签</mt-button>
       </div>
-      <uploader :src="'/api/imgs'"></uploader>
+      <uploader :src="'http://localhost:7001/test/upload'"></uploader>
       <mt-popup @click.native="tagRadio = false" v-model="tagRadio" class="tag-radio">
-        <mt-radio align="right" v-model="value" :options="options"></mt-radio>
+        <mt-radio align="right" v-model="value" :options="options"/>
       </mt-popup>
     </div>
   <!-- </transition> -->

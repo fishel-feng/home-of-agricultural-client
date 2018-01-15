@@ -10,9 +10,9 @@
             <div @click="getUserCard(item.userId)" class="nick-name">{{item.nickName}}</div>
             <div class="circle-text">{{item.content}}</div>
             <div class="circle-image">
-              <li  v-for="(image,innerIndex) in item.images" :key="innerIndex">
+              <div v-for="(image,innerIndex) in item.images" :key="innerIndex">
                 <img @click.stop="showBigImage(`http://localhost:7001/public/circle/${image}`)" :src="`http://localhost:7001/public/circle/${image}`" width="80px" height="80px" alt="">
-              </li>
+              </div>
             </div>
             <div class="circle-tail">
               <div class="circle-mark">
