@@ -10,7 +10,7 @@
         <div class="question-title">这里是问题标题</div>
         <div class="question-content">这里是问题描述</div>
         <div class="question-image">
-          <img src="../assets/svg/hot.svg" alt="">
+          <img src="../assets/svg/hot.svg" width="100px" height="100px"  alt="">
         </div>
         <div class="questioner-info">
           <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
@@ -25,7 +25,18 @@
           <div>邀请专家</div>
           <div>我要回答</div>
         </div>
-        <div>答案</div>
+        <ul>
+          <li>
+            <div>
+              <div>回答内容balabala</div>
+              <img src="../assets/svg/hot.svg" width="100px" height="100px"  alt="">
+            </div>
+            <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
+            <div>
+              <span>昵称</span>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </transition>

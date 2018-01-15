@@ -5,8 +5,11 @@
         <router-link to="/" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
+        <div slot="right" @click="submit">
+          发表
+        </div>
       </mt-header>
-      <mt-field placeholder="在此写下评论" :attr="{ maxlength: 300 }" type="textarea" rows="6" v-model="content"></mt-field>
+      <mt-field placeholder="在此写下评论" :attr="{ maxlength: 300 }" type="textarea" rows="6" v-model="content"/>
       <div class="hint">
         <div>
           最多300字
@@ -20,7 +23,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+import {accountTestMixin} from '@/common/js/mixin'
 export default {
+  mixins: [ accountTestMixin ],
   data () {
     return {
       content: ''
@@ -29,6 +35,23 @@ export default {
   computed: {
     rest () {
       return 300 - this.content.length
+    }
+  },
+  methods: {
+    submit () {
+      axios.post('http://localhost:7001/circle/addComment', {
+        circleId: this.$route.query.id,
+        content: this.content
+      }, {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        console.log(res.data)
+        if (res.data.code === 200) {
+          console.log('success')
+        }
+      })
     }
   }
 }
