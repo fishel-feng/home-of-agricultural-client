@@ -25,8 +25,18 @@
           <div>邀请专家</div>
           <div>我要回答</div>
         </div>
-        <ul>
-          <li>
+        <ul class="answer-container">
+          <li class="answer-item">
+            <div>
+              <div>回答内容balabala</div>
+              <img src="../assets/svg/hot.svg" width="100px" height="100px"  alt="">
+            </div>
+            <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
+            <div>
+              <span>昵称</span>
+            </div>
+          </li>
+          <li class="answer-item">
             <div>
               <div>回答内容balabala</div>
               <img src="../assets/svg/hot.svg" width="100px" height="100px"  alt="">
@@ -91,10 +101,17 @@ export default {
     .btn-question
       display flex
       div
+        border-radius 5px
+        color white
         border 1px solid #cdcdcd
         line-height 40px
         height 40px
         text-align center
         flex 1
-        background #ddd
+        background #26a2ff
+    .answer-container
+      background #ccc
+      .answer-item
+        margin 3px 0
+        background: #fff
 </style>
