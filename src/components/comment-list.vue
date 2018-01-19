@@ -8,30 +8,14 @@
       </mt-header>
       <div class="container">
         <ul>
-          <li class="item">
+          <li v-for="(comment, index) in comments" :key="index" @click="giveComment(comment.userId)" class="item">
             <div class="user-info">
-              <span class="nickname">nickname</span>
-              <span>回复 <span class="nickname">nickname</span></span>
+              <span @click="getUserInfo(comment.userId)" class="nickname">{{comment.nickName}}</span>
+              <span v-if="comment.targetId">回复 <span class="nickname" @click="getUserInfo(comment.targetId)">{{comment.targetName}}</span></span>
               :
             </div>
-            <div class="content">风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
+            <div class="content">{{comment.content}}</div>
           </li>
-          <li class="item">
-            <div class="user-info">
-              <span class="nickname">nickname</span>
-              :
-            </div>
-            <div class="content">风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
-          </li>
-          <li class="item">
-            <div class="user-info">
-              <span class="nickname">nickname</span>
-              <span>回复 <span class="nickname">nickname</span></span>
-              :
-            </div>
-            <div class="content">风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
-          </li>
-
         </ul>
       </div>
     </div>
@@ -39,7 +23,32 @@
 </template>
 
 <script>
-  export default {}
+  import axios from 'axios'
+  export default {
+    data () {
+      return {
+        comments: []
+      }
+    },
+    mounted () {
+      this.getData()
+    },
+    methods: {
+      getData () {
+        axios.get(`http://127.0.0.1:7001/circle/getComment/${this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1)}`).then(res => {
+          if (res.data.code === 200) {
+            this.comments = res.data.data.comments
+          }
+        })
+      },
+      giveComment () {
+        // todo
+      },
+      getUserInfo (userId) {
+        this.$router.push(`/user/${userId}`)
+      }
+    }
+  }
 </script>
 
 

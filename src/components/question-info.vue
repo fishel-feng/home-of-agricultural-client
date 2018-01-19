@@ -26,17 +26,17 @@
           <div>我要回答</div>
         </div>
         <ul class="answer-container">
-          <li class="answer-item">
+          <li v-for="(answer, index) in answers" :key="index" class="answer-item">
             <div class="answer-title">
               <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
               <div>
-                <span>昵称</span>
+                <span>{{answer.nickName}}</span>
               </div>
             </div>
             <div>
-              <div>回答内容balabala风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
-              <div class="answer-images">
-                <img src="../assets/svg/hot.svg" width="100px" height="100px"  alt="">
+              <div>{{answer.content}}</div>
+              <div v-for="(image, i) in answers.images" :key="i" class="answer-images">
+                <img :src="`http://localhost:7001/public/circle/${image}`" width="100px" height="100px"  alt="">
               </div>
             </div>
           </li>
@@ -47,9 +47,26 @@
 </template>
 
 <script>
-export default {
-  //
-}
+  import axios from 'axios'
+  export default {
+    data () {
+      return {
+        answers: []
+      }
+    },
+    mounted () {
+      this.getData()
+    },
+    methods: {
+      getData () {
+        axios.get(`http://127.0.0.1:7001/question/getQuestion/${this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1)}`).then(res => {
+          if (res.data.code === 200) {
+            this.answers = res.data.data.answers
+          }
+        })
+      }
+    }
+  }
 </script>
 
 <style lang="stylus" scoped>
