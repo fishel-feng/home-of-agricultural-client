@@ -8,7 +8,7 @@
       </mt-header>
       <div class="content-wrapper">
         <div class="question-title">这里是问题标题</div>
-        <div class="question-content">这里是问题描述</div>
+        <div class="question-content">这里是问题描述风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
         <div class="question-image">
           <img src="../assets/svg/hot.svg" width="100px" height="100px"  alt="">
         </div>
@@ -27,23 +27,17 @@
         </div>
         <ul class="answer-container">
           <li class="answer-item">
-            <div>
-              <div>回答内容balabala</div>
-              <img src="../assets/svg/hot.svg" width="100px" height="100px"  alt="">
+            <div class="answer-title">
+              <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
+              <div>
+                <span>昵称</span>
+              </div>
             </div>
-            <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
             <div>
-              <span>昵称</span>
-            </div>
-          </li>
-          <li class="answer-item">
-            <div>
-              <div>回答内容balabala</div>
-              <img src="../assets/svg/hot.svg" width="100px" height="100px"  alt="">
-            </div>
-            <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
-            <div>
-              <span>昵称</span>
+              <div>回答内容balabala风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
+              <div class="answer-images">
+                <img src="../assets/svg/hot.svg" width="100px" height="100px"  alt="">
+              </div>
             </div>
           </li>
         </ul>
@@ -80,6 +74,7 @@ export default {
     .question-image
       padding 10px
     .question-content
+      line-height: normal
       padding 10px
       font-size 16px
     .questioner-info
@@ -112,6 +107,14 @@ export default {
     .answer-container
       background #ccc
       .answer-item
+        padding 10px
+        line-height: normal
         margin 3px 0
         background: #fff
+        .answer-title
+          display flex
+          align-items center
+          margin-bottom 10px
+        .answer-images
+          padding 10px
 </style>

@@ -10,18 +10,28 @@
         <ul>
           <li class="item">
             <div class="user-info">
-              nickname
-              <span>回复 nickname</span>
+              <span class="nickname">nickname</span>
+              <span>回复 <span class="nickname">nickname</span></span>
               :
             </div>
             <div class="content">风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
-          </li><li class="item">
-            <div class="user-info">nickname :</div>
-            <div class="content">风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
-          </li><li class="item">
-            <div class="user-info">nickname 回复 nickname :</div>
-            <div class="content">风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
           </li>
+          <li class="item">
+            <div class="user-info">
+              <span class="nickname">nickname</span>
+              :
+            </div>
+            <div class="content">风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
+          </li>
+          <li class="item">
+            <div class="user-info">
+              <span class="nickname">nickname</span>
+              <span>回复 <span class="nickname">nickname</span></span>
+              :
+            </div>
+            <div class="content">风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
+          </li>
+
         </ul>
       </div>
     </div>
@@ -59,7 +69,9 @@
         .user-info
           margin-bottom 15px
           font-size 16px
+          .nickname
+            color #0f0
         .content
           line-height: normal
-          font-size 18px
+          font-size 16px
 </style>
