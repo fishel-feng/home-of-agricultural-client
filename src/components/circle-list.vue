@@ -23,11 +23,11 @@
                 </div>
               </div>
               <div class="circle-action">
-                <span v-if="!isLiked" @click="giveLike">
+                <span v-if="!isLiked(item._id)" @click="giveLike">
                   赞 <img src="../assets/svg/like.svg" alt="" width="14px">
                   &nbsp;
                 </span>
-                <span v-if="isLiked" @click="cancelLike">
+                <span v-if="isLiked(item._id)" @click="cancelLike">
                   取消赞 <img src="../assets/svg/liked.svg" alt="" width="14px">
                   &nbsp;&nbsp;
                 </span>
@@ -44,7 +44,7 @@
         </div>
       </ul>
     </mt-loadmore>
-    <router-view></router-view>
+    <router-view/>
     <div @click="hideImage" v-if="showImage" class="image-wrapper">
       <img class="big-image" :src="currentImage" alt="">
     </div>
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { showImageMixin, accountTestMixin } from '@/common/js/mixin'
 import { Toast } from 'mint-ui'
 import axios from 'axios'
@@ -65,8 +66,7 @@ export default {
     return {
       loading: false,
       circles: [],
-      showLoading: false,
-      isLiked: false
+      showLoading: false
     }
   },
   mounted () {
@@ -81,6 +81,11 @@ export default {
   },
   activated () {
     this.loading = false
+  },
+  computed: {
+    ...mapGetters([
+      'likes'
+    ])
   },
   watch: {
     '$route' (to, from) {
@@ -159,14 +164,15 @@ export default {
     },
     giveLike () {
       //
-      this.isLiked = true
     },
     cancelLike () {
       //
-      this.isLiked = false
     },
     giveComment (circleId) {
       this.$router.push(`/addComment?id=${circleId}`)
+    },
+    isLiked (id) {
+      return this.likes.indexOf(id) !== -1
     }
   }
 }

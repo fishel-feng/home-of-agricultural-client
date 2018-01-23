@@ -9,7 +9,7 @@
           发表
         </div>
       </mt-header>
-      <mt-field placeholder="在此写下评论" :attr="{ maxlength: 300 }" type="textarea" rows="6" v-model="content"/>
+      <mt-field :placeholder="this.$route.query.targetId ? '在此添加回复' : '在此写下评论'" :attr="{ maxlength: 300 }" type="textarea" rows="6" v-model="content"/>
       <div class="hint">
         <div>
           最多300字

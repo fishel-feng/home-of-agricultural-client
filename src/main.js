@@ -6,8 +6,10 @@ import 'mint-ui/lib/style.css'
 import App from './App'
 import router from './router'
 import store from './store'
-
+import VueSocketio from 'vue-socket.io'
 import '@/assets/stylus/index.styl'
+
+Vue.use(VueSocketio, 'http://127.0.0.1:7001')
 
 Vue.use(MintUI)
 

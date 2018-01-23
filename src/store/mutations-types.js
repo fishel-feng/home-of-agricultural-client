@@ -14,4 +14,6 @@ export const SET_FOLLOWINGS = 'SET_FOLLOWINGS'
 
 export const SET_FOLLOWERS = 'SET_FOLLOWERS'
 
+export const SET_LIKES = 'SET_LIKES'
+
 export const SET_TAGS = 'SET_TAGS'

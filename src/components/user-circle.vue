@@ -6,7 +6,7 @@
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
-      <circle-list baseUrl="http://localhost:7001/user/getCircles/"></circle-list>
+      <circle-list baseUrl="http://127.0.0.1:7001/user/getCircles/"></circle-list>
     </div>
   </transition>
 </template>

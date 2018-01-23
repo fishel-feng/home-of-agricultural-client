@@ -7,7 +7,7 @@
     </div>
   </mt-header>
   <keep-alive>
-    <router-view></router-view>
+    <router-view/>
   </keep-alive>
   <mt-tabbar v-model="selected" class="tail-tab">
     <mt-tab-item @click.native="selectItem(item)" :id="item.id" v-for="(item,index) in tailList" :key="index">
@@ -65,11 +65,17 @@ export default {
   },
   methods: {
     selectItem (item) {
-      this.verifyLogin(() => {
+      if (item.id === 'user') {
+        this.verifyLogin(() => {
+          this.selected = item.id
+          this.title = item.text
+          this.$router.push('/' + this.selected)
+        })
+      } else {
         this.selected = item.id
         this.title = item.text
         this.$router.push('/' + this.selected)
-      })
+      }
     },
     showMessageCenter () {
       this.$router.push('/message')

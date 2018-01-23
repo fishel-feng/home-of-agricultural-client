@@ -56,6 +56,7 @@ export default {
         } else if (res.data.code === 200) {
           const token = res.data.data.token
           this.initUserInfo(token)
+          this.$socket.emit('login', token)
           this.$router.go(-1)
         }
       })

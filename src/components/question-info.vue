@@ -59,7 +59,7 @@
     },
     methods: {
       getData () {
-        axios.get(`http://127.0.0.1:7001/question/getQuestion/${this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1)}`).then(res => {
+        axios.get(`http://127.0.0.1:7001/question/getQuestion/${this.$route.params.questionId}`).then(res => {
           if (res.data.code === 200) {
             this.question = res.data.data
             console.log(this.question)

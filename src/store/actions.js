@@ -21,12 +21,12 @@ export const deleteCollection = function ({commit, state}, articleId) {
 }
 
 export const saveUserInfo = function ({commit}, userInfo) {
-  console.log(userInfo)
   commit(types.SET_COLLECTIONS, userInfo.collections)
-  commit(types.SET_CIRCLES, userInfo.circles)
-  commit(types.SET_QUESTIONS, userInfo.questions)
+  // commit(types.SET_CIRCLES, userInfo.circles)
+  // commit(types.SET_QUESTIONS, userInfo.questions)
   commit(types.SET_ATTENTIONS, userInfo.attentions)
   commit(types.SET_ANSWERS, userInfo.answers)
   commit(types.SET_FOLLOWINGS, userInfo.followings)
   commit(types.SET_FOLLOWERS, userInfo.followers)
+  commit(types.SET_LIKES, userInfo.likes)
 }
