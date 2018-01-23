@@ -1,11 +1,13 @@
 import { mapActions, mapGetters } from 'vuex'
 import { MessageBox } from 'mint-ui'
 import axios from 'axios'
+import moment from 'moment'
 
 export const loginMixin = {
   methods: {
     ...mapActions([
       'addToken',
+      'addMyId',
       'saveUserInfo'
     ]),
     initUserInfo (token) {
@@ -17,6 +19,7 @@ export const loginMixin = {
           }
         }).then(res => {
           const user = res.data.data.user
+          this.addMyId(user._id)
           this.saveUserInfo(user)
         })
       }
@@ -27,7 +30,8 @@ export const loginMixin = {
 export const accountTestMixin = {
   computed: {
     ...mapGetters([
-      'token'
+      'token',
+      'myId'
     ])
   },
   methods: {
@@ -62,6 +66,14 @@ export const showImageMixin = {
     },
     hideImage () {
       this.showImage = false
+    }
+  }
+}
+
+export const getTimeMixin = {
+  methods: {
+    getTime (time) {
+      return moment(time).format('YYYY-MM-DD HH:mm:ss')
     }
   }
 }

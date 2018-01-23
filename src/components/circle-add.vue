@@ -44,6 +44,9 @@ export default {
       return 300 - this.content.length
     }
   },
+  mounted () {
+    this.content = ''
+  },
   methods: {
     submit () {
       axios.post('http://localhost:7001/circle/addCircle', {
@@ -54,9 +57,8 @@ export default {
           Authorization: this.token
         }
       }).then(res => {
-        console.log(res.data)
         if (res.data.code === 200) {
-          console.log('success')
+          this.$router.go(-1)
         }
       })
     },

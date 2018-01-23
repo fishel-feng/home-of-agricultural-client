@@ -1,4 +1,4 @@
-import {loadToken} from '@/common/js/cache'
+import {loadToken, loadMyId} from '@/common/js/cache'
 
 const state = {
   token: loadToken(),
@@ -10,6 +10,7 @@ const state = {
   followings: [],
   followers: [],
   likes: [],
+  myId: loadMyId(),
   tags: [
     {_id: '5a3e19eb2b25bae314e7fbc5', tagName: '黄瓜'},
     {_id: '5a3e1a062b25bae314e7fbd4', tagName: '水稻'},

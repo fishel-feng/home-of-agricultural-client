@@ -30,6 +30,9 @@ const mutations = {
   },
   [types.SET_TAGS] (state, tags) {
     state.tags = tags
+  },
+  [types.SET_MY_ID] (state, myId) {
+    state.myId = myId
   }
 }
 

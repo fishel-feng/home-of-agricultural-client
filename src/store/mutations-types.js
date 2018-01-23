@@ -17,3 +17,5 @@ export const SET_FOLLOWERS = 'SET_FOLLOWERS'
 export const SET_LIKES = 'SET_LIKES'
 
 export const SET_TAGS = 'SET_TAGS'
+
+export const SET_MY_ID = 'SET_MY_ID'

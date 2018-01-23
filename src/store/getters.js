@@ -16,4 +16,6 @@ export const followers = state => state.followers
 
 export const likes = state => state.likes
 
+export const myId = state => state.myId
+
 export const tags = state => state.tags

@@ -16,7 +16,7 @@
               <img src="../assets/svg/tag.svg" width="12px" alt="">
               {{item.tag.tagName}}
             </div>
-            <div class="answerCount">回答 {{item.answerCount}}</div>
+            <div class="answerCount">{{getTime(item.time)}} 回答 {{item.answerCount}}</div>
           </div>
         </li>
         <div class="load-wrapper">
@@ -28,16 +28,16 @@
     <div @click="hideImage" v-if="showImage" class="image-wrapper">
       <img class="big-image" :src="currentImage" alt="">
     </div>
-    <router-view></router-view>
+    <router-view/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { Toast } from 'mint-ui'
-import { showImageMixin, accountTestMixin } from '@/common/js/mixin'
+import { showImageMixin, accountTestMixin, getTimeMixin } from '@/common/js/mixin'
 export default {
-  mixins: [ showImageMixin, accountTestMixin ],
+  mixins: [ showImageMixin, accountTestMixin, getTimeMixin ],
   props: {
     baseUrl: String
   },
@@ -148,7 +148,6 @@ export default {
       font-weight bold
     .desc
       margin  5px
-      margin-top 5px
       font-size 14px
       color #4b4b4b
     .image

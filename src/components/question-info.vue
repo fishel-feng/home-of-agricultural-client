@@ -17,7 +17,7 @@
           <div class="questioner-desc">
             <div class="nick-name">{{question.nickName}}</div>
             <div class="location">{{question.location}}</div>
-            <div>时间</div>
+            <div>{{getTime(question.time)}}</div>
           </div>
           <mt-button class="btn-attention" type="primary" size="small">关注问题</mt-button>
         </div>
@@ -47,8 +47,10 @@
 </template>
 
 <script>
+  import { getTimeMixin } from '@/common/js/mixin'
   import axios from 'axios'
   export default {
+    mixins: [ getTimeMixin ],
     data () {
       return {
         question: {}

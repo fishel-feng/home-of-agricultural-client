@@ -7,7 +7,10 @@
             <img @click="getUserCard(item.userId)" :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="50px" height="50px">
           </div>
           <div class="circle-content">
-            <div @click="getUserCard(item.userId)" class="nick-name">{{item.nickName}}</div>
+            <div class="title-container">
+              <div @click="getUserCard(item.userId)" class="nick-name">{{item.nickName}}</div>
+              <div v-show="isMine(item.userId)" @click="deleteCircle(item._id)" class="btn-del">删除</div>
+            </div>
             <div class="circle-text">{{item.content}}</div>
             <div class="circle-image">
               <div v-for="(image,innerIndex) in item.images" :key="innerIndex">
@@ -16,7 +19,7 @@
             </div>
             <div class="circle-tail">
               <div class="circle-mark">
-                <span v-text="getText(item.time)"></span>
+                <span>{{getTime(item.time)}}</span>
                 <div>
                   <span @click="getLikeList(item._id)" class="btn-info">{{item.likeCount}}人觉得很赞</span>&nbsp;
                   <span @click="getCommentList(item._id)" class="btn-info">{{item.commentCount}}条评论</span>
@@ -25,11 +28,9 @@
               <div class="circle-action">
                 <span v-if="!isLiked(item._id)" @click="giveLike">
                   赞 <img src="../assets/svg/like.svg" alt="" width="14px">
-                  &nbsp;
                 </span>
                 <span v-if="isLiked(item._id)" @click="cancelLike">
                   取消赞 <img src="../assets/svg/liked.svg" alt="" width="14px">
-                  &nbsp;&nbsp;
                 </span>
                 <span @click="giveComment(item._id)">
                   评论 <img src="../assets/svg/comment.svg" alt="" width="14px">
@@ -53,12 +54,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { showImageMixin, accountTestMixin } from '@/common/js/mixin'
+import { showImageMixin, accountTestMixin, getTimeMixin } from '@/common/js/mixin'
 import { Toast } from 'mint-ui'
 import axios from 'axios'
-import moment from 'moment'
 export default {
-  mixins: [ showImageMixin, accountTestMixin ],
+  mixins: [ showImageMixin, accountTestMixin, getTimeMixin ],
   props: {
     baseUrl: String
   },
@@ -150,9 +150,6 @@ export default {
         })
       }
     },
-    getText (time) {
-      return moment(time).format('YYYY-MM-DD HH:mm:ss')
-    },
     getUserCard (userId) {
       this.$router.push(`/user/${userId}`)
     },
@@ -173,6 +170,12 @@ export default {
     },
     isLiked (id) {
       return this.likes.indexOf(id) !== -1
+    },
+    isMine (userId) {
+      return userId === this.myId
+    },
+    deleteCircle (circleId) {
+      // axios.post() todo  dialog
     }
   }
 }
@@ -196,8 +199,14 @@ export default {
       display flex
       flex-direction column
       line-height 18px
-      .nick-name
-        color #f63
+      .title-container
+        display flex
+        justify-content space-between
+        align-items center
+        .nick-name
+          color #f63
+        .btn-del
+          font-size 10px
       .circle-image
         overflow hidden
         img
@@ -213,9 +222,10 @@ export default {
           .btn-info
             color #9cf
         .circle-action
-          padding 10px
+          padding 5px
           display flex
           img
+            margin-right 5px
             position relative
             top 2px
   .load-wrapper

@@ -1,8 +1,12 @@
 import * as types from './mutations-types'
-import { saveToken } from '@/common/js/cache'
+import { saveToken, saveMyId } from '@/common/js/cache'
 
 export const addToken = function ({commit}, token) {
   commit(types.SET_TOKEN, saveToken(token))
+}
+
+export const addMyId = function ({commit}, myId) {
+  commit(types.SET_MY_ID, saveMyId(myId))
 }
 
 export const addCollection = function ({commit, state}, article) {
@@ -29,4 +33,5 @@ export const saveUserInfo = function ({commit}, userInfo) {
   commit(types.SET_FOLLOWINGS, userInfo.followings)
   commit(types.SET_FOLLOWERS, userInfo.followers)
   commit(types.SET_LIKES, userInfo.likes)
+  commit(types.SET_MY_ID, userInfo._id)
 }
