@@ -1,7 +1,7 @@
 <template>
   <!-- <transition name="top"> -->
     <div class="comment-add">
-      <mt-header fixed title="添加评论">
+      <mt-header fixed :title="this.$route.query.targetId ? `回复评论 ${this.$route.query.targetName}` : '添加评论'">
         <router-link to="/" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
@@ -41,7 +41,9 @@ export default {
     submit () {
       axios.post('http://localhost:7001/circle/addComment', {
         circleId: this.$route.query.id,
-        content: this.content
+        content: this.content,
+        targetId: this.$route.query.targetId ? this.$route.query.targetId : '',
+        targetName: this.$route.query.targetId ? this.$route.query.targetName : ''
       }, {
         headers: {
           Authorization: this.token

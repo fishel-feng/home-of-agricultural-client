@@ -7,16 +7,16 @@
         </router-link>
       </mt-header>
       <div class="content-wrapper">
-        <div class="question-title">这里是问题标题</div>
-        <div class="question-content">这里是问题描述风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。风蓬飘尽悲歌气，泥絮沾来薄幸名。</div>
+        <div class="question-title">{{question.title}}</div>
+        <div class="question-content">{{question.content}}</div>
         <div class="question-image">
           <img src="../assets/svg/hot.svg" width="100px" height="100px"  alt="">
         </div>
         <div class="questioner-info">
-          <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
+          <img :src="`http://localhost:7001/public/headImage/${question.headImage}`" width="30px" height="30px" alt="">
           <div class="questioner-desc">
-            <div class="nick-name">nickName</div>
-            <div class="location">地区</div>
+            <div class="nick-name">{{question.nickName}}</div>
+            <div class="location">{{question.location}}</div>
             <div>时间</div>
           </div>
           <mt-button class="btn-attention" type="primary" size="small">关注问题</mt-button>
@@ -26,7 +26,7 @@
           <div>我要回答</div>
         </div>
         <ul class="answer-container">
-          <li v-for="(answer, index) in answers" :key="index" class="answer-item">
+          <li v-for="(answer, index) in question.answers" :key="index" class="answer-item">
             <div class="answer-title">
               <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
               <div>
@@ -35,7 +35,7 @@
             </div>
             <div>
               <div>{{answer.content}}</div>
-              <div v-for="(image, i) in answers.images" :key="i" class="answer-images">
+              <div v-for="(image, i) in question.answers.images" :key="i" class="answer-images">
                 <img :src="`http://localhost:7001/public/circle/${image}`" width="100px" height="100px"  alt="">
               </div>
             </div>
@@ -51,7 +51,7 @@
   export default {
     data () {
       return {
-        answers: []
+        question: {}
       }
     },
     mounted () {
@@ -61,7 +61,8 @@
       getData () {
         axios.get(`http://127.0.0.1:7001/question/getQuestion/${this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1)}`).then(res => {
           if (res.data.code === 200) {
-            this.answers = res.data.data.answers
+            this.question = res.data.data
+            console.log(this.question)
           }
         })
       }

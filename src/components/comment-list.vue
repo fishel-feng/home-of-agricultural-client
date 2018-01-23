@@ -8,7 +8,7 @@
       </mt-header>
       <div class="container">
         <ul>
-          <li v-for="(comment, index) in comments" :key="index" @click="giveComment(comment.userId)" class="item">
+          <li v-for="(comment, index) in comments" :key="index" @click="giveComment(comment.userId, comment.nickName)" class="item">
             <div class="user-info">
               <span @click="getUserInfo(comment.userId)" class="nickname">{{comment.nickName}}</span>
               <span v-if="comment.targetId">回复 <span class="nickname" @click="getUserInfo(comment.targetId)">{{comment.targetName}}</span></span>
@@ -35,17 +35,20 @@
     },
     methods: {
       getData () {
-        axios.get(`http://127.0.0.1:7001/circle/getComment/${this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1)}`).then(res => {
+        axios.get(`http://127.0.0.1:7001/circle/getComment/${this.getCircleId()}`).then(res => {
           if (res.data.code === 200) {
             this.comments = res.data.data.comments
           }
         })
       },
-      giveComment () {
-        // todo
+      giveComment (targetId, targetName) {
+        this.$router.push(`/addComment?id=${this.getCircleId()}&targetId=${targetId}&targetName=${targetName}`)
       },
       getUserInfo (userId) {
         this.$router.push(`/user/${userId}`)
+      },
+      getCircleId () {
+        return this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1)
       }
     }
   }
