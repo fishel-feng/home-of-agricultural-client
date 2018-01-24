@@ -179,6 +179,7 @@ export default {
           if (res.data.code === 200) {
             this.addLike(circle._id)
             circle.likeCount++
+            this.$emit('like', this.token, circle.userId)
           }
         })
       })
