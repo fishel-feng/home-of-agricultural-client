@@ -21,7 +21,9 @@ export default {
   },
   methods: {
     addCircle () {
-      this.$router.push('/addCircle')
+      this.verifyLogin(() => {
+        this.$router.push('/addCircle')
+      })
     }
   },
   watch: {

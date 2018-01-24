@@ -24,6 +24,19 @@ export const deleteCollection = function ({commit, state}, articleId) {
   commit(types.SET_COLLECTIONS, collections)
 }
 
+export const addLike = function ({commit, state}, circleId) {
+  let likes = state.likes.slice()
+  likes.push(circleId)
+  commit(types.SET_LIKES, likes)
+}
+
+export const deleteLike = function ({commit, state}, circleId) {
+  let likes = state.likes.slice()
+  let index = likes.indexOf(circleId)
+  likes.splice(index, 1)
+  commit(types.SET_LIKES, likes)
+}
+
 export const saveUserInfo = function ({commit}, userInfo) {
   commit(types.SET_COLLECTIONS, userInfo.collections)
   // commit(types.SET_CIRCLES, userInfo.circles)

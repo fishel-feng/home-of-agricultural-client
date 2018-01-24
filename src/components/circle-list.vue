@@ -26,10 +26,10 @@
                 </div>
               </div>
               <div class="circle-action">
-                <span v-if="!isLiked(item._id)" @click="giveLike">
+                <span v-if="!isLiked(item._id)" @click="giveLike(item)">
                   赞 <img src="../assets/svg/like.svg" alt="" width="14px">
                 </span>
-                <span v-if="isLiked(item._id)" @click="cancelLike">
+                <span v-if="isLiked(item._id)" @click="cancelLike(item)">
                   取消赞 <img src="../assets/svg/liked.svg" alt="" width="14px">
                 </span>
                 <span @click="giveComment(item._id)">
@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import { showImageMixin, accountTestMixin, getTimeMixin } from '@/common/js/mixin'
-import { Toast } from 'mint-ui'
+import { Toast, MessageBox } from 'mint-ui'
 import axios from 'axios'
 export default {
   mixins: [ showImageMixin, accountTestMixin, getTimeMixin ],
@@ -75,6 +75,14 @@ export default {
     } else if (this.$route.path === '/circles/attention' || this.$route.path === '/user/circles') {
       this.verifyLogin(this.getData)
     }
+    axios.get('http://localhost:7001/user/getUserIndex', {
+      headers: {
+        Authorization: this.token
+      }
+    }).then(res => {
+      const user = res.data.data.user
+      this.setLikes(user.likes)
+    })
   },
   deactivated () {
     this.loading = true
@@ -159,14 +167,42 @@ export default {
     getLikeList (circleId) {
       this.$router.push(`/circles/like/${circleId}`)
     },
-    giveLike () {
-      //
+    giveLike (circle) {
+      this.verifyLogin(() => {
+        axios.post('http://localhost:7001/circle/giveLike', {
+          circleId: circle._id
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.addLike(circle._id)
+            circle.likeCount++
+          }
+        })
+      })
     },
-    cancelLike () {
-      //
+    cancelLike (circle) {
+      this.verifyLogin(() => {
+        axios.post('http://localhost:7001/circle/cancelLike', {
+          circleId: circle._id
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.deleteLike(circle._id)
+            circle.likeCount--
+          }
+        })
+      })
     },
     giveComment (circleId) {
-      this.$router.push(`/addComment?id=${circleId}`)
+      this.verifyLogin(() => {
+        this.$router.push(`/addComment?id=${circleId}`)
+      })
     },
     isLiked (id) {
       return this.likes.indexOf(id) !== -1
@@ -175,8 +211,40 @@ export default {
       return userId === this.myId
     },
     deleteCircle (circleId) {
-      // axios.post() todo  dialog
-    }
+      MessageBox.confirm('确定删除这条内容吗？', {
+        title: '提示',
+        confirmButtonText: '删除',
+        cancelButtonText: '取消'
+      }).then(action => {
+        axios.post('http://localhost:7001/circle/deleteCircle', {
+          circleId: circleId
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            let index = this.circles.findIndex(item => {
+              return item._id === circleId
+            })
+            this.circles.splice(index, 1)
+            Toast({
+              message: '删除成功',
+              position: 'bottom',
+              duration: 2000
+            })
+          }
+        })
+      }).catch(e => {
+      })
+    },
+    ...mapActions([
+      'addLike',
+      'deleteLike'
+    ]),
+    ...mapMutations({
+      setLikes: 'SET_LIKES'
+    })
   }
 }
 </script>
