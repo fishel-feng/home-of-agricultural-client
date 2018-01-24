@@ -7,9 +7,9 @@
         </router-link>
       </mt-header>
       <div class="form-wrapper">
-        <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone"></mt-field>
-        <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"></mt-field>
-        <mt-field label="重复密码" placeholder="请再次输入密码" type="password" v-model="repeatPassword"></mt-field>
+        <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone"/>
+        <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"/>
+        <mt-field label="重复密码" placeholder="请再次输入密码" type="password" v-model="repeatPassword"/>
         <mt-field label="验证码" v-model="captcha">
           <mt-button v-if="!waiting" @click.native="sendCode" plain type="primary" class="btn-code" height="45px" width="100px">发送验证码</mt-button>
           <mt-button v-if="waiting" disabled plain type="primary" class="btn-code" height="45px" width="100px">{{count}}s后重新发送</mt-button>
@@ -27,7 +27,7 @@ import { encryptPassword } from '@/common/js/util'
 import { mapActions } from 'vuex'
 import axios from 'axios'
 import { Toast, MessageBox } from 'mint-ui'
-const TIME_COUNT = 10
+const TIME_COUNT = 60
 export default {
   mixins: [loginMixin],
   data () {
@@ -80,21 +80,24 @@ export default {
             Toast({
               message: '发送成功',
               position: 'bottom',
-              duration: 5000
+              duration: 3000
             })
           }
           if (res.data.code === 455) {
             Toast({
               message: '此手机号已被注册',
               position: 'bottom',
-              duration: 5000
+              duration: 3000
             })
+            this.waiting = false
+            clearInterval(this.timer)
+            this.timer = null
           }
           if (res.data.code === 492) {
             Toast({
               message: '此用户不存在',
               position: 'bottom',
-              duration: 5000
+              duration: 3000
             })
           }
         })
@@ -145,7 +148,7 @@ export default {
             Toast({
               message: '注册成功',
               position: 'bottom',
-              duration: 5000
+              duration: 3000
             })
             const token = res.data.data.token
             this.initUserInfo(token)
@@ -162,13 +165,13 @@ export default {
             Toast({
               message: '验证码错误',
               position: 'bottom',
-              duration: 5000
+              duration: 3000
             })
           } else if (res.data.code === 455) {
             Toast({
               message: '此手机号已被注册',
               position: 'bottom',
-              duration: 5000
+              duration: 3000
             })
           }
         })
@@ -186,14 +189,14 @@ export default {
             Toast({
               message: '修改成功',
               position: 'bottom',
-              duration: 5000
+              duration: 3000
             })
             this.$router.go(-1)
           } else if (res.data.code === 457) {
             Toast({
               message: '验证码错误',
               position: 'bottom',
-              duration: 5000
+              duration: 3000
             })
           }
         })

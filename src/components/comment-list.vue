@@ -2,9 +2,7 @@
   <transition name="slide">
     <div class="comment-list">
       <mt-header fixed title="评论详情">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <div class="container">
         <ul>

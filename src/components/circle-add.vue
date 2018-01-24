@@ -2,9 +2,7 @@
   <!-- <transition name="top"> -->
     <div class="circle-add">
       <mt-header fixed title="发表动态">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
         <div slot="right" @click="submit">
           发表
         </div>
@@ -43,9 +41,6 @@ export default {
     rest () {
       return 300 - this.content.length
     }
-  },
-  mounted () {
-    this.content = ''
   },
   methods: {
     submit () {

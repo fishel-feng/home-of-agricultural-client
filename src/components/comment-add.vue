@@ -2,9 +2,7 @@
   <!-- <transition name="top"> -->
     <div class="comment-add">
       <mt-header fixed :title="this.$route.query.targetId ? `回复评论 ${this.$route.query.targetName}` : '添加评论'">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
         <div slot="right" @click="submit">
           发表
         </div>
@@ -42,16 +40,14 @@ export default {
       axios.post('http://localhost:7001/circle/addComment', {
         circleId: this.$route.query.id,
         content: this.content,
-        targetId: this.$route.query.targetId ? this.$route.query.targetId : '',
-        targetName: this.$route.query.targetId ? this.$route.query.targetName : ''
+        targetId: this.$route.query.targetId ? this.$route.query.targetId : ''
       }, {
         headers: {
           Authorization: this.token
         }
       }).then(res => {
-        console.log(res.data)
         if (res.data.code === 200) {
-          console.log('success')
+          this.$router.go(-1)
         }
       })
     }
