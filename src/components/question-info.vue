@@ -75,7 +75,7 @@
         //
       },
       addAnswer (questionId) {
-        //
+        this.$router.push(`/addAnswer?questionId=${questionId}`)
       }
     }
   }

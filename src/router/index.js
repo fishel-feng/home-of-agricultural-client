@@ -39,6 +39,12 @@ const QuestionAdd = (resolve) => {
   })
 }
 
+const AnswerAdd = (resolve) => {
+  import('@/components/answer-add').then((module) => {
+    resolve(module)
+  })
+}
+
 const SelectItem = (resolve) => {
   import('@/components/select-item').then((module) => {
     resolve(module)
@@ -316,6 +322,10 @@ export default new Router({
     {
       path: '/addQuestion',
       component: QuestionAdd
+    },
+    {
+      path: '/addAnswer',
+      component: AnswerAdd
     },
     {
       path: '/addComment',

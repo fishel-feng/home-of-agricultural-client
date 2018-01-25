@@ -97,11 +97,6 @@ export default {
         }
       })
     }
-  },
-  computed: {
-    rest () {
-      return 300 - this.content.length
-    }
   }
 }
 </script>
