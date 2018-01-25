@@ -51,7 +51,7 @@ export default {
           Toast({
             message: '用户名或密码错误',
             position: 'bottom',
-            duration: 5000
+            duration: 3000
           })
         } else if (res.data.code === 200) {
           const token = res.data.data.token

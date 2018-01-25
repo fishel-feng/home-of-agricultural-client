@@ -48,6 +48,7 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           this.$router.go(-1)
+          this.$socket.emit('comment', this.token, this.$route.query.id, this.$route.query.targetId)
         }
       })
     }

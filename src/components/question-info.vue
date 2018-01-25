@@ -19,11 +19,11 @@
             <div class="location">{{question.location}}</div>
             <div>{{getTime(question.time)}}</div>
           </div>
-          <mt-button class="btn-attention" type="primary" size="small">关注问题</mt-button>
+          <mt-button class="btn-attention" @click.native="addAttention(question._id)" type="primary" size="small">关注问题</mt-button>
         </div>
         <div class="btn-question">
-          <div>邀请专家</div>
-          <div>我要回答</div>
+          <div @click="getExpertList(question.tag)">邀请专家</div>
+          <div @click="addAnswer(question._id)">我要回答</div>
         </div>
         <ul class="answer-container">
           <li v-for="(answer, index) in question.answers" :key="index" class="answer-item">
@@ -67,6 +67,15 @@
             console.log(this.question)
           }
         })
+      },
+      addAttention (questionId) {
+        //
+      },
+      getExpertList (questionTag) {
+        //
+      },
+      addAnswer (questionId) {
+        //
       }
     }
   }

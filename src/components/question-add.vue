@@ -9,7 +9,7 @@
           提问
         </div>
       </mt-header>
-      <mt-field placeholder="在此输入问题标题" v-model="title"/>
+      <mt-field placeholder="在此输入问题标题" :attr="{ maxlength: 20 }" v-model="title"/>
       <mt-field placeholder="在此输入问题详细描述" type="textarea" rows="6" v-model="content"/>
       <div class="tag-wrapper">
         <div>问题标签：{{tag}}</div>
@@ -26,6 +26,7 @@
 <script>
 import Uploader from '@/components/uploader'
 import axios from 'axios'
+import { Toast } from 'mint-ui'
 import { accountTestMixin } from '@/common/js/mixin'
 export default {
   mixins: [ accountTestMixin ],
@@ -49,6 +50,22 @@ export default {
   },
   methods: {
     submit () {
+      if (!this.title || !this.content) {
+        Toast({
+          message: '标题或内容不能为空',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
+      }
+      if (!this.tag) {
+        Toast({
+          message: '请选择问题标签',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
+      }
       axios.post('http://localhost:7001/question/addQuestion', {
         title: this.title,
         content: this.content,
@@ -60,7 +77,7 @@ export default {
         }
       }).then(res => {
         if (res.data.code === 200) {
-          console.log('success')
+          this.$router.replace(`/question/all/${res.data.data.question._id}`)
         }
       })
     },

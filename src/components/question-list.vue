@@ -4,7 +4,10 @@
       <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
         <li class="item" v-for="(item,index) in questions" :key="index" @click="showQuestionInfo(item._id)">
           <img v-if="item.finishState" class="solve" src="../assets/svg/solve.svg" width="40px" alt="">
-          <div class="title">{{item.title}}</div>
+          <div class="title">
+            {{item.title}}
+            <span v-show="isMine(item.userId)" class="btn-del" @click.stop="deleteQuestion(item._id)">删除</span>
+          </div>
           <div class="desc">{{item.desc}}</div>
           <div class="image">
             <div v-for="(image,index) in item.images" :key="index">
@@ -34,7 +37,7 @@
 
 <script>
 import axios from 'axios'
-import { Toast } from 'mint-ui'
+import { Toast, MessageBox } from 'mint-ui'
 import { showImageMixin, accountTestMixin, getTimeMixin } from '@/common/js/mixin'
 export default {
   mixins: [ showImageMixin, accountTestMixin, getTimeMixin ],
@@ -125,6 +128,37 @@ export default {
           }
         }
       })
+    },
+    isMine (userId) {
+      return userId === this.myId
+    },
+    deleteQuestion (questionId) {
+      MessageBox.confirm('确定删除这条内容吗？', {
+        title: '提示',
+        confirmButtonText: '删除',
+        cancelButtonText: '取消'
+      }).then(action => {
+        axios.post('http://localhost:7001/question/deleteQuestion', {
+          questionId: questionId
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            let index = this.questions.findIndex(item => {
+              return item._id === questionId
+            })
+            this.questions.splice(index, 1)
+            Toast({
+              message: '删除成功',
+              position: 'bottom',
+              duration: 2000
+            })
+          }
+        })
+      }).catch(e => {
+      })
     }
   }
 }
@@ -144,8 +178,15 @@ export default {
       bottom auto
       position absolute
     .title
+      padding-right 30px
       font-size 18px
       font-weight bold
+      position relative
+      .btn-del
+        font-size 10px
+        position absolute
+        right 0
+        top 0
     .desc
       margin  5px
       font-size 14px
