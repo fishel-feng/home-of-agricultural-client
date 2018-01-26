@@ -79,6 +79,15 @@
         })
       },
       addAttention (questionId) {
+        axios.post('http://127.0.0.1:7001/question/attentionQuestion' + questionId).then(res => {
+          if (res.data.code === 200) {
+            Toast({
+              message: '关注问题成功',
+              position: 'bottom',
+              duration: 2000
+            })
+          }
+        })
         // todo
       },
       getExpertList (questionTag) {
