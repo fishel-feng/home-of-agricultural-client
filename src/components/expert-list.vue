@@ -1,0 +1,34 @@
+<template>
+  <div class="expert-list">
+    <mt-header title="相关专家">
+      <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
+    </mt-header>
+    <person-list :showButton="true" :data="experts"/>
+  </div>
+</template>
+
+<script>
+  import PersonList from '@/components/person-list'
+  export default {
+    components: {
+      PersonList
+    },
+    data () {
+      return {
+        experts: []
+      }
+    }
+  }
+</script>
+
+<style lang="stylus" scoped>
+.expert-list
+  position fixed
+  overflow-y auto
+  top 0
+  bottom 0
+  left 0
+  right 0
+  z-index 100
+  background #fff
+</style>

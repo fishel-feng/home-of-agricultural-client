@@ -2,9 +2,7 @@
   <!-- <transition name="slide"> -->
     <div class="follower-list">
       <mt-header title="关注我的人">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <person-list :data="followers"></person-list>
     </div>

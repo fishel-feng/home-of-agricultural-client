@@ -189,6 +189,12 @@ const MessageCenter = (resolve) => {
   })
 }
 
+const ExpertList = (resolve) => {
+  import('@/components/expert-list').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -342,6 +348,10 @@ export default new Router({
     {
       path: '/message',
       component: MessageCenter
+    },
+    {
+      path: '/expert',
+      component: ExpertList
     }
   ]
 })
