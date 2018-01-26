@@ -10,7 +10,7 @@
       </div>
     </mt-header>
     <mt-field placeholder="在此输入答案" type="textarea" rows="6" v-model="content"/>
-    <uploader @addImage="addImage" @success="uploadSuccess" :src="'http://localhost:7001/upload/question'"/>
+    <uploader @addImage="addImage" @success="uploadSuccess" :src="'http://localhost:7001/upload/answer'"/>
   </div>
   <!-- </transition> -->
 </template>

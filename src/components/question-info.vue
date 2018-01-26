@@ -10,7 +10,9 @@
         <div class="question-title">{{question.title}}</div>
         <div class="question-content">{{question.content}}</div>
         <div class="question-image">
-          <img src="../assets/svg/hot.svg" width="100px" height="100px"  alt="">
+          <div v-for="(image, i) in question.images">
+            <img @click.stop="showBigImage(`http://localhost:7001/public/question/${image}`)" :src="`http://localhost:7001/public/question/${image}`" width="100px" height="100px"  alt="">
+          </div>
         </div>
         <div class="questioner-info">
           <img :src="`http://localhost:7001/public/headImage/${question.headImage}`" width="30px" height="30px" alt="">
@@ -37,23 +39,28 @@
             </div>
             <div>
               <div>{{answer.content}}</div>
-              <div v-for="(image, i) in question.answers.images" :key="i" class="answer-images">
-                <img :src="`http://localhost:7001/public/circle/${image}`" width="100px" height="100px"  alt="">
+              <div class="answer-images">
+                <div v-for="(image, i) in answer.images" :key="i">
+                  <img @click.stop="showBigImage(`http://localhost:7001/public/answer/${image}`)" :src="`http://localhost:7001/public/answer/${image}`" width="100px" height="100px"  alt="">
+                </div>
               </div>
             </div>
           </li>
         </ul>
+      </div>
+      <div @click="hideImage" v-if="showImage" class="image-wrapper">
+        <img class="big-image" :src="currentImage" alt="">
       </div>
     </div>
   </transition>
 </template>
 
 <script>
-  import { getTimeMixin, accountTestMixin } from '@/common/js/mixin'
+  import { getTimeMixin, accountTestMixin, showImageMixin } from '@/common/js/mixin'
   import { Toast, MessageBox } from 'mint-ui'
   import axios from 'axios'
   export default {
-    mixins: [ getTimeMixin, accountTestMixin ],
+    mixins: [ getTimeMixin, accountTestMixin, showImageMixin ],
     data () {
       return {
         question: {}
@@ -136,7 +143,11 @@
       padding 10px
       font-size 20px
     .question-image
+      overflow hidden
       padding 10px
+      img
+        margin 5px
+        float left
     .question-content
       line-height: normal
       padding 10px
@@ -190,5 +201,21 @@
           .btn-del
             font-size 10px
         .answer-images
+          overflow hidden
           padding 10px
+          img
+            margin 5px
+            float left
+  .image-wrapper
+    display flex
+    align-items center
+    position fixed
+    background rgba(0, 0, 0, 0.8)
+    z-index 200
+    top 0
+    right 0
+    left 0
+    bottom 0
+    .big-image
+      width 100%
 </style>
