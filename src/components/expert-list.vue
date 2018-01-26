@@ -8,6 +8,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   import PersonList from '@/components/person-list'
   export default {
     components: {
@@ -17,8 +18,19 @@
       return {
         experts: []
       }
+    },
+    mounted () {
+      this.getData()
+    },
+    methods: {
+      getData () {
+        axios.get('http://127.0.0.1:7001/question/getExpertList/' + this.$route.params.tag).then(res => {
+          if (res.data.code === 200) {
+            this.experts = res.data.data.experts
+          }
+        })
+      }
     }
-    // todo
   }
 </script>
 
