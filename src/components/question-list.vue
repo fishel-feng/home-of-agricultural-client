@@ -3,7 +3,6 @@
     <mt-loadmore :top-method="loadTop" ref="loadmore">
       <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
         <li class="item" v-for="(item,index) in questions" :key="index" @click="showQuestionInfo(item._id)">
-          <img v-if="item.finishState" class="solve" src="../assets/svg/solve.svg" width="40px" alt="">
           <div class="title">
             {{item.title}}
             <span v-show="isMine(item.userId)" class="btn-del" @click.stop="deleteQuestion(item._id)">删除</span>
@@ -172,11 +171,6 @@ export default {
     background #fff
     margin-bottom 3px
     padding 10px
-    .solve
-      right 0
-      top auto
-      bottom auto
-      position absolute
     .title
       padding-right 30px
       font-size 18px

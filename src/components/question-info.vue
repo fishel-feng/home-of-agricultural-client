@@ -28,10 +28,12 @@
         <ul class="answer-container">
           <li v-for="(answer, index) in question.answers" :key="index" class="answer-item">
             <div class="answer-title">
-              <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
-              <div>
-                <span>{{answer.nickName}}</span>
+              <div class="title-container">
+                <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
+                <div class="nickName">{{answer.nickName}}</div>
+                <div class="expertState">专家状态</div>
               </div>
+              <div v-show="isMine(answer.userId)" @click.stop="deleteAnswer(answer._id)" class="btn-del">删除</div>
             </div>
             <div>
               <div>{{answer.content}}</div>
@@ -47,10 +49,11 @@
 </template>
 
 <script>
-  import { getTimeMixin } from '@/common/js/mixin'
+  import { getTimeMixin, accountTestMixin } from '@/common/js/mixin'
+  import { Toast, MessageBox } from 'mint-ui'
   import axios from 'axios'
   export default {
-    mixins: [ getTimeMixin ],
+    mixins: [ getTimeMixin, accountTestMixin ],
     data () {
       return {
         question: {}
@@ -76,6 +79,38 @@
       },
       addAnswer (questionId) {
         this.$router.push(`/addAnswer?questionId=${questionId}`)
+      },
+      deleteAnswer (answerId) {
+        MessageBox.confirm('确定删除这条内容吗？', {
+          title: '提示',
+          confirmButtonText: '删除',
+          cancelButtonText: '取消'
+        }).then(action => {
+          axios.post('http://localhost:7001/question/deleteAnswer', {
+            questionId: this.$route.params.questionId,
+            answerId: answerId
+          }, {
+            headers: {
+              Authorization: this.token
+            }
+          }).then(res => {
+            if (res.data.code === 200) {
+              let index = this.question.answers.findIndex(item => {
+                return item._id === answerId
+              })
+              this.question.answers.splice(index, 1)
+              Toast({
+                message: '删除成功',
+                position: 'bottom',
+                duration: 2000
+              })
+            }
+          })
+        }).catch(e => {
+        })
+      },
+      isMine (userId) {
+        return userId === this.myId
       }
     }
   }
@@ -143,7 +178,17 @@
         .answer-title
           display flex
           align-items center
+          justify-content space-between
           margin-bottom 10px
+          .title-container
+            display flex
+            align-items center
+            .nickName
+              margin-left 10px
+            .expertState
+              margin-left 10px
+          .btn-del
+            font-size 10px
         .answer-images
           padding 10px
 </style>
