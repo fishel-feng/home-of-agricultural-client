@@ -9,8 +9,10 @@
 
 <script>
   import axios from 'axios'
+  import { accountTestMixin } from '@/common/js/mixin'
   import PersonList from '@/components/person-list'
   export default {
+    mixins: [ accountTestMixin ],
     components: {
       PersonList
     },
@@ -31,7 +33,7 @@
         })
       },
       inviteExpert (item) {
-        console.log(item)
+        this.$socket.emit('invitation', this.token, item._id, this.$route.query.questionId)
       }
     }
   }

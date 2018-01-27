@@ -92,7 +92,7 @@
         // todo
       },
       getExpertList (questionTag) {
-        this.$router.push('/expert?tag=' + questionTag.tagName)
+        this.$router.push(`/expert?tag=${questionTag.tagName}&questionId=${this.$route.params.questionId}`)
       },
       addAnswer (questionId) {
         this.$router.push(`/addAnswer?questionId=${questionId}`)

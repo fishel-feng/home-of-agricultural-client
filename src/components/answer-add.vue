@@ -51,6 +51,7 @@
           }
         }).then(res => {
           if (res.data.code === 200) {
+            this.$socket.emit('answer', this.$route.query.questionId)
             this.$router.go(-1)
           }
         })
