@@ -2,9 +2,7 @@
   <transition name="slide">
     <div class="question-info">
       <mt-header fixed title="问题详情">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <div class="content-wrapper">
         <div class="question-title">{{question.title}}</div>
@@ -32,8 +30,11 @@
             <div class="answer-title">
               <div class="title-container">
                 <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
-                <div class="nickName">{{answer.nickName}}</div>
-                <div class="expertState">专家状态</div>
+                <div class="nick-name">{{answer.nickName}}</div>
+                <div class="expert-state">
+                  <span>{{answer.certification}}</span>
+                  <span class="btn-message-send" v-show="answer.certification && !isMine(answer.userId)" @click.stop="sendMessage(answer)"><img src="../assets/svg/chat.svg" width="12px" alt=""> 问专家</span>
+                </div>
               </div>
               <div v-show="isMine(answer.userId)" @click.stop="deleteAnswer(answer._id)" class="btn-del">删除</div>
             </div>
@@ -127,6 +128,9 @@
       },
       isMine (userId) {
         return userId === this.myId
+      },
+      sendMessage (answer) {
+        this.$router.push(`/chat?userId=${answer.userId}&userName=${answer.nickName}`)
       }
     }
   }
@@ -192,9 +196,9 @@
       background #ccc
       .answer-item
         padding 10px
-        line-height: normal
+        line-height normal
         margin 3px 0
-        background: #fff
+        background #fff
         .answer-title
           display flex
           align-items center
@@ -203,10 +207,16 @@
           .title-container
             display flex
             align-items center
-            .nickName
+            .nick-name
               margin-left 10px
-            .expertState
+            .expert-state
               margin-left 10px
+              .btn-message-send
+                margin-left 10px
+                border-radius 5px
+                padding 2px
+                font-size 12px
+                background #ccc
           .btn-del
             font-size 10px
         .answer-images

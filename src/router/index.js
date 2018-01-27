@@ -195,6 +195,12 @@ const ExpertList = (resolve) => {
   })
 }
 
+const Chat = (resolve) => {
+  import('@/components/chat').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -352,6 +358,10 @@ export default new Router({
     {
       path: '/expert',
       component: ExpertList
+    },
+    {
+      path: '/chat',
+      component: Chat
     }
   ]
 })

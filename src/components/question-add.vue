@@ -2,9 +2,7 @@
   <!-- <transition name="top"> -->
     <div class="question-add">
       <mt-header fixed title="发起提问">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
         <div slot="right" @click="submit">
           提问
         </div>
