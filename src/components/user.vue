@@ -2,8 +2,11 @@
   <div class="user">
     <div class="head">
       <img @click="showBigImage(`http://localhost:7001/public/headImage/${headImage}`)" :src="`http://localhost:7001/public/headImage/${headImage}`" height="80px" width="80px" alt="">
-      <div class="desc">
-        <div>{{nickName}}</div>
+      <div class="desc" @click="showUserInfo">
+        <div class="name-wrapper">
+          {{nickName}}
+          <span class="btn-edit" @click.stop="editInfo">编辑个人资料</span>
+        </div>
         <div>{{description}}</div>
       </div>
     </div>
@@ -79,6 +82,12 @@ export default {
     logout () {
       this.addToken('')
       this.$router.push('/')
+    },
+    editInfo () {
+      // todo
+    },
+    showUserInfo () {
+      this.$router.push(`/user/${this.myId}`)
     }
   },
   mounted () {
@@ -99,7 +108,15 @@ export default {
       padding 10px
       display flex
       flex-direction column
-      justify-content space-around
+      justify-content space-between
+      .name-wrapper
+        display flex
+        flex-direction row
+        justify-content space-between
+        align-items center
+        .btn-edit
+          font-size 10px
+          color #ccc
   .center
     padding 15px
   .foot
