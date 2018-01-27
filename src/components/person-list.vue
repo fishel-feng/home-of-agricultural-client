@@ -1,7 +1,7 @@
 <template>
   <div class="person-list">
     <ul>
-      <li class="item" v-for="(item,index) in data" :key="index" @click="showUserCard(item.userId)">
+      <li class="item" v-for="(item,index) in data" :key="index" @click="showUserCard(item)">
         <div class="user-wrapper">
           <img :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="70px" height="70px" alt="">
           <div class="text">
@@ -10,7 +10,7 @@
           </div>
         </div>
         <div v-if="showButton" class="btn-wrapper">
-          <mt-button size="small" type="primary">邀请</mt-button>
+          <mt-button @click.natve.stop="invite(item)" size="small" type="primary">邀请</mt-button>
         </div>
       </li>
     </ul>
@@ -30,8 +30,12 @@ export default {
     }
   },
   methods: {
-    showUserCard (userId) {
-      this.$router.push(`/user/${userId}`)
+    showUserCard (item) {
+      const id = item.userId ? item.userId : item._id
+      this.$router.push(`/user/${id}`)
+    },
+    invite (item) {
+      this.$emit('invite', item)
     }
   }
 }

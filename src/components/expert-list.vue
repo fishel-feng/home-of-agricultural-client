@@ -3,7 +3,7 @@
     <mt-header title="相关专家">
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
-    <person-list :showButton="true" :data="experts"/>
+    <person-list @invite="inviteExpert" :showButton="true" :data="experts"/>
   </div>
 </template>
 
@@ -24,11 +24,14 @@
     },
     methods: {
       getData () {
-        axios.get('http://127.0.0.1:7001/question/getExpertList/' + this.$route.params.tag).then(res => {
+        axios.get('http://127.0.0.1:7001/question/getExpertList/' + this.$route.query.tag).then(res => {
           if (res.data.code === 200) {
             this.experts = res.data.data.experts
           }
         })
+      },
+      inviteExpert (item) {
+        console.log(item)
       }
     }
   }
