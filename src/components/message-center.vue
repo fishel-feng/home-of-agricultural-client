@@ -4,13 +4,43 @@
       <mt-header fixed title="消息中心">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
+      <div class="message-container">
+        <div class="message-item">第一条消息</div>
+      </div>
     </div>
   </transition>
 </template>
 
 <script>
 export default {
-  //
+  data () {
+    return {
+      messages: [] // todo
+    }
+  },
+  sockets: {
+    chat () {
+      //
+    },
+    like () {
+      //
+    },
+    comment () {
+      //
+    },
+    follow () {
+      //
+    },
+    invite () {
+      //
+    },
+    answer () {
+      //
+    },
+    attention () {
+      //
+    }
+  }
 }
 </script>
 
@@ -28,6 +58,14 @@ export default {
   right 0
   z-index 100
   background #fff
-  padding 20px
+  .message-container
+    margin-top 40px
+    .message-item
+      min-height 60px
+      display flex
+      justify-content center
+      align-items center
+      padding 10px
+      background radial-gradient(#ccc, #fff);
 </style>
 

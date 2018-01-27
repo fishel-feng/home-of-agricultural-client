@@ -103,6 +103,7 @@ export default {
         font-size 20px
         padding 20px
         .today-hot
+          padding 10px
           margin 5px
           background #9cf
           text-align center
