@@ -16,7 +16,7 @@
         <span>年龄：{{user.age ? user.age : '未知'}}</span>
         <span>职业：{{user.job ? user.job : '未知'}}</span>
       </div>
-      <mt-button type="primary" size="small">关注用户</mt-button>
+      <mt-button @click.native="followUser" class="btn-follow" type="primary" size="small">关注用户</mt-button>
     </div>
     <div class="block-wrapper">
       <div>
@@ -43,7 +43,9 @@
 
 <script>
   import axios from 'axios'
+  import { accountTestMixin } from '@/common/js/mixin'
   export default {
+    mixins: [ accountTestMixin ],
     data () {
       return {
         user: {}
@@ -64,6 +66,9 @@
             this.user = res.data.data.user
           }
         })
+      },
+      followUser () {
+        this.$socket.emit('follow', this.token, this.$route.params.id)
       }
     }
   }
@@ -103,6 +108,8 @@
         margin 3px 0
         span
           margin 0 10px
+      .btn-follow
+        margin-top 10px
     .block-wrapper
       margin-top 10px
       overflow hidden
