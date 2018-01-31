@@ -56,7 +56,7 @@
     },
     watch: {
       '$route' (to, from) {
-        // console.log(this.$route.params.id)
+        // todo
       }
     },
     methods: {
