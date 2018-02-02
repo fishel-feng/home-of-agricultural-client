@@ -19,7 +19,8 @@
             <div class="location">{{question.location}}</div>
             <div>{{getTime(question.time)}}</div>
           </div>
-          <mt-button class="btn-attention" @click.native="addAttention(question._id)" type="primary" size="small">关注问题</mt-button>
+          <mt-button class="btn-attention" v-if="!attentionState" @click.native="addAttention" type="primary" size="small">关注问题</mt-button>
+          <mt-button class="btn-attention" v-if="attentionState" @click.native="removeAttention" type="primary" size="small">取消关注</mt-button>
         </div>
         <div class="btn-question">
           <div @click="getExpertList(question.tag)">邀请专家</div>
@@ -59,13 +60,20 @@
 <script>
   import { getTimeMixin, accountTestMixin, showImageMixin } from '@/common/js/mixin'
   import { Toast, MessageBox } from 'mint-ui'
+  import { mapGetters } from 'vuex'
   import axios from 'axios'
   export default {
     mixins: [ getTimeMixin, accountTestMixin, showImageMixin ],
     data () {
       return {
-        question: {}
+        question: {},
+        attentionState: false
       }
+    },
+    computed: {
+      ...mapGetters([
+        'attentions'
+      ])
     },
     mounted () {
       this.getData()
@@ -78,9 +86,16 @@
             console.log(this.question)
           }
         })
+        this.attentionState = this.attentions.indexOf(this.question._id) === -1
       },
-      addAttention (questionId) {
-        axios.post('http://127.0.0.1:7001/question/attentionQuestion' + questionId).then(res => {
+      addAttention () {
+        axios.post('http://127.0.0.1:7001/question/attentionQuestion/', {
+          questionId: this.question._id
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
           if (res.data.code === 200) {
             Toast({
               message: '关注问题成功',
@@ -90,6 +105,9 @@
           }
         })
         // todo
+      },
+      removeAttention () {
+        //
       },
       getExpertList (questionTag) {
         this.$router.push(`/expert?tag=${questionTag.tagName}&questionId=${this.$route.params.questionId}`)
