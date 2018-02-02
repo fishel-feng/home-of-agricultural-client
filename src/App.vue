@@ -19,7 +19,6 @@
 
 <script>
 import { accountTestMixin } from '@/common/js/mixin'
-import { mapGetters } from 'vuex'
 export default {
   mixins: [accountTestMixin],
   name: 'app',
@@ -58,10 +57,10 @@ export default {
       ]
     }
   },
-  computed: {
-    ...mapGetters([
-      'token'
-    ])
+  mounted () {
+    this.verifyLogin(() => {
+      this.$socket.emit('login', this.token)
+    })
   },
   methods: {
     selectItem (item) {

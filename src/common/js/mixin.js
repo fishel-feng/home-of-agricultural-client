@@ -11,6 +11,7 @@ export const loginMixin = {
       'saveUserInfo'
     ]),
     initUserInfo (token) {
+      this.$socket.emit('login', this.token)
       this.addToken(token)
       if (token) {
         axios.get('http://127.0.0.1:7001/user/getUserIndex', {
