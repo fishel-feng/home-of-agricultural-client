@@ -195,6 +195,12 @@ const ExpertList = (resolve) => {
   })
 }
 
+const UserEdit = (resolve) => {
+  import('@/components/user-edit').then((module) => {
+    resolve(module)
+  })
+}
+
 const Chat = (resolve) => {
   import('@/components/chat').then((module) => {
     resolve(module)
@@ -342,6 +348,10 @@ export default new Router({
     {
       path: '/addComment',
       component: CommentAdd
+    },
+    {
+      path: '/editUserInfo',
+      component: UserEdit
     },
     {
       path: '/about',

@@ -84,7 +84,7 @@ export default {
       this.$router.push('/')
     },
     editInfo () {
-      // todo
+      this.$router.push('/editUserInfo?id=' + this.myId)
     },
     showUserInfo () {
       this.$router.push(`/user/${this.myId}`)

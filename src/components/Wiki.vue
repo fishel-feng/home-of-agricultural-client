@@ -1,5 +1,6 @@
 <template>
   <div class="wiki">
+    <div @click="clickMe">点击我</div>
     <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50" infinite-scroll-immediate-check="false">
       <li v-for="item in list" class="item">{{ item }}</li>
     </ul>
@@ -33,6 +34,9 @@ export default {
         }
         // this.loading = false
       }, 2500)
+    },
+    clickMe () {
+      this.$socket.emit('click', 'iiiii', 'jjjjj')
     }
   },
   mounted () {
