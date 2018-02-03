@@ -6,7 +6,7 @@
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
-      <question-list baseUrl="http://localhost:7001/user/getAttentions/"></question-list>
+      <question-list baseUrl="http://localhost:7001/user/getAttentions/"/>
     </div>
   </transition>
 </template>
