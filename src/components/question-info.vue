@@ -84,7 +84,6 @@
           if (res.data.code === 200) {
             this.question = res.data.data
             this.attentionState = this.attentions.indexOf(this.question._id) !== -1
-            console.log(this.attentions)
           }
         })
       },

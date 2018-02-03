@@ -92,6 +92,12 @@ export default {
     selected (newVal, oldVal) {
       this.oldSelect = oldVal
     }
+  },
+  sockets: {
+    like (content) {
+      console.log(content)
+      this.messageCount++
+    }
   }
 }
 </script>

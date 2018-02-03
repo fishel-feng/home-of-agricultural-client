@@ -1,6 +1,7 @@
 <template>
   <div class="wiki">
     <div @click="clickMe">点击我</div>
+    {{time}}
     <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50" infinite-scroll-immediate-check="false">
       <li v-for="item in list" class="item">{{ item }}</li>
     </ul>
@@ -8,13 +9,15 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   data () {
     return {
       list: [],
       loading: false,
       allLoaded: false,
-      wrapperHeight: 0
+      wrapperHeight: 0,
+      time: ''
     }
   },
   deactivated () {
@@ -43,6 +46,7 @@ export default {
     for (let i = 1; i <= 20; i++) {
       this.list.push(i)
     }
+    this.time = moment(1517651874725).format('YYYY-MM-DD HH:mm:ss')
   }
 }
 </script>
