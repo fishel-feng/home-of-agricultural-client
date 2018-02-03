@@ -37,6 +37,19 @@ export const deleteLike = function ({commit, state}, circleId) {
   commit(types.SET_LIKES, likes)
 }
 
+export const addAttention = function ({commit, state}, questionId) {
+  let attentions = state.attentions.slice()
+  attentions.push(questionId)
+  commit(types.SET_ATTENTIONS, attentions)
+}
+
+export const deleteAttention = function ({commit, state}, questionId) {
+  let attentions = state.attentions.slice()
+  let index = attentions.indexOf(questionId)
+  attentions.splice(index, 1)
+  commit(types.SET_ATTENTIONS, attentions)
+}
+
 export const saveUserInfo = function ({commit}, userInfo) {
   commit(types.SET_COLLECTIONS, userInfo.collections)
   // commit(types.SET_CIRCLES, userInfo.circles)

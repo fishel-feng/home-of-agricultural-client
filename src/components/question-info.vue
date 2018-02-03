@@ -19,7 +19,7 @@
             <div class="location">{{question.location}}</div>
             <div>{{getTime(question.time)}}</div>
           </div>
-          <mt-button class="btn-attention" v-if="!attentionState" @click.native="addAttention" type="primary" size="small">关注问题</mt-button>
+          <mt-button class="btn-attention" v-if="!attentionState" @click.native="giveAttention" type="primary" size="small">关注问题</mt-button>
           <mt-button class="btn-attention" v-if="attentionState" @click.native="removeAttention" type="primary" size="small">取消关注</mt-button>
         </div>
         <div class="btn-question">
@@ -60,7 +60,7 @@
 <script>
   import { getTimeMixin, accountTestMixin, showImageMixin } from '@/common/js/mixin'
   import { Toast, MessageBox } from 'mint-ui'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import axios from 'axios'
   export default {
     mixins: [ getTimeMixin, accountTestMixin, showImageMixin ],
@@ -83,13 +83,33 @@
         axios.get(`http://127.0.0.1:7001/question/getQuestion/${this.$route.params.questionId}`).then(res => {
           if (res.data.code === 200) {
             this.question = res.data.data
-            console.log(this.question)
+            this.attentionState = this.attentions.indexOf(this.question._id) !== -1
+            console.log(this.attentions)
           }
         })
-        this.attentionState = this.attentions.indexOf(this.question._id) === -1
       },
-      addAttention () {
+      giveAttention () {
         axios.post('http://127.0.0.1:7001/question/attentionQuestion/', {
+          questionId: this.question._id
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          console.log(res.data)
+          if (res.data.code === 200) {
+            Toast({
+              message: '关注问题成功',
+              position: 'bottom',
+              duration: 2000
+            })
+            this.attentionState = true
+            this.addAttention(this.question._id)
+          }
+        })
+      },
+      removeAttention () {
+        axios.post('http://127.0.0.1:7001/question/removeAttentionQuestion/', {
           questionId: this.question._id
         }, {
           headers: {
@@ -98,16 +118,14 @@
         }).then(res => {
           if (res.data.code === 200) {
             Toast({
-              message: '关注问题成功',
+              message: '取消关注问题成功',
               position: 'bottom',
               duration: 2000
             })
+            this.attentionState = false
+            this.deleteAttention(this.question._id)
           }
         })
-        // todo
-      },
-      removeAttention () {
-        //
       },
       getExpertList (questionTag) {
         this.$router.push(`/expert?tag=${questionTag.tagName}&questionId=${this.$route.params.questionId}`)
@@ -149,7 +167,11 @@
       },
       sendMessage (answer) {
         this.$router.push(`/chat?userId=${answer.userId}&userName=${answer.nickName}`)
-      }
+      },
+      ...mapActions([
+        'addAttention',
+        'deleteAttention'
+      ])
     }
   }
 </script>

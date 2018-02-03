@@ -33,7 +33,7 @@
         })
       },
       inviteExpert (item) {
-        this.$socket.emit('invitation', this.token, item._id, this.$route.query.questionId)
+        this.$socket.emit('invite', this.token, item._id, this.$route.query.questionId)
       }
     }
   }
