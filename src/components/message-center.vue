@@ -78,7 +78,7 @@
         this.$router.push('/user/' + userId)
       },
       showQuestionInfo (questionId) {
-        //
+        this.$router.push('/question/all/' + questionId)
       }
     }
   }

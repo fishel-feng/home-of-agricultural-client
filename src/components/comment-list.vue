@@ -8,9 +8,12 @@
         <ul>
           <li v-for="(comment, index) in comments" :key="index" @click="giveComment(comment.userId, comment.nickName)" class="item">
             <div class="user-info">
-              <span @click.stop="getUserInfo(comment.userId)" class="nickname">{{comment.nickName}}</span>
-              <span v-if="comment.targetId">回复 <span class="nickname" @click.stop="getUserInfo(comment.targetId)">{{comment.targetName}}</span></span>
-              :
+              <div>
+                <span @click.stop="getUserInfo(comment.userId)" class="nickname">{{comment.nickName}}</span>
+                <span v-if="comment.targetId">回复 <span class="nickname" @click.stop="getUserInfo(comment.targetId)">{{comment.targetName}}</span></span>
+                :
+              </div>
+              <div class="time">{{getTime(comment.time)}}</div>
             </div>
             <div class="content">{{comment.content}}</div>
           </li>
@@ -21,8 +24,10 @@
 </template>
 
 <script>
+  import {getTimeMixin} from '@/common/js/mixin'
   import axios from 'axios'
   export default {
+    mixins: [getTimeMixin],
     data () {
       return {
         comments: []
@@ -74,10 +79,14 @@
         padding 10px
         margin 3px 0
         .user-info
+          display flex
+          justify-content space-between
           margin-bottom 15px
           font-size 16px
           .nickname
             color #0f0
+          .time
+            font-size 10px
         .content
           line-height: normal
           font-size 16px
