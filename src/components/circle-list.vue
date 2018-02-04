@@ -2,7 +2,7 @@
   <div class="circle-list">
     <mt-loadmore :top-method="loadTop" ref="loadmore">
       <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
-        <li v-for="(item, index) in circles" :key="index" class="list-item">
+        <li v-for="(item, index) in circles" :key="index" class="list-item" ref="li">
           <div class="head-image">
             <img @click="getUserCard(item.userId)" :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="50px" height="50px">
           </div>
@@ -105,6 +105,12 @@ export default {
     }
   },
   methods: {
+    // roll () {
+    //   this.$nextTick(() => {
+    //     this.$refs.li[3].scrollIntoView()
+    //   })
+    //   // todo
+    // },
     getData (callback) {
       axios.get(this.baseUrl + new Date().toISOString(), {
         headers: {
@@ -179,7 +185,7 @@ export default {
           if (res.data.code === 200) {
             this.addLike(circle._id)
             circle.likeCount++
-            this.$socket.emit('like', this.token, circle.userId)
+            this.$socket.emit('like', this.token, circle.userId, circle._id)
           }
         })
       })
