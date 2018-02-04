@@ -7,6 +7,7 @@
     <div class="content-wrapper">
       <img :src="`http://localhost:7001/public/headImage/${user.headImage}`" width="120px" height="120px" alt="">
       <div class="nickname">{{user.nickName}}</div>
+      <div class="expert-state" v-if="user.certification"><img src="../assets/svg/v.svg" width="14px" height="14px" alt=""> {{user.certification}}专家</div>
       <div class="description">{{user.description}}</div>
       <div class="information">
         <span>地区：{{user.location ? user.location : '未知'}}</span>
@@ -21,22 +22,21 @@
     <div class="block-wrapper">
       <div>
         <span>回答问题</span>
-        <span>22</span>
+        <span>{{user.answerCount}}</span>
       </div>
       <div>
         <span>提出问题</span>
-        <span>22</span>
+        <span>{{user.questionCount}}</span>
       </div>
       <div>
         <span>关注的人</span>
-        <span>22</span>
+        <span>{{user.followingCount}}</span>
       </div>
       <div>
         <span>ta的粉丝</span>
-        <span>22</span>
+        <span>{{user.followerCount}}</span>
       </div>
     </div>
-    <div>最近动态</div>
   </div>
   <!-- </transition> -->
 </template>
@@ -64,6 +64,7 @@
         axios.get(`http://127.0.0.1:7001/user/getUserInfo/${this.$route.params.id}`).then(res => {
           if (res.data.code === 200) {
             this.user = res.data.data.user
+            console.log(this.user)
           }
         })
       },
@@ -99,6 +100,11 @@
         font-weight 500
         font-size 20px
         margin 6px 0
+      .expert-state
+        font-size 16px
+        background coral
+        padding 5px 15px
+        border-radius 5px
       .description
         font-size 16px
         margin 6px 0
@@ -128,6 +134,10 @@
         height 80px
         span
           margin 5px 0
+    .circle-wrapper
+      display flex
+      flex-direction column
+      align-items center
 </style>
 
 
