@@ -69,6 +69,7 @@
         })
       },
       followUser () {
+        // todo
         this.$socket.emit('follow', this.token, this.$route.params.id)
       }
     }
@@ -101,6 +102,7 @@
         font-size 20px
         margin 6px 0
       .expert-state
+        color #f2e822
         font-size 16px
         background coral
         padding 5px 15px
