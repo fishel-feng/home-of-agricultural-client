@@ -13,7 +13,10 @@
                 <span v-if="comment.targetId">回复 <span class="nickname" @click.stop="getUserInfo(comment.targetId)">{{comment.targetName}}</span></span>
                 :
               </div>
-              <div class="time">{{getTime(comment.time)}}</div>
+              <div class="right">
+                {{getTime(comment.time)}}
+                <div v-if="comment.userId===myId" @click.stop="deleteComment(comment._id)">删除</div>
+              </div>
             </div>
             <div class="content">{{comment.content}}</div>
           </li>
@@ -24,10 +27,11 @@
 </template>
 
 <script>
-  import {getTimeMixin} from '@/common/js/mixin'
+  import {MessageBox, Toast} from 'mint-ui'
+  import {getTimeMixin, accountTestMixin} from '@/common/js/mixin'
   import axios from 'axios'
   export default {
-    mixins: [getTimeMixin],
+    mixins: [getTimeMixin, accountTestMixin],
     data () {
       return {
         comments: []
@@ -49,6 +53,35 @@
       },
       getUserInfo (userId) {
         this.$router.push(`/user/${userId}`)
+      },
+      deleteComment (commentId) {
+        MessageBox.confirm('确定删除这条内容吗？', {
+          title: '提示',
+          confirmButtonText: '删除',
+          cancelButtonText: '取消'
+        }).then(action => {
+          axios.post('http://localhost:7001/circle/deleteComment', {
+            circleId: this.$route.params.circleId,
+            commentId: commentId
+          }, {
+            headers: {
+              Authorization: this.token
+            }
+          }).then(res => {
+            if (res.data.code === 200) {
+              let index = this.comments.findIndex(item => {
+                return item._id === commentId
+              })
+              this.comments.splice(index, 1)
+              Toast({
+                message: '删除成功',
+                position: 'bottom',
+                duration: 2000
+              })
+            }
+          })
+        }).catch(e => {
+        })
       }
     }
   }
@@ -85,8 +118,11 @@
           font-size 16px
           .nickname
             color #0f0
-          .time
+          .right
             font-size 10px
+            display flex
+            div
+              margin-left 5px
         .content
           line-height: normal
           font-size 16px

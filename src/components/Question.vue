@@ -16,7 +16,7 @@ export default {
   data () {
     return {
       items: [],
-      selected: 'all'
+      selected: this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1)
     }
   },
   computed: {

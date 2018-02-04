@@ -16,7 +16,7 @@ export default {
   data () {
     return {
       msg: 'Welcome to 农友圈页面',
-      selected: 'all'
+      selected: this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1)
     }
   },
   methods: {
