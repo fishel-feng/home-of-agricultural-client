@@ -74,7 +74,7 @@ export const showImageMixin = {
 export const getTimeMixin = {
   methods: {
     getTime (time) {
-      return moment(time).format('YYYY-MM-DD HH:mm:ss')
+      return moment(time).format('MM-DD HH:mm')
     }
   }
 }

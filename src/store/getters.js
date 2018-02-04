@@ -19,3 +19,5 @@ export const likes = state => state.likes
 export const myId = state => state.myId
 
 export const tags = state => state.tags
+
+export const messages = state => state.messages

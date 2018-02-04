@@ -10,6 +10,7 @@ const state = {
   followings: [],
   followers: [],
   likes: [],
+  messages: [],
   myId: loadMyId(),
   tags: [
     {_id: '5a3e19eb2b25bae314e7fbc5', tagName: '黄瓜'},

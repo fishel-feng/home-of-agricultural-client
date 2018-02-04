@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { accountTestMixin } from '@/common/js/mixin'
 export default {
   mixins: [accountTestMixin],
@@ -78,7 +79,10 @@ export default {
     },
     showMessageCenter () {
       this.$router.push('/message')
-    }
+    },
+    ...mapActions([
+      'addMessages'
+    ])
   },
   watch: {
     '$route' (to, from) {
@@ -88,15 +92,47 @@ export default {
           this.title = element.text
         }
       })
+      if (from.path === '/message') {
+        this.messageCount = 0
+      }
     },
     selected (newVal, oldVal) {
       this.oldSelect = oldVal
     }
   },
   sockets: {
-    like (content) {
-      console.log(content)
-      this.messageCount++
+    sockets: {
+      chat () {
+        //
+      },
+      like (content) {
+        this.addMessages({type: 'like', content})
+        this.messageCount++
+      },
+      comment (content) {
+        this.addMessages({type: 'comment', content})
+        this.messageCount++
+      },
+      reply (content) {
+        this.addMessages({type: 'reply', content})
+        this.messageCount++
+      },
+      follow (content) {
+        this.addMessages({type: 'follow', content})
+        this.messageCount++
+      },
+      invite (content) {
+        this.addMessages({type: 'invite', content})
+        this.messageCount++
+      },
+      answer (content) {
+        this.addMessages({type: 'answer', content})
+        this.messageCount++
+      },
+      attention (content) {
+        this.addMessages({type: 'attention', content})
+        this.messageCount++
+      }
     }
   }
 }

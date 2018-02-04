@@ -50,6 +50,21 @@ export const deleteAttention = function ({commit, state}, questionId) {
   commit(types.SET_ATTENTIONS, attentions)
 }
 
+export const addMessages = function ({commit, state}, message) {
+  let messages = state.messages.slice()
+  messages.unshift(message)
+  commit(types.SET_MESSAGES, messages)
+}
+
+export const deleteMessage = function ({commit, state}, message) {
+  let messages = state.messages.slice()
+  let index = messages.findIndex(item => {
+    return item.time === message.time && item.type === message.type
+  })
+  messages.splice(index, 1)
+  commit(types.SET_MESSAGES, messages)
+}
+
 export const saveUserInfo = function ({commit}, userInfo) {
   commit(types.SET_COLLECTIONS, userInfo.collections)
   // commit(types.SET_CIRCLES, userInfo.circles)

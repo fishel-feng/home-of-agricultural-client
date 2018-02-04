@@ -19,3 +19,5 @@ export const SET_LIKES = 'SET_LIKES'
 export const SET_TAGS = 'SET_TAGS'
 
 export const SET_MY_ID = 'SET_MY_ID'
+
+export const SET_MESSAGES = 'SET_MESSAGES'

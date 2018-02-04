@@ -33,6 +33,9 @@ const mutations = {
   },
   [types.SET_MY_ID] (state, myId) {
     state.myId = myId
+  },
+  [types.SET_MESSAGES] (state, messages) {
+    state.messages = messages
   }
 }
 
