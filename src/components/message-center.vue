@@ -60,19 +60,14 @@
 
 <script>
   import {getTimeMixin} from '@/common/js/mixin'
-  // import { mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
   export default {
-    // computed: {
-    //   ...mapGetters([
-    //     'messages'
-    //   ])
-    // }
-    mixins: [getTimeMixin],
-    data () {
-      return {
-        messages: [{type: 'attention', content: {userId: '5a240cb38cdba712692ccee3', nickName: 'name', title: '云想衣裳花想容'}, time: 1517729014706}, {type: 'comment', content: 'hello'}]
-      }
+    computed: {
+      ...mapGetters([
+        'messages'
+      ])
     },
+    mixins: [getTimeMixin],
     methods: {
       showUserInfo (userId) {
         this.$router.push('/user/' + userId)

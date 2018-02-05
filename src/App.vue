@@ -6,9 +6,7 @@
       <img class="message-icon" src="./assets/svg/message.svg" height="20px" width="20px">
     </div>
   </mt-header>
-  <!--<keep-alive>-->
-    <router-view/>
-  <!--</keep-alive>-->
+  <router-view/>
   <mt-tabbar v-model="selected" class="tail-tab">
     <mt-tab-item @click.native="selectItem(item)" :id="item.id" v-for="(item,index) in tailList" :key="index">
       <img slot="icon" :src="`http://127.0.0.1:7001/public/svg/${item.image}.svg`"> {{item.text}}
@@ -101,38 +99,36 @@ export default {
     }
   },
   sockets: {
-    sockets: {
-      chat () {
-        //
-      },
-      like (content) {
-        this.addMessages({type: 'like', content})
-        this.messageCount++
-      },
-      comment (content) {
-        this.addMessages({type: 'comment', content})
-        this.messageCount++
-      },
-      reply (content) {
-        this.addMessages({type: 'reply', content})
-        this.messageCount++
-      },
-      follow (content) {
-        this.addMessages({type: 'follow', content})
-        this.messageCount++
-      },
-      invite (content) {
-        this.addMessages({type: 'invite', content})
-        this.messageCount++
-      },
-      answer (content) {
-        this.addMessages({type: 'answer', content})
-        this.messageCount++
-      },
-      attention (content) {
-        this.addMessages({type: 'attention', content})
-        this.messageCount++
-      }
+    chat () {
+      //
+    },
+    like (content) {
+      this.addMessages({type: 'like', content})
+      this.messageCount++
+    },
+    comment (content) {
+      this.addMessages({type: 'comment', content})
+      this.messageCount++
+    },
+    reply (content) {
+      this.addMessages({type: 'reply', content})
+      this.messageCount++
+    },
+    follow (content) {
+      this.addMessages({type: 'follow', content})
+      this.messageCount++
+    },
+    invite (content) {
+      this.addMessages({type: 'invite', content})
+      this.messageCount++
+    },
+    answer (content) {
+      this.addMessages({type: 'answer', content})
+      this.messageCount++
+    },
+    attention (content) {
+      this.addMessages({type: 'attention', content})
+      this.messageCount++
     }
   }
 }

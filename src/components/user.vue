@@ -61,7 +61,6 @@ export default {
         }
       }).then(res => {
         const user = res.data.data.user
-        console.log(res.data)
         this.collectionCount = user.collectionCount
         this.circleCount = user.circleCount
         this.questionCount = user.questionCount
