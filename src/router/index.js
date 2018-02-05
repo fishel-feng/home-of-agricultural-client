@@ -4,11 +4,22 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const News = (resolve) => {
-  import('@/components/news').then((module) => {
+  import('@/components/pages/news/news').then((module) => {
     resolve(module)
   })
 }
 
+const ArticleList = (resolve) => {
+  import('@/components/pages/news/article-list').then((module) => {
+    resolve(module)
+  })
+}
+
+const ArticleInfo = (resolve) => {
+  import('@/components/pages/news/article-info').then((module) => {
+    resolve(module)
+  })
+}
 const Wiki = (resolve) => {
   import('@/components/wiki').then((module) => {
     resolve(module)
@@ -107,18 +118,6 @@ const FollowingList = (resolve) => {
 
 const FollowerList = (resolve) => {
   import('@/components/follower-list').then((module) => {
-    resolve(module)
-  })
-}
-
-const ArticleList = (resolve) => {
-  import('@/components/article-list').then((module) => {
-    resolve(module)
-  })
-}
-
-const ArticleInfo = (resolve) => {
-  import('@/components/article-info').then((module) => {
     resolve(module)
   })
 }

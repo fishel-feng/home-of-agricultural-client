@@ -16,7 +16,7 @@
         <div class="main-wrapper">
           <div class="today-hot-wrapper">
             <div class="today-hot">
-              <img src="../assets/svg/hot.svg" alt="" width="20px">
+              <img src="../../../assets/svg/hot.svg" alt="" width="20px">
               今日热点
             </div>
           </div>
@@ -26,7 +26,7 @@
         </div>
       </ul>
     </div>
-    <router-view></router-view>
+    <router-view/>
   </div>
 </template>
 

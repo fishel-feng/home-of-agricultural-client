@@ -1,31 +1,34 @@
 <template>
-  <list-view class="article-list" :data="newsList" :showLoading="showLoading" :loading="true" @load="loadMore">
-    <li slot="item" slot-scope="props" @click="getInfo(props.item)" class="list-item">
-      <h2 class="title">{{props.item.title}}</h2>
-      <p class="desc">{{props.item.desc}}</p>
-      <span class="date">{{props.item.date}}</span>
-      <span class="read">
-        <img src="../assets/svg/read.svg" alt="" height="8px">
-        {{props.item.read}}
-      </span>
-    </li>
-  </list-view>
+  <div class="article-list">
+    <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" :infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
+      <li v-for="news in newsList" @click="getInfo(news.item)" class="list-item">
+        <h2 class="title">{{news.title}}</h2>
+        <p class="desc">{{news.desc}}</p>
+        <span class="date">{{news.date}}</span>
+        <span class="read">
+          <img src="../../../assets/svg/read.svg" alt="" height="8px">
+          {{news.read}}
+        </span>
+      </li>
+      <div class="load-wrapper">
+        <div class="load-more" v-show="!showLoading">加载更多</div>
+        <mt-spinner class="loading" type="triple-bounce" v-show="showLoading"></mt-spinner>
+      </div>
+    </ul>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
-import ListView from '@/components/list-view'
 export default {
   data () {
     return {
+      loading: false,
       newsList: [],
       listId: '',
       page: 1,
       showLoading: false
     }
-  },
-  components: {
-    ListView
   },
   mounted () {
     this.initData()
@@ -96,4 +99,12 @@ export default {
     .read
       float right
       font-size 12px
+  .load-wrapper
+    padding-top 10px
+    background #fff
+    position relative
+    width 100%
+    height 30px
+    text-align center
+    font-size 14px
 </style>
