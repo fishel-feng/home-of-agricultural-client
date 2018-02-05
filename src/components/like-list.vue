@@ -11,7 +11,7 @@
 
 <script>
 import axios from 'axios'
-import PersonList from '@/components/person-list'
+import PersonList from '@/components/abstract/person-list'
 export default {
   data () {
     return {

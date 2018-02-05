@@ -129,6 +129,14 @@ export default {
             }
           } else {
             this.circles = res.data.data.circleList
+            if (this.$route.query.id) {
+              let index = this.circles.findIndex(item => {
+                return item._id === this.$route.query.id
+              })
+              this.$nextTick(() => {
+                this.$refs.li[index].scrollIntoView()
+              })
+            }
             this.loading = false
           }
         }

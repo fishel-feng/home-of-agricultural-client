@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import Uploader from '@/components/uploader'
+  import Uploader from '@/components/abstract/uploader'
   import axios from 'axios'
   import { Toast } from 'mint-ui'
   import { accountTestMixin } from '@/common/js/mixin'

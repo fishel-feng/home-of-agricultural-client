@@ -23,7 +23,7 @@
 
 <script>
 import axios from 'axios'
-import Uploader from '@/components/uploader'
+import Uploader from '@/components/abstract/uploader'
 import {accountTestMixin} from '@/common/js/mixin'
 export default {
   mixins: [ accountTestMixin ],

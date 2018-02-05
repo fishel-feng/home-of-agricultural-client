@@ -10,7 +10,7 @@
 <script>
   import axios from 'axios'
   import { accountTestMixin } from '@/common/js/mixin'
-  import PersonList from '@/components/person-list'
+  import PersonList from '@/components/abstract/person-list'
   export default {
     mixins: [ accountTestMixin ],
     components: {

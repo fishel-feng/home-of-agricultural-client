@@ -11,7 +11,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import PersonList from '@/components/person-list'
+import PersonList from '@/components/abstract/person-list'
 export default {
   components: {
     PersonList

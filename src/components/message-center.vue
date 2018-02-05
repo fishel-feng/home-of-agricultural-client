@@ -6,31 +6,31 @@
       </mt-header>
       <div class="message-container">
         <div v-for="(item, index) in messages" :key="index">
-          <div v-if="item.type==='like'" class="message-item">
+          <div v-if="item.type==='like'" class="message-item" @click="showCircle(item.content.circleId)">
             <div>
               <span class="nick-name" @click.stop="showUserInfo(item.content.userId)">{{item.content.nickName}}</span> 赞了你的动态
             </div>
             <span class="time">{{getTime(item.content.time)}}</span>
           </div>
-          <div v-else-if="item.type==='comment'" class="message-item">
+          <div v-else-if="item.type==='comment'" class="message-item" @click="showCircle(item.content.circleId)">
             <div>
               <span class="nick-name" @click.stop="showUserInfo(item.content.userId)">{{item.content.nickName}}</span> 评论了你的动态
             </div>
             <span class="time">{{getTime(item.content.time)}}</span>
           </div>
-          <div v-else-if="item.type==='reply'" class="message-item">
+          <div v-else-if="item.type==='reply'" class="message-item" @click="showCircle(item.content.circleId)">
             <div>
               <span class="nick-name" @click.stop="showUserInfo(item.content.userId)">{{item.content.nickName}}</span> 回复了你的评论
             </div>
             <span class="time">{{getTime(item.content.time)}}</span>
           </div>
-          <div v-else-if="item.type==='follow'" class="message-item">
+          <div v-else-if="item.type==='follow'" class="message-item" @click="showFollowers">
             <div>
               <span class="nick-name" @click.stop="showUserInfo(item.content.userId)">{{item.content.nickName}}</span> 关注了你
             </div>
             <span class="time">{{getTime(item.content.time)}}</span>
           </div>
-          <div v-else-if="item.type==='invite'" class="message-item">
+          <div v-else-if="item.type==='invite'" class="message-item" @click="showQuestionInfo(item.content.questionId)">
             <div>
               <span class="nick-name" @click.stop="showUserInfo(item.content.userId)">{{item.content.nickName}}</span>
               邀请你回答问题
@@ -38,19 +38,21 @@
             </div>
             <span class="time">{{getTime(item.content.time)}}</span>
           </div>
-          <div v-else-if="item.type==='answer'" class="message-item">
+          <div v-else-if="item.type==='answer'" class="message-item" @click="showQuestionInfo(item.content.questionId)">
             <div>
               <span class="nick-name" @click.stop="showUserInfo(item.content.userId)">{{item.content.nickName}}</span>
               回答了你提出的问题
               <span class="question-title" @click.stop="showQuestionInfo(item.content.questionId)">{{item.content.title}}</span>
             </div>
+            <span class="time">{{getTime(item.content.time)}}</span>
           </div>
-          <div v-else-if="item.type==='attention'" class="message-item">
+          <div v-else-if="item.type==='attention'" class="message-item" @click="showQuestionInfo(item.content.questionId)">
             <div>
               你关注的问题
               <span class="question-title" @click.stop="showQuestionInfo(item.content.questionId)">{{item.content.title}}</span>
               有了新的回答
             </div>
+            <span class="time">{{getTime(item.content.time)}}</span>
           </div>
         </div>
       </div>
@@ -74,6 +76,12 @@
       },
       showQuestionInfo (questionId) {
         this.$router.push('/question/all/' + questionId)
+      },
+      showCircle (circleId) {
+        this.$router.push('/user/circles?id=' + circleId)
+      },
+      showFollowers () {
+        this.$router.push('/user/followers')
       }
     }
   }
@@ -96,6 +104,7 @@
   .message-container
     margin-top 40px
     .message-item
+      line-height normal
       min-height 50px
       display flex
       align-items center

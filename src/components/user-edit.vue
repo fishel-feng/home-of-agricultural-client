@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import Uploader from '@/components/uploader'
+  import Uploader from '@/components/abstract/uploader'
   import { accountTestMixin } from '@/common/js/mixin'
   import axios from 'axios'
   export default {

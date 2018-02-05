@@ -16,43 +16,43 @@
 </template>
 
 <script>
-export default {
-  props: {
-    data: {
-      type: Array,
-      default: []
+  export default {
+    props: {
+      data: {
+        type: Array,
+        default: []
+      },
+      showLoading: {
+        type: Boolean,
+        default: false
+      },
+      moreText: {
+        type: String,
+        default: '已无更多内容'
+      },
+      loading: {
+        type: Boolean,
+        default: false
+      },
+      distance: {
+        type: Number,
+        default: 10
+      },
+      disableScroll: {
+        type: Boolean,
+        default: false
+      }
     },
-    showLoading: {
-      type: Boolean,
-      default: false
-    },
-    moreText: {
-      type: String,
-      default: '已无更多内容'
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    distance: {
-      type: Number,
-      default: 10
-    },
-    disableScroll: {
-      type: Boolean,
-      default: false
-    }
-  },
-  methods: {
-    loadMore () {
-      this.$emit('load')
+    methods: {
+      loadMore () {
+        this.$emit('load')
+      }
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>
-// .list-view
+  // .list-view
   // padding-top 3px
   .load-wrapper
     padding-top 10px
