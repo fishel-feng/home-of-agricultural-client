@@ -7,7 +7,7 @@
     <div class="content-wrapper">
       <img :src="`http://localhost:7001/public/headImage/${user.headImage}`" width="120px" height="120px" alt="">
       <div class="nickname">{{user.nickName}}</div>
-      <div class="expert-state" v-if="user.certification"><img src="../assets/svg/v.svg" width="14px" height="14px" alt=""> {{user.certification}}专家</div>
+      <div class="expert-state" v-if="user.certification"><img src="../../../assets/svg/v.svg" width="14px" height="14px" alt=""> {{user.certification}}专家</div>
       <div class="description">{{user.description}}</div>
       <div class="information">
         <span>地区：{{user.location ? user.location : '未知'}}</span>

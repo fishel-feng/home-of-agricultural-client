@@ -15,7 +15,7 @@
           </div>
           <div class="tail">
             <div class="tag">
-              <img src="../assets/svg/tag.svg" width="12px" alt="">
+              <img src="../../assets/svg/tag.svg" width="12px" alt="">
               {{item.tag.tagName}}
             </div>
             <div class="answerCount">{{getTime(item.time)}} 回答 {{item.answerCount}}</div>

@@ -1,11 +1,11 @@
 <template>
   <div class="circle-type">
-    <circle-list :baseUrl="baseUrl"></circle-list>
+    <circle-list :baseUrl="baseUrl"/>
   </div>
 </template>
 
 <script>
-import CircleList from '@/components/circle-list'
+import CircleList from '@/components/abstract/circle-list'
 export default {
   data () {
     return {

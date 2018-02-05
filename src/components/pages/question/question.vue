@@ -5,7 +5,7 @@
       <mt-tab-item @click.native="select(item._id)" v-for="(item,index) in items" :key="index" :id="item._id">{{item.tagName}}</mt-tab-item>
       <mt-tab-item @click.native="selectItem">+</mt-tab-item>
     </mt-navbar>
-    <router-view></router-view>
+    <router-view/>
     <div @click="addQuestion" class="btn-add">问</div>
   </div>
 </template>
@@ -34,9 +34,6 @@ export default {
     }
   },
   methods: {
-    main_log (val) {
-      console.log('main_log', val)
-    },
     addQuestion () {
       this.$router.push('/addQuestion')
     },

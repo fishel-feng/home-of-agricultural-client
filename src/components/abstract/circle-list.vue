@@ -27,13 +27,13 @@
               </div>
               <div class="circle-action">
                 <span v-if="!isLiked(item._id)" @click="giveLike(item)">
-                  赞 <img src="../assets/svg/like.svg" alt="" width="14px">
+                  赞 <img src="../../assets/svg/like.svg" alt="" width="14px">
                 </span>
                 <span v-if="isLiked(item._id)" @click="cancelLike(item)">
-                  取消赞 <img src="../assets/svg/liked.svg" alt="" width="14px">
+                  取消赞 <img src="../../assets/svg/liked.svg" alt="" width="14px">
                 </span>
                 <span @click="giveComment(item._id)">
-                  评论 <img src="../assets/svg/comment.svg" alt="" width="14px">
+                  评论 <img src="../../assets/svg/comment.svg" alt="" width="14px">
                 </span>
               </div>
             </div>
@@ -105,12 +105,6 @@ export default {
     }
   },
   methods: {
-    // roll () {
-    //   this.$nextTick(() => {
-    //     this.$refs.li[3].scrollIntoView()
-    //   })
-    //   // todo
-    // },
     getData (callback) {
       axios.get(this.baseUrl + new Date().toISOString(), {
         headers: {

@@ -30,11 +30,11 @@
           <li v-for="(answer, index) in question.answers" :key="index" class="answer-item">
             <div class="answer-title">
               <div class="title-container">
-                <img src="../assets/svg/hot.svg" width="30px" height="30px" alt="">
+                <img src="../../../assets/svg/hot.svg" width="30px" height="30px" alt="">
                 <div class="nick-name">{{answer.nickName}}</div>
                 <div class="expert-state">
                   <span>{{answer.certification}}</span>
-                  <span class="btn-message-send" v-show="answer.certification && !isMine(answer.userId)" @click.stop="sendMessage(answer)"><img src="../assets/svg/chat.svg" width="12px" alt=""> 问专家</span>
+                  <span class="btn-message-send" v-show="answer.certification && !isMine(answer.userId)" @click.stop="sendMessage(answer)"><img src="../../../assets/svg/chat.svg" width="12px" alt=""> 问专家</span>
                 </div>
               </div>
               <div v-show="isMine(answer.userId)" @click.stop="deleteAnswer(answer._id)" class="btn-del">删除</div>

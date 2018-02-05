@@ -1,7 +1,7 @@
 <template>
   <div class="wiki">
     <div class="container">
-      <img src="../assets/svg/search.svg" width="180px" height="180px" alt="">
+      <img src="../../../assets/svg/search.svg" width="180px" height="180px" alt="">
       <mt-field placeholder="在此输入查询关键词" v-model="keyWord"/>
       <mt-button @click.native="search" type="primary" class="btn-submit">搜索</mt-button>
     </div>

@@ -1,11 +1,11 @@
 <template>
   <div class="question-type">
-    <question-list :baseUrl="baseUrl"></question-list>
+    <question-list :baseUrl="baseUrl"/>
   </div>
 </template>
 
 <script>
-import QuestionList from '@/components/question-list'
+import QuestionList from '@/components/abstract/question-list'
 export default {
   data () {
     return {
