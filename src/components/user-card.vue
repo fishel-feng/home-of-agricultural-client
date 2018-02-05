@@ -17,7 +17,8 @@
         <span>年龄：{{user.age ? user.age : '未知'}}</span>
         <span>职业：{{user.job ? user.job : '未知'}}</span>
       </div>
-      <mt-button @click.native="followUser" class="btn-follow" type="primary" size="small">关注用户</mt-button>
+      <mt-button v-if="!isFollowed" @click.native="followUser" class="btn-follow" type="primary" size="small">关注用户</mt-button>
+      <mt-button v-if="isFollowed" @click.native="unFollowUser" class="btn-follow" type="primary" size="small">取消关注</mt-button>
     </div>
     <div class="block-wrapper">
       <div>
@@ -48,16 +49,12 @@
     mixins: [ accountTestMixin ],
     data () {
       return {
-        user: {}
+        user: {},
+        isFollowed: false
       }
     },
     mounted () {
       this.getData()
-    },
-    watch: {
-      '$route' (to, from) {
-        // todo
-      }
     },
     methods: {
       getData () {
@@ -71,6 +68,9 @@
       followUser () {
         // todo
         this.$socket.emit('follow', this.token, this.$route.params.id)
+      },
+      unFollowUser () {
+        // todo
       }
     }
   }
