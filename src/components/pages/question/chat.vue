@@ -3,16 +3,16 @@
     <mt-header fixed :title="this.$route.query.userName">
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
-    <div class="messages">
-      <div  v-for="(item, index) in messageList" :key="index">
+    <ul class="messages">
+      <li  v-for="(item, index) in messageList" :key="index" ref="li">
         <div v-if="item.type==='text'" :class="item.sender!==myId?'message-item':'message-item right'">
           <span>{{item.content}}</span>
         </div>
         <div v-if="item.type==='image'" :class="item.sender!==myId?'message-item':'message-item right'">
           <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/chat/${item.content}`)" :src="`http://127.0.0.1:7001/public/chat/${item.content}`" alt="" width="120px" height="120px">
         </div>
-      </div>
-    </div>
+      </li>
+    </ul>
     <div class="input-area">
       <div class="btn-add" @click="sendImage">+</div>
       <mt-field class="input-text" type="text" v-model="message"/>
@@ -31,7 +31,7 @@
     data () {
       return {
         message: '',
-        messageList: [{type: 'text', sender: '5a240cb38cdba712692ccee4', content: '风蓬飘尽悲歌气，泥絮沾来薄幸名。'}]
+        messageList: []
       }
     },
     methods: {
@@ -39,10 +39,25 @@
         // todo
       },
       sendMessage () {
+        if (!this.message) {
+          return
+        }
         this.$socket.emit('chat', this.token, this.$route.query.userId, this.message, 'text')
-        console.log(this.messageList)
         this.messageList.push({type: 'text', sender: this.myId, content: this.message})
+        this.$nextTick(() => {
+          this.$refs.li[this.messageList.length - 1].scrollIntoView()
+        })
         this.message = ''
+      }
+    },
+    sockets: {
+      chat (message) {
+        if (message.sender === this.$route.query.userId) {
+          this.messageList.push(message)
+          this.$nextTick(() => {
+            this.$refs.li[this.messageList.length - 1].scrollIntoView()
+          })
+        }
       }
     }
   }
