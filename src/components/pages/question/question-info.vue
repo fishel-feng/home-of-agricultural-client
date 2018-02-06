@@ -34,7 +34,8 @@
                 <div class="nick-name">{{answer.nickName}}</div>
                 <div class="expert-state">
                   <span>{{answer.certification}}</span>
-                  <span class="btn-message-send" v-show="answer.certification && !isMine(answer.userId)" @click.stop="sendMessage(answer)"><img src="../../../assets/svg/chat.svg" width="12px" alt=""> 问专家</span>
+                  <!--todo v-show="answer.certification && !isMine(answer.userId)" 测试 -->
+                  <span class="btn-message-send" v-show="answer.certification" @click.stop="sendMessage(answer)"><img src="../../../assets/svg/chat.svg" width="12px" alt=""> 问专家</span>
                 </div>
               </div>
               <div v-show="isMine(answer.userId)" @click.stop="deleteAnswer(answer._id)" class="btn-del">删除</div>
