@@ -34,7 +34,13 @@
         messageList: []
       }
     },
+    mounted () {
+      this.getData()
+    },
     methods: {
+      getData () {
+        // todo
+      },
       sendImage () {
         // todo
       },
