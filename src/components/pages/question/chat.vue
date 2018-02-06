@@ -39,7 +39,7 @@
         // todo
       },
       sendMessage () {
-        this.$socket.emit('chat', this.token, this.$route.query.userId, this.message)
+        this.$socket.emit('chat', this.token, this.$route.query.userId, this.message, 'text')
         console.log(this.messageList)
         this.messageList.push({type: 'text', sender: this.myId, content: this.message})
         this.message = ''
