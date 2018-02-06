@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import axios from 'axios'
+import { mapActions, mapMutations } from 'vuex'
 import { accountTestMixin } from '@/common/js/mixin'
 export default {
   mixins: [accountTestMixin],
@@ -59,6 +60,7 @@ export default {
   mounted () {
     this.verifyLogin(() => {
       this.$socket.emit('login', this.token)
+      this.initData()
     })
   },
   methods: {
@@ -80,7 +82,20 @@ export default {
     },
     ...mapActions([
       'addMessages'
-    ])
+    ]),
+    ...mapMutations({
+      setMessage: 'SET_MESSAGES'
+    }),
+    initData () {
+      axios.get('http://127.0.0.1:7001/user/showMessage', {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        this.messages = res.data.data.messages
+        this.setMessage(this.messages)
+      })
+    }
   },
   watch: {
     '$route' (to, from) {
@@ -102,32 +117,8 @@ export default {
     chat () {
       //
     },
-    like (content) {
-      this.addMessages({type: 'like', content})
-      this.messageCount++
-    },
-    comment (content) {
-      this.addMessages({type: 'comment', content})
-      this.messageCount++
-    },
-    reply (content) {
-      this.addMessages({type: 'reply', content})
-      this.messageCount++
-    },
-    follow (content) {
-      this.addMessages({type: 'follow', content})
-      this.messageCount++
-    },
-    invite (content) {
-      this.addMessages({type: 'invite', content})
-      this.messageCount++
-    },
-    answer (content) {
-      this.addMessages({type: 'answer', content})
-      this.messageCount++
-    },
-    attention (content) {
-      this.addMessages({type: 'attention', content})
+    message (content) {
+      this.addMessages(content)
       this.messageCount++
     }
   }

@@ -11,7 +11,7 @@ export const addMyId = function ({commit}, myId) {
 
 export const addCollection = function ({commit, state}, article) {
   let collections = state.collections.slice()
-  collections.unshift(article)
+  collections.push(article)
   commit(types.SET_COLLECTIONS, collections)
 }
 
@@ -26,7 +26,7 @@ export const deleteCollection = function ({commit, state}, articleId) {
 
 export const addLike = function ({commit, state}, circleId) {
   let likes = state.likes.slice()
-  likes.unshift(circleId)
+  likes.push(circleId)
   commit(types.SET_LIKES, likes)
 }
 
@@ -39,7 +39,7 @@ export const deleteLike = function ({commit, state}, circleId) {
 
 export const addAttention = function ({commit, state}, questionId) {
   let attentions = state.attentions.slice()
-  attentions.unshift(questionId)
+  attentions.push(questionId)
   commit(types.SET_ATTENTIONS, attentions)
 }
 
