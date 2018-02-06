@@ -4,15 +4,13 @@
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
     <div class="messages">
-      <!--todo-->
-      <div class="message-item">
-        <span>风蓬飘尽悲歌气，泥絮沾来薄幸名。</span>
-      </div>
-      <div class="message-item right">
-        <span>风蓬飘尽悲歌气，泥絮沾来薄幸名。</span>
-      </div>
-      <div class="message-item right">
-        <img @click.stop="showBigImage(`http://img.zcool.cn/community/01833455496f930000019ae96b17d9.jpg@1280w_1l_2o_100sh.webp`)" src="../../../assets/svg/search.svg" alt="" width="120px" height="120px">
+      <div  v-for="(item, index) in messageList" :key="index">
+        <div v-if="item.type==='text'" :class="item.sender!==myId?'message-item':'message-item right'">
+          <span>{{item.content}}</span>
+        </div>
+        <div v-if="item.type==='image'" :class="item.sender!==myId?'message-item':'message-item right'">
+          <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/chat/${item.content}`)" :src="`http://127.0.0.1:7001/public/chat/${item.content}`" alt="" width="120px" height="120px">
+        </div>
       </div>
     </div>
     <div class="input-area">
@@ -27,12 +25,13 @@
 </template>
 
 <script>
-  import { showImageMixin } from '@/common/js/mixin'
+  import { showImageMixin, accountTestMixin } from '@/common/js/mixin'
   export default {
-    mixins: [ showImageMixin ],
+    mixins: [ showImageMixin, accountTestMixin ],
     data () {
       return {
-        message: ''
+        message: '',
+        messageList: [{type: 'text', sender: '5a240cb38cdba712692ccee4', content: '风蓬飘尽悲歌气，泥絮沾来薄幸名。'}]
       }
     },
     methods: {
@@ -40,7 +39,10 @@
         // todo
       },
       sendMessage () {
-        // todo
+        this.$socket.emit('chat', this.token, this.$route.query.userId, this.message)
+        console.log(this.messageList)
+        this.messageList.push({type: 'text', sender: this.myId, content: this.message})
+        this.message = ''
       }
     }
   }

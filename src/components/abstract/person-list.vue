@@ -10,7 +10,7 @@
           </div>
         </div>
         <div v-if="showButton" class="btn-wrapper">
-          <mt-button @click.natve.stop="invite(item)" size="small" type="primary">邀请</mt-button>
+          <mt-button @click.natve.stop="select(item)" size="small" :type="item.newMessage ? 'danger':'primary'">{{item.newMessage?'新消息':text}}</mt-button>
         </div>
       </li>
     </ul>
@@ -27,6 +27,10 @@ export default {
     showButton: {
       type: Boolean,
       default: false
+    },
+    text: {
+      type: String,
+      default: ''
     }
   },
   methods: {
@@ -34,8 +38,8 @@ export default {
       const id = item.userId ? item.userId : item._id
       this.$router.push(`/user/${id}`)
     },
-    invite (item) {
-      this.$emit('invite', item)
+    select (item) {
+      this.$emit('select', item)
     }
   }
 }

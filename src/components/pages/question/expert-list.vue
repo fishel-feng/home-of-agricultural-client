@@ -3,7 +3,7 @@
     <mt-header title="相关专家">
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
-    <person-list @invite="inviteExpert" :showButton="true" :data="experts"/>
+    <person-list @select="inviteExpert" :showButton="true" :text="'邀请'" :data="experts"/>
   </div>
 </template>
 

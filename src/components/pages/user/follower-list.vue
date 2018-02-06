@@ -4,7 +4,7 @@
       <mt-header title="关注我的人">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <person-list :data="followers"></person-list>
+      <person-list :data="followers"/>
     </div>
   <!-- </transition> -->
 </template>

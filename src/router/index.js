@@ -183,6 +183,12 @@ const About = (resolve) => {
   })
 }
 
+const Recent = (resolve) => {
+  import('@/components/pages/user/recent').then((module) => {
+    resolve(module)
+  })
+}
+
 const Certification = (resolve) => {
   import('@/components/pages/user/certification').then((module) => {
     resolve(module)
@@ -366,6 +372,10 @@ export default new Router({
     {
       path: '/chat',
       component: Chat
+    },
+    {
+      path: '/recent',
+      component: Recent
     }
   ]
 })

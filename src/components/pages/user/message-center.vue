@@ -4,6 +4,9 @@
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
     <div class="message-container">
+      <div class="chat-message">
+        聊天消息<mt-badge size="normal" type="error">无最新消息</mt-badge>
+      </div>
       <div v-for="(item, index) in messages" :key="index">
         <div v-if="item.type==='like'" class="message-item" @click="showCircle(item.circleId)">
           <div>
@@ -97,6 +100,14 @@
   background #fff
   .message-container
     margin-top 40px
+    .chat-message
+      background #ccc
+      line-height normal
+      min-height 50px
+      display flex
+      align-items center
+      padding 10px
+      justify-content space-between
     .message-item
       line-height normal
       min-height 50px
