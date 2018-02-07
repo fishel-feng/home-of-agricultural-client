@@ -44,34 +44,76 @@
 
 <script>
   import axios from 'axios'
+  import {mapGetters, mapActions} from 'vuex'
   import { accountTestMixin } from '@/common/js/mixin'
   export default {
     mixins: [ accountTestMixin ],
     data () {
       return {
-        user: {},
-        isFollowed: false
+        user: {}
       }
     },
     mounted () {
       this.getData()
+    },
+    computed: {
+      ...mapGetters([
+        'followings'
+      ]),
+      isFollowed () {
+        let result = false
+        this.followings.forEach(item => {
+          if (item.userId === this.user._id) {
+            result = true
+          }
+        })
+        return result
+      }
     },
     methods: {
       getData () {
         axios.get(`http://127.0.0.1:7001/user/getUserInfo/${this.$route.params.id}`).then(res => {
           if (res.data.code === 200) {
             this.user = res.data.data.user
-            console.log(this.user)
           }
         })
       },
       followUser () {
-        // todo
-        this.$socket.emit('follow', this.token, this.$route.params.id)
+        axios.post(`http://127.0.0.1:7001/user/giveFollow`, {
+          targetId: this.$route.params.id
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.addFollowing({
+              description: this.user.description,
+              headImage: this.user.headImage,
+              nickName: this.user.nickName,
+              userId: this.$route.params.id
+            })
+            this.$socket.emit('follow', this.token, this.$route.params.id)
+          }
+        })
       },
       unFollowUser () {
-        // todo
-      }
+        axios.post(`http://127.0.0.1:7001/user/cancelFollow`, {
+          targetId: this.$route.params.id
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.deleteFollowing(this.$route.params.id)
+          }
+        })
+      },
+      ...mapActions([
+        'addFollowing',
+        'deleteFollowing'
+      ])
     }
   }
 </script>

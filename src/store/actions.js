@@ -37,6 +37,21 @@ export const deleteLike = function ({commit, state}, circleId) {
   commit(types.SET_LIKES, likes)
 }
 
+export const addFollowing = function ({commit, state}, targetUser) {
+  let followings = state.followings.slice()
+  followings.push(targetUser)
+  commit(types.SET_FOLLOWINGS, followings)
+}
+
+export const deleteFollowing = function ({commit, state}, targetId) {
+  let followings = state.followings.slice()
+  let index = followings.findIndex(item => {
+    return item.userId === targetId
+  })
+  followings.splice(index, 1)
+  commit(types.SET_FOLLOWINGS, followings)
+}
+
 export const addAttention = function ({commit, state}, questionId) {
   let attentions = state.attentions.slice()
   attentions.push(questionId)
