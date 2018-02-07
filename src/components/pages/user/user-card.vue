@@ -1,5 +1,4 @@
 <template>
-  <!-- <transition name="slide"> -->
   <div class="user-card">
     <mt-header title="用户资料">
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
@@ -39,7 +38,6 @@
       </div>
     </div>
   </div>
-  <!-- </transition> -->
 </template>
 
 <script>
@@ -119,12 +117,6 @@
 </script>
 
 <style lang="stylus" scoped>
-  .slide-enter-active, .slide-leave-active
-    transition all 0.3s
-
-  .slide-enter, .slide-leave-to
-    transform translate3d(100%, 0, 0)
-
   .user-card
     position fixed
     overflow-y auto
