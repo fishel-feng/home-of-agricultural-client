@@ -75,4 +75,5 @@ export const saveUserInfo = function ({commit}, userInfo) {
   commit(types.SET_FOLLOWERS, userInfo.followers)
   commit(types.SET_LIKES, userInfo.likes)
   commit(types.SET_MY_ID, userInfo._id)
+  commit(types.SET_TAGS, userInfo.tags)
 }

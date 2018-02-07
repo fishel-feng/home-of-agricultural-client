@@ -40,13 +40,17 @@
       }
     },
     mounted () {
+      this.userId = this.$route.query.userId
       this.getData()
+    },
+    beforeDestroy () {
+      this.$socket.emit('read', this.token, this.userId)
     },
     methods: {
       getData (callback) {
         let chatId = this.myId < this.$route.query.userId ? this.myId + this.$route.query.userId : this.$route.query.userId + this.myId
         let time = this.messageList.length ? this.messageList[0].time : new Date().toISOString()
-        axios.get(`http://127.0.0.1:7001/questions/getChat/${chatId}/${time}`, {
+        axios.get(`http://127.0.0.1:7001/question/getChat/${chatId}/${time}`, {
           headers: {
             Authorization: this.token
           }
@@ -96,7 +100,6 @@
         }
       }
     }
-    // TODO 组件销毁时候清理
   }
 </script>
 

@@ -2,9 +2,7 @@
   <transition name="slide">
     <div class="select-item">
       <mt-header fixed title="选择问题分类">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <mt-checklist
         align="right"
@@ -21,9 +19,12 @@
 </template>
 
 <script>
+import { Toast } from 'mint-ui'
+import { accountTestMixin } from '@/common/js/mixin'
 import { mapMutations, mapGetters } from 'vuex'
 import axios from 'axios'
 export default {
+  mixins: [accountTestMixin],
   data () {
     return {
       options: [],
@@ -41,11 +42,25 @@ export default {
   methods: {
     submit () {
       this.setTags(this.value)
-      // todo 登录发请求
-      this.$router.go(-1)
+      axios.post('http://localhost:7001/question/saveTags', {
+        tags: this.value
+      }, {
+        headers: {
+          Authorization: this.token
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          Toast({
+            message: '保存成功',
+            position: 'bottom',
+            duration: 2000
+          })
+          this.$router.go(-1)
+        }
+      })
     },
     initData () {
-      axios.get('http://localhost:7001/questions/getTags').then(res => {
+      axios.get('http://localhost:7001/question/getTags').then(res => {
         if (res.data.code === 200) {
           res.data.data.forEach(element => {
             this.options.push({

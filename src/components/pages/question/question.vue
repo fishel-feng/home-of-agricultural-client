@@ -2,7 +2,7 @@
   <div class="question">
     <mt-navbar v-model="selected">
       <mt-tab-item @click.native="select('all')" id="all">全部</mt-tab-item>
-      <mt-tab-item @click.native="select(item._id)" v-for="(item,index) in items" :key="index" :id="item._id">{{item.tagName}}</mt-tab-item>
+      <mt-tab-item @click.native="select(tag._id)" v-for="(tag,index) in tags" :key="index" :id="tag._id">{{tag.tagName}}</mt-tab-item>
       <mt-tab-item @click.native="selectItem">+</mt-tab-item>
     </mt-navbar>
     <router-view/>
@@ -15,7 +15,6 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      items: [],
       selected: this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1)
     }
   },
@@ -23,9 +22,6 @@ export default {
     ...mapGetters([
       'tags'
     ])
-  },
-  mounted () {
-    this.items = this.tags
   },
   watch: {
     '$route' (to, from) {
