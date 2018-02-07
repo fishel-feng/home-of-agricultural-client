@@ -4,27 +4,42 @@
     <mt-header title="最近联系的人">
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
-    <person-list @select="sendMessage" :showButton="true" :text="'发消息'" :data="followers"/>
+    <person-list @select="sendMessage" :showButton="true" :text="'发消息'" :data="recent"/>
   </div>
   <!-- </transition> -->
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import axios from 'axios'
+  import {accountTestMixin} from '@/common/js/mixin'
   import PersonList from '@/components/abstract/person-list'
-  // todo
   export default {
+    mixins: [accountTestMixin],
     components: {
       PersonList
     },
-    computed: {
-      ...mapGetters([
-        'followers'
-      ])
+    data () {
+      return {
+        recent: []
+      }
+    },
+    mounted () {
+      this.initData()
     },
     methods: {
       sendMessage (item) {
-        //
+        this.$router.push(`/chat?userId=${item.userId}&userName=${item.nickName}`)
+      },
+      initData () {
+        axios.get('http://127.0.0.1:7001/user/getRecent', {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.recent = res.data.data.recent
+          }
+        })
       }
     }
   }

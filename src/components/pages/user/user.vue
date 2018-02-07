@@ -10,9 +10,6 @@
         <div>{{description}}</div>
       </div>
     </div>
-    <div class="recent">
-      <mt-cell title="最近联系" to="/recent" is-link/>
-    </div>
     <div class="center">
       <mt-cell title="我的收藏" to="/user/collections" is-link :value="collectionCount"/>
       <mt-cell title="我的动态" to="/user/circles" is-link :value="circleCount"/>
@@ -119,8 +116,6 @@ export default {
         .btn-edit
           font-size 10px
           color #ccc
-  .recent
-    padding 5px 15px
   .center
     padding 10px 15px
   .foot

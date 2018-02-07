@@ -3,16 +3,19 @@
     <mt-header fixed :title="this.$route.query.userName">
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
-    <ul class="messages">
-      <li  v-for="(item, index) in messageList" :key="index" ref="li">
-        <div v-if="item.type==='text'" :class="item.sender!==myId?'message-item':'message-item right'">
-          <span>{{item.content}}</span>
-        </div>
-        <div v-if="item.type==='image'" :class="item.sender!==myId?'message-item':'message-item right'">
-          <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/chat/${item.content}`)" :src="`http://127.0.0.1:7001/public/chat/${item.content}`" alt="" width="120px" height="120px">
-        </div>
-      </li>
-    </ul>
+    <mt-loadmore :top-method="loadTop" ref="loadmore">
+      <ul class="messages">
+        <div class="load-hint" v-show="messageList.length > 30">{{hint}}</div>
+        <li  v-for="(item, index) in messageList" :key="index" ref="li">
+          <div v-if="item.type==='text'" :class="item.sender!==myId?'message-item':'message-item right'">
+            <span>{{item.content}}</span>
+          </div>
+          <div v-if="item.type==='image'" :class="item.sender!==myId?'message-item':'message-item right'">
+            <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/chat/${item.content}`)" :src="`http://127.0.0.1:7001/public/chat/${item.content}`" alt="" width="120px" height="120px">
+          </div>
+        </li>
+      </ul>
+    </mt-loadmore>
     <div class="input-area">
       <div class="btn-add" @click="sendImage">+</div>
       <mt-field class="input-text" type="text" v-model="message"/>
@@ -25,21 +28,48 @@
 </template>
 
 <script>
+  import axios from 'axios'
   import { showImageMixin, accountTestMixin } from '@/common/js/mixin'
   export default {
     mixins: [ showImageMixin, accountTestMixin ],
     data () {
       return {
         message: '',
-        messageList: []
+        messageList: [],
+        hint: '下拉加载更多'
       }
     },
     mounted () {
       this.getData()
     },
     methods: {
-      getData () {
-        // todo
+      getData (callback) {
+        let chatId = this.myId < this.$route.query.userId ? this.myId + this.$route.query.userId : this.$route.query.userId + this.myId
+        let time = this.messageList.length ? this.messageList[0].time : new Date().toISOString()
+        axios.get(`http://127.0.0.1:7001/questions/getChat/${chatId}/${time}`, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            if (!callback) {
+              this.messageList = res.data.data
+              this.$nextTick(() => {
+                this.$refs.li[this.messageList.length - 1].scrollIntoView()
+              })
+            } else {
+              if (res.data.data.length) {
+                this.messageList.unshift(...res.data.data)
+                callback()
+              } else {
+                this.hint = '已无更多消息'
+              }
+            }
+          }
+        })
+      },
+      loadTop () {
+        this.getData(this.$refs.loadmore.onTopLoaded)
       },
       sendImage () {
         // todo
@@ -66,6 +96,7 @@
         }
       }
     }
+    // TODO 组件销毁时候清理
   }
 </script>
 
@@ -82,6 +113,8 @@
   .messages
     margin-top 40px
     margin-bottom 48px
+    .load-hint
+      text-align center
     .right
       justify-content flex-end
     .left
