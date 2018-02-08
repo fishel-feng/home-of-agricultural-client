@@ -4,7 +4,7 @@
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
     <mt-loadmore :top-method="loadTop" ref="loadmore">
-      <ul class="messages">
+      <ul class="messages" ref="div">
         <div class="load-hint" v-show="messageList.length > 30">{{hint}}</div>
         <li  v-for="(item, index) in messageList" :key="index" ref="li">
           <div v-if="item.type==='text'" :class="item.sender!==myId?'message-item':'message-item right'">
@@ -16,10 +16,15 @@
         </li>
       </ul>
     </mt-loadmore>
-    <div class="input-area">
-      <div class="btn-add" @click="sendImage">+</div>
-      <mt-field class="input-text" type="text" v-model="message"/>
-      <mt-button @click.native="sendMessage" class="btn-submit" type="primary" size="small" >发送</mt-button>
+    <div class="input-wrapper">
+      <div class="input-area">
+        <div class="btn-add" @click="sendImage">+</div>
+        <mt-field class="input-text" type="text" v-model="message"/>
+        <mt-button @click.native="sendMessage" class="btn-submit" type="primary" size="small" >发送</mt-button>
+      </div>
+      <div v-show="showUploader">
+        <uploader :submitText="'发送图片'" :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/chat'"/>
+      </div>
     </div>
     <div @click="hideImage" v-if="showImage" class="image-wrapper">
       <img class="big-image" :src="currentImage" alt="">
@@ -28,6 +33,7 @@
 </template>
 
 <script>
+  import Uploader from '@/components/abstract/uploader'
   import axios from 'axios'
   import { showImageMixin, accountTestMixin } from '@/common/js/mixin'
   export default {
@@ -36,8 +42,13 @@
       return {
         message: '',
         messageList: [],
-        hint: '下拉加载更多'
+        hint: '下拉加载更多',
+        showUploader: false,
+        hasImage: false
       }
+    },
+    components: {
+      Uploader
     },
     mounted () {
       this.userId = this.$route.query.userId
@@ -76,7 +87,32 @@
         this.getData(this.$refs.loadmore.onTopLoaded)
       },
       sendImage () {
-        // todo
+        if (this.showUploader) {
+          this.showUploader = false
+          this.$refs.div.style['margin-bottom'] = '48px'
+        } else {
+          this.showUploader = true
+          this.$refs.div.style['margin-bottom'] = this.hasImage ? '208px' : '154px'
+          this.$refs.li[this.messageList.length - 1].scrollIntoView()
+        }
+      },
+      uploadSuccess (images) {
+        this.hasImage = false
+        this.$refs.div.style['margin-bottom'] = '154px'
+        this.$socket.emit('chat', this.token, this.$route.query.userId, images[0], 'image')
+        this.messageList.push({type: 'image', sender: this.myId, content: images[0]})
+        this.$nextTick(() => {
+          this.$refs.li[this.messageList.length - 1].scrollIntoView()
+        })
+      },
+      clearImage () {
+        this.hasImage = false
+        this.$refs.div.style['margin-bottom'] = '154px'
+      },
+      addImage () {
+        this.hasImage = true
+        this.$refs.div.style['margin-bottom'] = '208px'
+        this.$refs.li[this.messageList.length - 1].scrollIntoView()
       },
       sendMessage () {
         if (!this.message) {
@@ -135,30 +171,31 @@
         margin 5px
         padding 10px
         max-width 60%
-  .input-area
-    width 100%
-    height 48px
-    display flex
+  .input-wrapper
     position fixed
     bottom 0
-    .btn-add
-      font-weight bolder
-      font-size 35px
-      text-align center
-      line-height 40px
-      width 45px
-      height 45px
-      border solid 1px #26a2ff
-      border-radius 50%
-      color #26a2ff
-      background-color #fff
-    .input-text
-      flex 1
-      border-radius 10px
-      border #218dff solid 1px
-    .btn-submit
-      height 100%
-      width 60px
+    width 100%
+    .input-area
+      display flex
+      height 48px
+      .btn-add
+        font-weight bolder
+        font-size 35px
+        text-align center
+        line-height 40px
+        width 45px
+        height 45px
+        border solid 1px #26a2ff
+        border-radius 50%
+        color #26a2ff
+        background-color #fff
+      .input-text
+        flex 1
+        border-radius 10px
+        border #218dff solid 1px
+      .btn-submit
+        height 100%
+        width 60px
   .image-wrapper
     display flex
     align-items center

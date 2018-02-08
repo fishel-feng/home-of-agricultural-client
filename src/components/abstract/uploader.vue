@@ -17,8 +17,8 @@
       <section v-if="uploading" :width="(percent * 100) + '%'">{{(percent * 100) + '%'}}</section>
     </div>
     <div class="operation-box">
-      <mt-button v-if="status === 'ready'" type="primary" size="small" @click.native="submit">上传</mt-button>
-      <mt-button v-if="status === 'finished'" type="primary" size="small" @click.native="finished">完成</mt-button>
+      <mt-button v-if="status === 'ready'" type="primary" size="small" @click.native="submit">{{submitText}}</mt-button>
+      <!--<mt-button v-if="status === 'finished'" type="primary" size="small" @click.native="finished">完成</mt-button>-->
     </div>
   </section>
   <input type="file" accept="image/*" @change="fileChanged" ref="file" multiple="multiple">
@@ -38,6 +38,10 @@ export default {
     once: {
       type: Boolean,
       default: false
+    },
+    submitText: {
+      type: String,
+      default: '上传'
     }
   },
   data () {
@@ -52,7 +56,6 @@ export default {
   methods: {
     add () {
       this.$refs.file.click()
-      this.$emit('addImage')
     },
     submit () {
       if (this.files.length === 0) {
@@ -70,7 +73,8 @@ export default {
       }).then(res => {
         if (res.data.code === 200 && res.data.data.length) {
           this.$emit('success', res.data.data)
-          this.status = 'finished'
+          // this.status = 'finished'
+          this.finished()
         } else {
           this.status = 'error'
         }
@@ -88,6 +92,9 @@ export default {
     },
     fileChanged () {
       const list = this.$refs.file.files
+      if (list.length) {
+        this.$emit('addImage')
+      }
       for (let i = 0; i < list.length; i++) {
         if (!this.isContain(list[i])) {
           const item = {
@@ -208,7 +215,7 @@ export default {
 .vue-uploader .upload-func {
   display: flex;
   padding: 10px;
-  margin: 0px;
+  margin: 0;
   background: #f8f8f8;
   border-top: 1px solid #ececec;
 }
