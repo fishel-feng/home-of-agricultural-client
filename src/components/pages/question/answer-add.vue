@@ -8,7 +8,7 @@
       </div>
     </mt-header>
     <mt-field placeholder="在此输入答案" type="textarea" rows="6" v-model="content"/>
-    <uploader @addImage="addImage" @success="uploadSuccess" :src="'http://localhost:7001/upload/answer'"/>
+    <uploader @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/answer'"/>
   </div>
   <!-- </transition> -->
 </template>
@@ -33,6 +33,14 @@
     },
     methods: {
       submit () {
+        if (this.hasImage) {
+          Toast({
+            message: '有未上传的图片，请上传完毕或取消上传后再继续',
+            position: 'bottom',
+            duration: 3000
+          })
+          return
+        }
         if (!this.content) {
           Toast({
             message: '内容不能为空',
@@ -61,6 +69,9 @@
       },
       uploadSuccess (images) {
         this.images = images
+        this.hasImage = false
+      },
+      clearImage () {
         this.hasImage = false
       }
     }

@@ -5,7 +5,7 @@
       <img :src="file.src" alt="">
       <span class="file-remove" @click="remove(index)">+</span>
     </section>
-    <section v-if="status === 'ready'" class="file-item">
+    <section v-if="status === 'ready' && !(once && files.length >= 1)" class="file-item">
       <div @click="add" class="add">
         <span>+</span>
       </div>
@@ -34,6 +34,10 @@ export default {
     src: {
       type: String,
       required: true
+    },
+    once: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -48,13 +52,13 @@ export default {
   methods: {
     add () {
       this.$refs.file.click()
+      this.$emit('addImage')
     },
     submit () {
       if (this.files.length === 0) {
         console.warn('no file!')
         return
       }
-      this.$emit('addImage')
       const formData = new FormData()
       this.files.forEach((item) => {
         formData.append(item.name, item.file)
@@ -78,6 +82,9 @@ export default {
     },
     remove (index) {
       this.files.splice(index, 1)
+      if (!this.files.length) {
+        this.$emit('empty')
+      }
     },
     fileChanged () {
       const list = this.$refs.file.files

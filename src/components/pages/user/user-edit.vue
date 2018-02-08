@@ -1,14 +1,15 @@
 <template>
   <div class="user-edit">
     <mt-header fixed title="编辑个人资料">
-      <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
+      <mt-button @click.native="back" icon="back" slot="left">返回</mt-button>
     </mt-header>
     <div class="container">
       <mt-field label="用户名" placeholder="请输入用户名" v-model="nickName"/>
       <div class="head-image-container">
         <span>头像</span>
         <img :src="`http://localhost:7001/public/headImage/${headImage}`" width="40px" height="40px" alt="">
-        <uploader @success="uploadSuccess" :src="'http://localhost:7001/upload/headImage'"/>
+        <uploader :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/headImage'"/>
+        &nbsp;上传头像
       </div>
       <mt-field label="个人简介" placeholder="在此输入个人简介" :attr="{ maxlength: 40 }" type="textarea" rows="3" v-model="description"/>
       <div class="gender">
@@ -29,6 +30,7 @@
 <script>
   import Uploader from '@/components/abstract/uploader'
   import { accountTestMixin } from '@/common/js/mixin'
+  import {Toast, MessageBox} from 'mint-ui'
   import axios from 'axios'
   export default {
     mixins: [accountTestMixin],
@@ -40,7 +42,8 @@
         age: 0,
         location: '',
         job: '',
-        headImage: ''
+        headImage: '',
+        hasImage: false
       }
     },
     components: {
@@ -64,12 +67,57 @@
           }
         })
       },
-      uploadSuccess () {
-        // todo
+      uploadSuccess (images) {
+        this.headImage = images[0]
+        this.hasImage = false
+      },
+      clearImage () {
+        this.hasImage = false
+      },
+      addImage () {
+        this.hasImage = true
+      },
+      back () {
+        MessageBox.confirm('是否保存修改', {
+          closeOnClickModal: true,
+          confirmButtonText: '保存',
+          cancelButtonText: '不保存'
+        }).then(action => {
+          this.submit()
+        }).catch(e => {
+          this.$router.go(-1)
+        })
       },
       submit () {
-        axios.post(`http://127.0.0.1:7001/user/modifyUserInfo`).then(res => {
-          // todo
+        if (this.hasImage) {
+          Toast({
+            message: '有未上传的图片，请上传完毕或取消上传后再继续',
+            position: 'bottom',
+            duration: 3000
+          })
+          return
+        }
+        axios.post(`http://127.0.0.1:7001/user/modifyUserInfo`, {
+          nickName: this.nickName,
+          gender: this.gender,
+          age: this.age,
+          job: this.job,
+          location: this.location,
+          description: this.description,
+          headImage: this.headImage
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            Toast({
+              message: '修改信息成功',
+              position: 'bottom',
+              duration: 2000
+            })
+            this.$router.go(-1)
+          }
         })
       }
     }

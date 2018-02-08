@@ -13,7 +13,7 @@
         <div>问题标签：{{tag}}</div>
         <mt-button @click.native="tagRadio = true" type="primary" size="small">选择问题标签</mt-button>
       </div>
-      <uploader @addImage="addImage" @success="uploadSuccess" :src="'http://localhost:7001/upload/question'"/>
+      <uploader @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/question'"/>
       <mt-popup @click.native="tagRadio = false" v-model="tagRadio" class="tag-radio">
         <mt-radio align="right" v-model="tag" :options="tags"/>
       </mt-popup>
@@ -48,6 +48,14 @@ export default {
   },
   methods: {
     submit () {
+      if (this.hasImage) {
+        Toast({
+          message: '有未上传的图片，请上传完毕或取消上传后再继续',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
+      }
       if (!this.title || !this.content) {
         Toast({
           message: '标题或内容不能为空',
@@ -78,6 +86,9 @@ export default {
           this.$router.replace(`/question/all/${res.data.data.question._id}`)
         }
       })
+    },
+    clearImage () {
+      this.hasImage = false
     },
     addImage () {
       this.hasImage = true

@@ -16,12 +16,13 @@
           剩余{{rest}}字
         </div>
       </div>
-      <uploader @addImage="addImage" @success="uploadSuccess" :src="'http://localhost:7001/upload/circle'"/>
+      <uploader @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/circle'"/>
     </div>
   <!-- </transition> -->
 </template>
 
 <script>
+import {Toast} from 'mint-ui'
 import axios from 'axios'
 import Uploader from '@/components/abstract/uploader'
 import {accountTestMixin} from '@/common/js/mixin'
@@ -44,6 +45,14 @@ export default {
   },
   methods: {
     submit () {
+      if (this.hasImage) {
+        Toast({
+          message: '有未上传的图片，请上传完毕或取消上传后再继续',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
+      }
       axios.post('http://localhost:7001/circle/addCircle', {
         content: this.content,
         images: this.images
@@ -56,6 +65,9 @@ export default {
           this.$router.go(-1)
         }
       })
+    },
+    clearImage () {
+      this.hasImage = false
     },
     addImage () {
       this.hasImage = true
