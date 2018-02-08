@@ -63,10 +63,6 @@
           axios.post('http://localhost:7001/circle/deleteComment', {
             circleId: this.$route.params.circleId,
             commentId: commentId
-          }, {
-            headers: {
-              Authorization: this.token
-            }
           }).then(res => {
             if (res.data.code === 200) {
               let index = this.comments.findIndex(item => {

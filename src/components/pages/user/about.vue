@@ -3,9 +3,7 @@
   <!-- <transition name="bottom"> -->
     <div class="about">
       <mt-header fixed title="关于">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <!-- todo -->
       <!-- logo -->

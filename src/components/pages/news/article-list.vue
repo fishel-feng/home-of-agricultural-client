@@ -1,7 +1,7 @@
 <template>
   <div class="article-list">
     <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" :infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
-      <li v-for="news in newsList" @click="getInfo(news.item)" class="list-item">
+      <li v-for="news in newsList" @click="getInfo(news)" class="list-item">
         <h2 class="title">{{news.title}}</h2>
         <p class="desc">{{news.desc}}</p>
         <span class="date">{{news.date}}</span>
@@ -15,6 +15,7 @@
         <mt-spinner class="loading" type="triple-bounce" v-show="showLoading"></mt-spinner>
       </div>
     </ul>
+    <router-view/>
   </div>
 </template>
 

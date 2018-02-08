@@ -53,10 +53,6 @@
           questionId: this.$route.query.questionId,
           content: this.content,
           images: this.images
-        }, {
-          headers: {
-            Authorization: this.token
-          }
         }).then(res => {
           if (res.data.code === 200) {
             this.$socket.emit('answer', this.token, this.$route.query.questionId)

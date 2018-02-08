@@ -1,12 +1,12 @@
 <template>
-  <!-- <transition name="slide"> -->
+   <transition name="slide">
     <div class="following-list">
       <mt-header title="我关注的人">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <person-list :data="followings"></person-list>
+      <person-list :data="followings"/>
     </div>
-  <!-- </transition> -->
+   </transition>
 </template>
 
 <script>

@@ -7,6 +7,8 @@ import App from './App'
 import router from './router'
 import store from './store'
 import VueSocketio from 'vue-socket.io'
+import axios from 'axios'
+import {loadToken} from '@/common/js/cache'
 import '@/assets/stylus/index.styl'
 
 Vue.use(VueSocketio, 'http://127.0.0.1:7001')
@@ -14,6 +16,15 @@ Vue.use(VueSocketio, 'http://127.0.0.1:7001')
 Vue.use(MintUI)
 
 Vue.config.productionTip = false
+
+axios.interceptors.request.use((config) => {
+  if (loadToken()) {
+    config.headers.Authorization = loadToken()
+  }
+  return config
+}, err => {
+  return Promise.reject(err)
+})
 
 /* eslint-disable no-new */
 new Vue({

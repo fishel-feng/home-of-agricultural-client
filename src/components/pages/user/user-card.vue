@@ -79,10 +79,6 @@
       followUser () {
         axios.post(`http://127.0.0.1:7001/user/giveFollow`, {
           targetId: this.$route.params.id
-        }, {
-          headers: {
-            Authorization: this.token
-          }
         }).then(res => {
           if (res.data.code === 200) {
             this.addFollowing({
@@ -98,10 +94,6 @@
       unFollowUser () {
         axios.post(`http://127.0.0.1:7001/user/cancelFollow`, {
           targetId: this.$route.params.id
-        }, {
-          headers: {
-            Authorization: this.token
-          }
         }).then(res => {
           if (res.data.code === 200) {
             this.deleteFollowing(this.$route.params.id)

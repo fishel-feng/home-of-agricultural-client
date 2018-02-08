@@ -2,9 +2,7 @@
   <transition name="slide">
     <div class="user-question">
       <mt-header fixed title="我提问的问题">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <question-list baseUrl="http://localhost:7001/user/getQuestions/"/>
     </div>

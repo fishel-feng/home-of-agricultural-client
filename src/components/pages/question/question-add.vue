@@ -77,10 +77,6 @@ export default {
         content: this.content,
         tag: this.tag,
         images: this.images
-      }, {
-        headers: {
-          Authorization: this.token
-        }
       }).then(res => {
         if (res.data.code === 200) {
           this.$router.replace(`/question/all/${res.data.data.question._id}`)

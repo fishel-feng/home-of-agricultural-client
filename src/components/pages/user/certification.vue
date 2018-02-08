@@ -1,9 +1,7 @@
 <template>
   <div class="certification">
     <mt-header fixed title="专家认证">
-      <router-link to="/" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
+      <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
     专家认证
   </div>
@@ -11,7 +9,7 @@
 
 <script>
 export default {
-
+  // todo
 }
 </script>
 

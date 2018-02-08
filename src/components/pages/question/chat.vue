@@ -61,11 +61,7 @@
       getData (callback) {
         let chatId = this.myId < this.$route.query.userId ? this.myId + this.$route.query.userId : this.$route.query.userId + this.myId
         let time = this.messageList.length ? this.messageList[0].time : new Date().toISOString()
-        axios.get(`http://127.0.0.1:7001/question/getChat/${chatId}/${time}`, {
-          headers: {
-            Authorization: this.token
-          }
-        }).then(res => {
+        axios.get(`http://127.0.0.1:7001/question/getChat/${chatId}/${time}`).then(res => {
           if (res.data.code === 200) {
             if (!callback) {
               this.messageList = res.data.data

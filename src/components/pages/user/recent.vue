@@ -29,11 +29,7 @@
         this.$router.push(`/chat?userId=${item.userId}&userName=${item.nickName}`)
       },
       initData () {
-        axios.get('http://127.0.0.1:7001/user/getRecent', {
-          headers: {
-            Authorization: this.token
-          }
-        }).then(res => {
+        axios.get('http://127.0.0.1:7001/user/getRecent').then(res => {
           if (res.data.code === 200) {
             this.recent = res.data.data.recent
           }

@@ -75,11 +75,7 @@ export default {
     } else if (this.$route.path === '/circles/attention' || this.$route.path === '/user/circles') {
       this.verifyLogin(this.getData)
     }
-    axios.get('http://localhost:7001/user/getUserIndex', {
-      headers: {
-        Authorization: this.token
-      }
-    }).then(res => {
+    axios.get('http://localhost:7001/user/getUserIndex').then(res => {
       const user = res.data.data.user
       this.setLikes(user.likes)
     })
@@ -106,11 +102,7 @@ export default {
   },
   methods: {
     getData (callback) {
-      axios.get(this.baseUrl + new Date().toISOString(), {
-        headers: {
-          Authorization: this.token
-        }
-      }).then(res => {
+      axios.get(this.baseUrl + new Date().toISOString()).then(res => {
         if (res.data.code === 200) {
           if (this.circles.length && res.data.data.circleList.length && this.circles[0]._id === res.data.data.circleList[0]._id) {
             if (callback) {
@@ -143,11 +135,7 @@ export default {
       this.loading = true
       this.showLoading = true
       if (this.circles.length) {
-        axios.get(this.baseUrl + this.circles[this.circles.length - 1].time, {
-          headers: {
-            Authorization: this.token
-          }
-        }).then(res => {
+        axios.get(this.baseUrl + this.circles[this.circles.length - 1].time).then(res => {
           if (res.data.code === 200) {
             if (!res.data.data.circleList.length) {
               Toast({
@@ -179,10 +167,6 @@ export default {
       this.verifyLogin(() => {
         axios.post('http://localhost:7001/circle/giveLike', {
           circleId: circle._id
-        }, {
-          headers: {
-            Authorization: this.token
-          }
         }).then(res => {
           if (res.data.code === 200) {
             this.addLike(circle._id)
@@ -196,10 +180,6 @@ export default {
       this.verifyLogin(() => {
         axios.post('http://localhost:7001/circle/cancelLike', {
           circleId: circle._id
-        }, {
-          headers: {
-            Authorization: this.token
-          }
         }).then(res => {
           if (res.data.code === 200) {
             this.deleteLike(circle._id)
@@ -227,10 +207,6 @@ export default {
       }).then(action => {
         axios.post('http://localhost:7001/circle/deleteCircle', {
           circleId: circleId
-        }, {
-          headers: {
-            Authorization: this.token
-          }
         }).then(res => {
           if (res.data.code === 200) {
             let index = this.circles.findIndex(item => {

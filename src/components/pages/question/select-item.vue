@@ -44,10 +44,6 @@ export default {
       this.setTags(this.value)
       axios.post('http://localhost:7001/question/saveTags', {
         tags: this.value
-      }, {
-        headers: {
-          Authorization: this.token
-        }
       }).then(res => {
         if (res.data.code === 200) {
           Toast({

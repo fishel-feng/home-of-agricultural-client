@@ -87,11 +87,7 @@ export default {
       setMessage: 'SET_MESSAGES'
     }),
     initData () {
-      axios.get('http://127.0.0.1:7001/user/showMessage', {
-        headers: {
-          Authorization: this.token
-        }
-      }).then(res => {
+      axios.get('http://127.0.0.1:7001/user/showMessage').then(res => {
         this.messages = res.data.data.messages
         this.setMessage(this.messages)
       })

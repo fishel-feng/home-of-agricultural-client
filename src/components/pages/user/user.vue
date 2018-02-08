@@ -55,11 +55,7 @@ export default {
   },
   methods: {
     getData () {
-      axios.get('http://localhost:7001/user/getUserIndex', {
-        headers: {
-          Authorization: this.token
-        }
-      }).then(res => {
+      axios.get('http://localhost:7001/user/getUserIndex').then(res => {
         const user = res.data.data.user
         this.collectionCount = user.collectionCount
         this.circleCount = user.circleCount

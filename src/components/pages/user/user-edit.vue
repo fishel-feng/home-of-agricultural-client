@@ -105,10 +105,6 @@
           location: this.location,
           description: this.description,
           headImage: this.headImage
-        }, {
-          headers: {
-            Authorization: this.token
-          }
         }).then(res => {
           if (res.data.code === 200) {
             Toast({

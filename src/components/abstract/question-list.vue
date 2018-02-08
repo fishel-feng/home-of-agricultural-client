@@ -83,11 +83,7 @@ export default {
       this.loading = true
       this.showLoading = true
       if (this.questions.length) {
-        axios.get(this.baseUrl + this.questions[this.questions.length - 1].time, {
-          headers: {
-            Authorization: this.token
-          }
-        }).then(res => {
+        axios.get(this.baseUrl + this.questions[this.questions.length - 1].time).then(res => {
           if (res.data.code === 200) {
             if (!res.data.data.questions.length) {
               Toast({
@@ -106,11 +102,7 @@ export default {
       this.showLoading = false
     },
     getData (callback) {
-      axios.get(this.baseUrl + new Date().toISOString(), {
-        headers: {
-          Authorization: this.token
-        }
-      }).then(res => {
+      axios.get(this.baseUrl + new Date().toISOString()).then(res => {
         if (res && res.data.code === 200) {
           if (this.questions.length && res.data.data.questions.length && this.questions[0]._id === res.data.data.questions[0]._id) {
             if (callback) {
@@ -139,10 +131,6 @@ export default {
       }).then(action => {
         axios.post('http://localhost:7001/question/deleteQuestion', {
           questionId: questionId
-        }, {
-          headers: {
-            Authorization: this.token
-          }
         }).then(res => {
           if (res.data.code === 200) {
             let index = this.questions.findIndex(item => {

@@ -196,7 +196,6 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
@@ -233,20 +232,6 @@ export default {
   font-size: 12px;
   transition: all .5s ease;
 }
-
-/* .vue-uploader .upload-func .operation-box {
-  flex-grow: 0;
-  padding-left: 10px;
-} */
-
-/* .vue-uploader .upload-func .operation-box button {
-  padding: 4px 12px;
-  color: #fff;
-  background: #007ACC;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
-} */
 
 .vue-uploader>input[type="file"] {
   display: none;

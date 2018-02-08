@@ -2,9 +2,7 @@
   <transition name="slide">
     <div class="user-collection">
       <mt-header fixed title="我收藏的文章">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <ul class="wrapper">
         <li class="titleList" v-for="(item,index) in collections" :key="index" @click="showArticleInfo(item.articleId)">{{item.title}}</li>
@@ -33,11 +31,7 @@ export default {
   },
   methods: {
     initData () {
-      axios.get('http://localhost:7001/user/getCollections', {
-        headers: {
-          Authorization: this.token
-        }
-      }).then(res => {
+      axios.get('http://localhost:7001/user/getCollections').then(res => {
         this.collections = res.data.data.collections
       })
     },

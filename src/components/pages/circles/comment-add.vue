@@ -41,10 +41,6 @@ export default {
         circleId: this.$route.query.id,
         content: this.content,
         targetId: this.$route.query.targetId ? this.$route.query.targetId : ''
-      }, {
-        headers: {
-          Authorization: this.token
-        }
       }).then(res => {
         if (res.data.code === 200) {
           this.$router.go(-1)

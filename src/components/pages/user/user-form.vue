@@ -2,9 +2,7 @@
   <transition name="slide">
     <div class="user-form">
       <mt-header fixed :title="isNew?'用户注册':'找回密码'">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <div class="form-wrapper">
         <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone"/>

@@ -56,10 +56,6 @@ export default {
       axios.post('http://localhost:7001/circle/addCircle', {
         content: this.content,
         images: this.images
-      }, {
-        headers: {
-          Authorization: this.token
-        }
       }).then(res => {
         if (res.data.code === 200) {
           this.$router.go(-1)

@@ -2,9 +2,7 @@
   <transition name="slide">
     <div class="user-circle">
       <mt-header fixed title="我发表的动态">
-        <router-link to="/" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <circle-list baseUrl="http://127.0.0.1:7001/user/getCircles/"/>
     </div>

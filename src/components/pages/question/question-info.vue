@@ -90,10 +90,6 @@
       giveAttention () {
         axios.post('http://127.0.0.1:7001/question/attentionQuestion/', {
           questionId: this.question._id
-        }, {
-          headers: {
-            Authorization: this.token
-          }
         }).then(res => {
           console.log(res.data)
           if (res.data.code === 200) {
@@ -110,10 +106,6 @@
       removeAttention () {
         axios.post('http://127.0.0.1:7001/question/removeAttentionQuestion/', {
           questionId: this.question._id
-        }, {
-          headers: {
-            Authorization: this.token
-          }
         }).then(res => {
           if (res.data.code === 200) {
             Toast({
@@ -141,10 +133,6 @@
           axios.post('http://localhost:7001/question/deleteAnswer', {
             questionId: this.$route.params.questionId,
             answerId: answerId
-          }, {
-            headers: {
-              Authorization: this.token
-            }
           }).then(res => {
             if (res.data.code === 200) {
               let index = this.question.answers.findIndex(item => {
