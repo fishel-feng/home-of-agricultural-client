@@ -76,9 +76,13 @@ export default {
       }
     },
     getArticleInfo (id) {
+      this.loading = true
       this.$router.push('/news/' + id)
     },
     getArticleList () {
+      if (this.$route.path !== '/news') {
+        return
+      }
       this.showLoading = true
       this.loading = true
       axios.get(`http://localhost:7001/news/getArticleListByPage/${this.selected}/${this.page}`).then(res => {
@@ -94,8 +98,8 @@ export default {
 
 <style lang="stylus" scoped>
 .news
-  margin-bottom 55px
-  width: 100%
+  margin-bottom 43px
+  width 100%
   .nav
     width 100%
   .content

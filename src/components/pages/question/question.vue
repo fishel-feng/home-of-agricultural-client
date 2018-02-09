@@ -46,6 +46,9 @@ export default {
       this.getQuestionList()
     },
     getQuestionList (callback) {
+      if (this.$route.path !== '/question') {
+        return
+      }
       let url = this.selected ? `/getQuestionList/${this.selected}/` : '/getAllQuestionList/'
       let last = this.questions.length ? this.questions[this.questions.length - 1].time : new Date().toISOString()
       this.showLoading = true
@@ -64,7 +67,6 @@ export default {
       this.getQuestionList(callback)
     },
     getQuestionInfo (id) {
-      this.loading = true
       this.$router.push('/question/' + id)
     }
   },
@@ -85,7 +87,6 @@ export default {
         this.getPageContent()
       }
       if (to.path === '/question' && this.loading) {
-        console.log(this.loading)
         this.loading = false
       }
     }
