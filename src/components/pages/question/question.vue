@@ -1,43 +1,93 @@
 <template>
   <div class="question">
     <mt-navbar v-model="selected">
-      <mt-tab-item @click.native="select('all')" id="all">全部</mt-tab-item>
-      <mt-tab-item @click.native="select(tag._id)" v-for="(tag,index) in tags" :key="index" :id="tag._id">{{tag.tagName}}</mt-tab-item>
+      <mt-tab-item @click.native="getPageContent" id="">全部</mt-tab-item>
+      <mt-tab-item @click.native="getPageContent" v-for="(tag,index) in tags" :key="index" :id="tag._id">{{tag.tagName}}</mt-tab-item>
       <mt-tab-item @click.native="selectItem">+</mt-tab-item>
     </mt-navbar>
-    <router-view/>
+    <question-list class="question-list" @refresh="reload" @showDetail="getQuestionInfo"  @load="getQuestionList" :questions="questions" :loading="loading" :showLoading="showLoading"/>
     <div @click="addQuestion" class="btn-add">问</div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import axios from 'axios'
+import QuestionList from '@/components/abstract/question-list'
 export default {
   data () {
     return {
-      selected: this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1)
+      selected: '',
+      loading: false,
+      showLoading: false,
+      questions: []
     }
+  },
+  mounted () {
+    this.getQuestionList()
   },
   computed: {
     ...mapGetters([
       'tags'
     ])
   },
-  watch: {
-    '$route' (to, from) {
-      this.items = this.tags
-      this.selected = to.path.slice(10)
-    }
+  components: {
+    QuestionList
   },
   methods: {
     addQuestion () {
-      this.$router.push('/addQuestion')
+      this.$router.push('/question/addQuestion')
     },
     selectItem () {
       this.$router.push('/question/selectItem')
     },
-    select (id) {
+    getPageContent () {
+      this.questions = []
+      this.getQuestionList()
+    },
+    getQuestionList (callback) {
+      let url = this.selected ? `/getQuestionList/${this.selected}/` : '/getAllQuestionList/'
+      let last = this.questions.length ? this.questions[this.questions.length - 1].time : new Date().toISOString()
+      this.showLoading = true
+      this.loading = true
+      axios.get('http://localhost:7001/question' + url + last).then(res => {
+        this.questions.push(...res.data.data.questions)
+        if (callback) {
+          callback()
+        }
+        this.showLoading = false
+        this.loading = false
+      })
+    },
+    reload (callback) {
+      this.questions = []
+      this.getQuestionList(callback)
+    },
+    getQuestionInfo (id) {
+      this.loading = true
       this.$router.push('/question/' + id)
+    }
+  },
+  watch: {
+    selected (newVal, oldVal) {
+      if (newVal === undefined) {
+        this.selected = oldVal
+      }
+    },
+    '$route' (to, from) {
+      if (from.path === '/question/addQuestion' && from.query.tag) {
+        this.selected = ''
+        this.tags.forEach(item => {
+          if (from.query.tag === item.tagName) {
+            this.selected = item._id
+          }
+        })
+        this.getPageContent()
+      }
+      if (to.path === '/question' && this.loading) {
+        console.log(this.loading)
+        this.loading = false
+      }
     }
   }
 }
@@ -47,6 +97,8 @@ export default {
 .question
   margin-bottom 55px
   width: 100%
+  .question-list
+    padding-top 3px
   .btn-add
     font-weight bold
     font-size 20px

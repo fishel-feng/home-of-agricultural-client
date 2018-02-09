@@ -37,10 +37,12 @@
     },
     methods: {
       getArticleInfo (article) {
-        this.$router.push('/news/' + article.articleId)
+        this.$router.push(this.$route.path + '/' + article.articleId)
       },
       loadMore () {
-        this.$emit('load')
+        setTimeout(() => {
+          this.$emit('load')
+        }, 2000)
       }
     }
   }

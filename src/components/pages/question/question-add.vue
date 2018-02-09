@@ -1,5 +1,5 @@
 <template>
-  <!-- <transition name="top"> -->
+  <transition name="slide">
     <div class="question-add">
       <mt-header fixed title="发起提问">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
@@ -18,7 +18,7 @@
         <mt-radio align="right" v-model="tag" :options="tags"/>
       </mt-popup>
     </div>
-  <!-- </transition> -->
+  </transition>
 </template>
 
 <script>
@@ -79,7 +79,13 @@ export default {
         images: this.images
       }).then(res => {
         if (res.data.code === 200) {
-          this.$router.replace(`/question/all/${res.data.data.question._id}`)
+          Toast({
+            message: '提问成功',
+            position: 'bottom',
+            duration: 2000
+          })
+          this.$router.replace('/question/addQuestion?tag=' + this.tag)
+          this.$router.go(-1)
         }
       })
     },
@@ -94,7 +100,7 @@ export default {
       this.hasImage = false
     },
     getTag () {
-      axios.get('http://localhost:7001/questions/getTags').then(res => {
+      axios.get('http://localhost:7001/question/getTags').then(res => {
         if (res.data.code === 200) {
           res.data.data.forEach(element => {
             this.tags.push(element.tagName)
@@ -119,8 +125,8 @@ export default {
   left 0
   right 0
   z-index 100
-  margin-top 50px
   background #fff
+  padding-top 50px
   .tag-wrapper
     display flex
     justify-content space-between

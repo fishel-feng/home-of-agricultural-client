@@ -27,12 +27,6 @@ const Question = (resolve) => {
   })
 }
 
-const QuestionType = (resolve) => {
-  import('@/components/pages/question/question-type').then((module) => {
-    resolve(module)
-  })
-}
-
 const QuestionInfo = (resolve) => {
   import('@/components/pages/question/question-info').then((module) => {
     resolve(module)
@@ -230,12 +224,20 @@ export default new Router({
           component: SelectItem
         },
         {
-          path: ':tag',
-          component: QuestionType,
+          path: 'addQuestion',
+          component: QuestionAdd
+        },
+        {
+          path: ':questionId',
+          component: QuestionInfo,
           children: [
             {
-              path: ':questionId',
-              component: QuestionInfo
+              path: 'addAnswer',
+              component: AnswerAdd
+            },
+            {
+              path: 'expert',
+              component: ExpertList
             }
           ]
         }
@@ -326,14 +328,6 @@ export default new Router({
       component: CircleAdd
     },
     {
-      path: '/addQuestion',
-      component: QuestionAdd
-    },
-    {
-      path: '/addAnswer',
-      component: AnswerAdd
-    },
-    {
       path: '/addComment',
       component: CommentAdd
     },
@@ -352,10 +346,6 @@ export default new Router({
     {
       path: '/message',
       component: MessageCenter
-    },
-    {
-      path: '/expert',
-      component: ExpertList
     },
     {
       path: '/chat',

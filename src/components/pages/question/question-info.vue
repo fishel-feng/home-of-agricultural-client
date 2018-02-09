@@ -23,8 +23,8 @@
           <mt-button class="btn-attention" v-if="attentionState" @click.native="removeAttention" type="primary" size="small">取消关注</mt-button>
         </div>
         <div class="btn-question">
-          <div @click="getExpertList(question.tag)">邀请专家</div>
-          <div @click="addAnswer(question._id)">我要回答</div>
+          <div @click="getExpertList">邀请专家</div>
+          <div @click="addAnswer">我要回答</div>
         </div>
         <ul class="answer-container">
           <li v-for="(answer, index) in question.answers" :key="index" class="answer-item">
@@ -53,6 +53,7 @@
       <div @click="hideImage" v-if="showImage" class="image-wrapper">
         <img class="big-image" :src="currentImage" alt="">
       </div>
+      <router-view/>
     </div>
   </transition>
 </template>
@@ -118,11 +119,11 @@
           }
         })
       },
-      getExpertList (questionTag) {
-        this.$router.push(`/expert?tag=${questionTag.tagName}&questionId=${this.$route.params.questionId}`)
+      getExpertList () {
+        this.$router.push(`/question/${this.question._id}/expert?tag=${this.question.tag.tagName}&questionId=${this.$route.params.questionId}`)
       },
-      addAnswer (questionId) {
-        this.$router.push(`/addAnswer?questionId=${questionId}`)
+      addAnswer () {
+        this.$router.push(`/question/${this.question._id}/addAnswer`)
       },
       deleteAnswer (answerId) {
         MessageBox.confirm('确定删除这条内容吗？', {

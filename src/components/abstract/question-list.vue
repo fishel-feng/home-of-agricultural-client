@@ -35,173 +35,118 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { Toast, MessageBox } from 'mint-ui'
-import { showImageMixin, accountTestMixin, getTimeMixin } from '@/common/js/mixin'
-export default {
-  mixins: [ showImageMixin, accountTestMixin, getTimeMixin ],
-  props: {
-    baseUrl: String
-  },
-  data () {
-    return {
-      questions: [],
-      showLoading: false,
-      loading: false
-    }
-  },
-  deactivated () {
-    this.loading = true
-  },
-  activated () {
-    this.loading = false
-  },
-  mounted () {
-    if (this.$route.path === '/user/attentions' || this.$route.path === '/user/questions' || this.$route.path === '/user/answers') {
-      this.verifyLogin(this.getData)
-    } else if (this.$route.path.startsWith('/question')) {
-      this.getData()
-    }
-  },
-  watch: {
-    '$route' (to, from) {
-      if (this.$route.path === '/user/attentions' || this.$route.path === '/user/questions' || this.$route.path === '/user/answers') {
-        this.verifyLogin(this.getData)
-      } else if (this.$route.path.startsWith('/question')) {
-        this.getData()
+  import axios from 'axios'
+  import { Toast, MessageBox } from 'mint-ui'
+  import { showImageMixin, accountTestMixin, getTimeMixin } from '@/common/js/mixin'
+  export default {
+    mixins: [ showImageMixin, accountTestMixin, getTimeMixin ],
+    props: {
+      questions: {
+        type: Array,
+        default: []
+      },
+      showLoading: {
+        type: Boolean,
+        default: false
+      },
+      loading: {
+        type: Boolean,
+        default: false
       }
-    }
-  },
-  methods: {
-    showQuestionInfo (id) {
-      this.$router.push('/question/all/' + id)
     },
-    loadTop () {
-      this.getData(this.$refs.loadmore.onTopLoaded)
-    },
-    loadMore () {
-      this.loading = true
-      this.showLoading = true
-      if (this.questions.length) {
-        axios.get(this.baseUrl + this.questions[this.questions.length - 1].time).then(res => {
-          if (res.data.code === 200) {
-            if (!res.data.data.questions.length) {
-              Toast({
-                message: '无更多问题',
-                position: 'bottom',
-                duration: 1000
+    methods: {
+      showQuestionInfo (id) {
+        this.$emit('showDetail', id)
+      },
+      loadTop () {
+        this.$emit('refresh', this.$refs.loadmore.onTopLoaded)
+      },
+      isMine (userId) {
+        return userId === this.myId
+      },
+      loadMore () {
+        setTimeout(() => {
+          this.$emit('load')
+        }, 2000)
+      },
+      deleteQuestion (questionId) {
+        MessageBox.confirm('确定删除这条内容吗？', {
+          title: '提示',
+          confirmButtonText: '删除',
+          cancelButtonText: '取消'
+        }).then(() => {
+          axios.post('http://localhost:7001/question/deleteQuestion', {
+            questionId: questionId
+          }).then(res => {
+            if (res.data.code === 200) {
+              let index = this.questions.findIndex(item => {
+                return item._id === questionId
               })
-              this.showLoading = false
-            } else {
-              this.circles.push(...res.data.data.circleList)
-              this.loading = false
+              this.questions.splice(index, 1)
+              Toast({
+                message: '删除成功',
+                position: 'bottom',
+                duration: 2000
+              })
             }
-          }
-        })
+          })
+        }).catch(e => {})
       }
-      this.showLoading = false
-    },
-    getData (callback) {
-      axios.get(this.baseUrl + new Date().toISOString()).then(res => {
-        if (res && res.data.code === 200) {
-          if (this.questions.length && res.data.data.questions.length && this.questions[0]._id === res.data.data.questions[0]._id) {
-            if (callback) {
-              Toast({
-                message: '无更多问题',
-                position: 'bottom',
-                duration: 1000
-              })
-              callback()
-            }
-          } else {
-            this.questions = res.data.data.questions
-            this.loading = false
-          }
-        }
-      })
-    },
-    isMine (userId) {
-      return userId === this.myId
-    },
-    deleteQuestion (questionId) {
-      MessageBox.confirm('确定删除这条内容吗？', {
-        title: '提示',
-        confirmButtonText: '删除',
-        cancelButtonText: '取消'
-      }).then(action => {
-        axios.post('http://localhost:7001/question/deleteQuestion', {
-          questionId: questionId
-        }).then(res => {
-          if (res.data.code === 200) {
-            let index = this.questions.findIndex(item => {
-              return item._id === questionId
-            })
-            this.questions.splice(index, 1)
-            Toast({
-              message: '删除成功',
-              position: 'bottom',
-              duration: 2000
-            })
-          }
-        })
-      }).catch(e => {
-      })
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>
-.question-list
-  background #ccc
-  .item
-    position relative
-    background #fff
-    margin-bottom 3px
-    padding 10px
-    .title
-      padding-right 30px
-      font-size 18px
-      font-weight bold
+  .question-list
+    background #ccc
+    .item
       position relative
-      .btn-del
-        font-size 10px
-        position absolute
-        right 0
-        top 0
-    .desc
-      margin  5px
-      font-size 14px
-      color #4b4b4b
-    .image
+      background #fff
+      margin-bottom 3px
       padding 10px
-      overflow hidden
-      img
-        float left
-        margin 5px
-    .tail
-      min-height 14px
-      display flex
-      justify-content space-between
-      font-size 12px
-  .load-wrapper
-    padding-top 10px
-    background #fff
-    position relative
-    width 100%
-    height 30px
-    text-align center
-    font-size 14px
-  .image-wrapper
-    display flex
-    align-items center
-    position fixed
-    background rgba(0, 0, 0, 0.8)
-    z-index 200
-    top 0
-    right 0
-    left 0
-    bottom 0
-    .big-image
+      .title
+        padding-right 30px
+        font-size 18px
+        font-weight bold
+        position relative
+        .btn-del
+          font-size 10px
+          position absolute
+          right 0
+          top 0
+      .desc
+        margin  5px
+        font-size 14px
+        color #4b4b4b
+      .image
+        padding 10px
+        overflow hidden
+        img
+          float left
+          margin 5px
+      .tail
+        min-height 14px
+        display flex
+        justify-content space-between
+        font-size 12px
+    .load-wrapper
+      padding-top 10px
+      background #fff
+      position relative
       width 100%
+      height 30px
+      text-align center
+      font-size 14px
+    .image-wrapper
+      display flex
+      align-items center
+      position fixed
+      background rgba(0, 0, 0, 0.8)
+      z-index 200
+      top 0
+      right 0
+      left 0
+      bottom 0
+      .big-image
+        width 100%
 </style>

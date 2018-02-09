@@ -2,7 +2,7 @@
   <transition name="slide">
     <div class="select-item">
       <mt-header fixed title="选择问题分类">
-        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
+        <mt-button @click.native="back" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <mt-checklist
         align="right"
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { Toast } from 'mint-ui'
+import { Toast, MessageBox } from 'mint-ui'
 import { accountTestMixin } from '@/common/js/mixin'
 import { mapMutations, mapGetters } from 'vuex'
 import axios from 'axios'
@@ -53,6 +53,17 @@ export default {
           })
           this.$router.go(-1)
         }
+      })
+    },
+    back () {
+      MessageBox.confirm('是否保存修改', {
+        closeOnClickModal: true,
+        confirmButtonText: '保存',
+        cancelButtonText: '不保存'
+      }).then(action => {
+        this.submit()
+      }).catch(e => {
+        this.$router.go(-1)
       })
     },
     initData () {

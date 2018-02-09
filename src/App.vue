@@ -1,12 +1,14 @@
 <template>
 <div id="app">
-  <mt-header :title="title[$route.path.slice(1)]">
+  <mt-header fixed :title="title[$route.path.slice(1)]">
     <div class="icon-wrapper" slot="right" @click="showMessageCenter">
       <div v-show="messageCount!==0" class="dot"></div>
       <img class="message-icon" src="./assets/svg/message.svg" height="20px" width="20px">
     </div>
   </mt-header>
-  <router-view/>
+  <div class="main">
+    <router-view/>
+  </div>
   <mt-tabbar v-model="selected" class="tail-tab">
     <mt-tab-item @click.native="selectItem" id="news">
       <img slot="icon" src="./assets/svg/home.svg"> 新闻
@@ -117,6 +119,8 @@ export default {
     bottom -8px
     right 3px
     position absolute
+.main
+  margin-top 40px
 .tail-tab
   position fixed
 </style>

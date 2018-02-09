@@ -25,7 +25,7 @@
         <router-view/>
       </div>
       <div v-else>
-        <article-list @load="getArticleList(selected)" :newsList="newsList" :loading="loading" :showLoading="showLoading"/>
+        <article-list @load="getArticleList" :newsList="newsList" :loading="loading" :showLoading="showLoading"/>
       </div>
     </div>
   </div>
@@ -72,16 +72,16 @@ export default {
       if (this.selected) {
         this.newsList = []
         this.page = 1
-        this.getArticleList(this.selected)
+        this.getArticleList()
       }
     },
     getArticleInfo (id) {
       this.$router.push('/news/' + id)
     },
-    getArticleList (type) {
+    getArticleList () {
       this.showLoading = true
       this.loading = true
-      axios.get(`http://localhost:7001/news/getArticleListByPage/${type}/${this.page}`).then(res => {
+      axios.get(`http://localhost:7001/news/getArticleListByPage/${this.selected}/${this.page}`).then(res => {
         this.newsList.push(...res.data.data.articles)
         this.showLoading = false
         this.loading = false
@@ -99,7 +99,7 @@ export default {
   .nav
     width 100%
   .content
-    margin-top 6px
+    margin-top 46px
     .swipe
       background #ccc
       padding-top 3px
