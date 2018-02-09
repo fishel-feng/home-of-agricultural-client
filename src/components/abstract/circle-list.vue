@@ -155,7 +155,7 @@ export default {
       }
     },
     getUserCard (userId) {
-      this.$router.push(`/user/${userId}`)
+      this.$router.push(`/userCard?id=${userId}`)
     },
     getCommentList (circleId) {
       this.$router.push(`/circles/comment/${circleId}`)

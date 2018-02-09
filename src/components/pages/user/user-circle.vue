@@ -32,6 +32,6 @@ export default {
   right 0
   z-index 100
   background #fff
-  margin-top 40px
+  padding-top 40px
 </style>
 

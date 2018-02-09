@@ -36,7 +36,7 @@ export default {
   methods: {
     showUserCard (item) {
       const id = item.userId ? item.userId : item._id
-      this.$router.push(`/user/${id}`)
+      this.$router.push(`/userCard?id=${id}`)
     },
     select (item) {
       this.$emit('select', item)

@@ -70,7 +70,7 @@
     },
     methods: {
       getData () {
-        axios.get(`http://127.0.0.1:7001/user/getUserInfo/${this.$route.params.id}`).then(res => {
+        axios.get(`http://127.0.0.1:7001/user/getUserInfo/${this.$route.query.id}`).then(res => {
           if (res.data.code === 200) {
             this.user = res.data.data.user
           }
@@ -78,7 +78,7 @@
       },
       followUser () {
         axios.post(`http://127.0.0.1:7001/user/giveFollow`, {
-          targetId: this.$route.params.id
+          targetId: this.$route.query.id
         }).then(res => {
           if (res.data.code === 200) {
             this.addFollowing({
@@ -87,7 +87,7 @@
               nickName: this.user.nickName,
               userId: this.$route.params.id
             })
-            this.$socket.emit('follow', this.token, this.$route.params.id)
+            this.$socket.emit('follow', this.token, this.$route.query.id)
           }
         })
       },
@@ -96,7 +96,7 @@
           targetId: this.$route.params.id
         }).then(res => {
           if (res.data.code === 200) {
-            this.deleteFollowing(this.$route.params.id)
+            this.deleteFollowing(this.$route.query.id)
           }
         })
       },

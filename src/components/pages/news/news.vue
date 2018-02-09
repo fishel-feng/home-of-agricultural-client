@@ -1,18 +1,16 @@
 <template>
   <div class="news">
     <mt-navbar fixed class="nav" v-model="selected">
-      <mt-tab-item @click.native="getList(nav)" v-for="nav in navList" :key="nav.itemName" :id="nav.itemName">{{nav.itemName}}</mt-tab-item>
+      <mt-tab-item @click.native="getPageContent" v-for="nav in navList" :key="nav.itemName" :id="nav.navUrl">{{nav.itemName}}</mt-tab-item>
     </mt-navbar>
     <div class="content">
-      <ul v-if="selected==='首页'">
-        <li>
-          <mt-swipe class="swipe" :auto="4000">
-            <mt-swipe-item @click.native="getInfo(item.articleId)" class="swipe-item" v-for="(item,index) in scroll" :key="index">
-              <span class="title">{{item.title}}</span>
-              <img class="image" :src="item.imageUrl" alt="" width="100%" height="100%">
-            </mt-swipe-item>
-          </mt-swipe>
-        </li>
+      <div v-if="!selected">
+        <mt-swipe class="swipe" :auto="4000">
+          <mt-swipe-item @click.native="getArticleInfo(item.articleId)" class="swipe-item" v-for="(item,index) in scroll" :key="index">
+            <span class="title">{{item.title}}</span>
+            <img class="image" :src="item.imageUrl" alt="" width="100%" height="100%">
+          </mt-swipe-item>
+        </mt-swipe>
         <div class="main-wrapper">
           <div class="today-hot-wrapper">
             <div class="today-hot">
@@ -20,26 +18,45 @@
               今日热点
             </div>
           </div>
-          <li @click="getInfo(item.articleId)" v-for="item in hotList" :key="item.rank" class="list-wrapper">
+          <li @click="getArticleInfo(item.articleId)" v-for="item in hotList" :key="item.rank" class="list-wrapper">
               {{item.rank}} {{item.title}}
           </li>
         </div>
-      </ul>
+        <router-view/>
+      </div>
+      <div v-else>
+        <article-list @load="getArticleList(selected)" :newsList="newsList" :loading="loading" :showLoading="showLoading"/>
+      </div>
     </div>
-    <router-view/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import ArticleList from '@/components/abstract/article-list'
 export default {
   data () {
     return {
+      navList: [{itemName: '首页', navUrl: ''},
+        {itemName: '头条', navUrl: 'toutiao'},
+        {itemName: '热点', navUrl: 'redian'},
+        {itemName: '种植', navUrl: 'zhongzhi'},
+        {itemName: '养殖', navUrl: 'yangzhi'},
+        {itemName: '农资', navUrl: 'nongzi'},
+        {itemName: '电商', navUrl: 'dianshang'},
+        {itemName: '休闲', navUrl: 'xiuxian'},
+        {itemName: '全部', navUrl: 'list'}],
+      selected: '',
       scroll: [],
       hotList: [],
-      navList: [],
-      selected: '首页'
+      newsList: [],
+      page: 1,
+      loading: false,
+      showLoading: false
     }
+  },
+  components: {
+    ArticleList
   },
   mounted () {
     this.initData()
@@ -49,30 +66,27 @@ export default {
       axios.get('http://127.0.0.1:7001/news/getArticleIndex').then(res => {
         this.scroll = res.data.data.scroll
         this.hotList = res.data.data.todayNews
-        this.navList = res.data.data.navItem
       })
     },
-    getList (nav) {
-      if (nav.navUrl) {
-        this.$router.push(`/news/${nav.navUrl}`)
-        this.selected = nav.itemName
-        return
+    getPageContent () {
+      if (this.selected) {
+        this.newsList = []
+        this.page = 1
+        this.getArticleList(this.selected)
       }
-      this.$router.push('/news')
     },
-    getInfo (id) {
-      this.$router.push({
-        path: `/news/index/${id}`
+    getArticleInfo (id) {
+      this.$router.push('/news/' + id)
+    },
+    getArticleList (type) {
+      this.showLoading = true
+      this.loading = true
+      axios.get(`http://localhost:7001/news/getArticleListByPage/${type}/${this.page}`).then(res => {
+        this.newsList.push(...res.data.data.articles)
+        this.showLoading = false
+        this.loading = false
       })
-    }
-  },
-  watch: {
-    '$route' (to, from) {
-      this.navList.forEach(element => {
-        if (to.path.substring(6) === element.navUrl) {
-          this.selected = element.itemName
-        }
-      })
+      this.page++
     }
   }
 }

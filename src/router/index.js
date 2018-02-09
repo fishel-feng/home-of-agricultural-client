@@ -9,12 +9,6 @@ const News = (resolve) => {
   })
 }
 
-const ArticleList = (resolve) => {
-  import('@/components/pages/news/article-list').then((module) => {
-    resolve(module)
-  })
-}
-
 const ArticleInfo = (resolve) => {
   import('@/components/pages/news/article-info').then((module) => {
     resolve(module)
@@ -218,14 +212,8 @@ export default new Router({
       component: News,
       children: [
         {
-          path: ':listId',
-          component: ArticleList,
-          children: [
-            {
-              path: ':articleId',
-              component: ArticleInfo
-            }
-          ]
+          path: ':articleId',
+          component: ArticleInfo
         }
       ]
     },
@@ -314,12 +302,12 @@ export default new Router({
         {
           path: 'followers',
           component: FollowerList
-        },
-        {
-          path: ':id',
-          component: UserCard
         }
       ]
+    },
+    {
+      path: '/userCard',
+      component: UserCard
     },
     {
       path: '/signIn',
