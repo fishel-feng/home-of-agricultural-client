@@ -270,6 +270,10 @@ export default new Router({
       component: User,
       children: [
         {
+          path: 'edit',
+          component: UserEdit
+        },
+        {
           path: 'collections',
           component: UserCollection
         },
@@ -322,10 +326,6 @@ export default new Router({
     {
       path: '/resetPassword',
       component: UserForm
-    },
-    {
-      path: '/editUserInfo',
-      component: UserEdit
     },
     {
       path: '/message',

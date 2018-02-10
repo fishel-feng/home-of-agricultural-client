@@ -1,30 +1,32 @@
 <template>
-  <div class="user-edit">
-    <mt-header fixed title="编辑个人资料">
-      <mt-button @click.native="back" icon="back" slot="left">返回</mt-button>
-    </mt-header>
-    <div class="container">
-      <mt-field label="用户名" placeholder="请输入用户名" v-model="nickName"/>
-      <div class="head-image-container">
-        <span>头像</span>
-        <img :src="`http://localhost:7001/public/headImage/${headImage}`" width="40px" height="40px" alt="">
-        <uploader :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/headImage'"/>
-        &nbsp;上传头像
+  <transition name="slide">
+    <div class="user-edit">
+      <mt-header fixed title="编辑个人资料">
+        <mt-button @click.native="back" icon="back" slot="left">返回</mt-button>
+      </mt-header>
+      <div class="container">
+        <mt-field label="用户名" placeholder="请输入用户名" v-model="nickName"/>
+        <div class="head-image-container">
+          <span>头像</span>
+          <img :src="`http://localhost:7001/public/headImage/${headImage}`" width="40px" height="40px" alt="">
+          <uploader :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/headImage'"/>
+          &nbsp;上传头像
+        </div>
+        <mt-field label="个人简介" placeholder="在此输入个人简介" :attr="{ maxlength: 40 }" type="textarea" rows="3" v-model="description"/>
+        <div class="gender">
+          <span>性别</span>
+          <mt-radio
+            v-model="gender"
+            :options="['男', '女', '保密']">
+          </mt-radio>
+        </div>
+        <mt-field label="年龄" type="number" placeholder="输入年龄" v-model="age"/>
+        <mt-field label="地区" placeholder="输入所在地区" v-model="location"/>
+        <mt-field label="职业" placeholder="输入您的职业" v-model="job"/>
+        <mt-button @click.native="submit" type="primary" class="btn-submit">保存修改</mt-button>
       </div>
-      <mt-field label="个人简介" placeholder="在此输入个人简介" :attr="{ maxlength: 40 }" type="textarea" rows="3" v-model="description"/>
-      <div class="gender">
-        <span>性别</span>
-        <mt-radio
-          v-model="gender"
-          :options="['男', '女', '保密']">
-        </mt-radio>
-      </div>
-      <mt-field label="年龄" type="number" placeholder="输入年龄" v-model="age"/>
-      <mt-field label="地区" placeholder="输入所在地区" v-model="location"/>
-      <mt-field label="职业" placeholder="输入您的职业" v-model="job"/>
-      <mt-button @click.native="submit" type="primary" class="btn-submit">保存修改</mt-button>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -121,6 +123,10 @@
 </script>
 
 <style lang="stylus" scoped>
+.slide-enter-active, .slide-leave-active
+  transition all 0.3s
+.slide-enter, .slide-leave-to
+  transform translate3d(100%, 0, 0)
 .user-edit
   position fixed
   overflow-y auto
@@ -131,6 +137,7 @@
   z-index 100
   background #fff
   .container
+    padding 10px
     margin-top 40px
     .head-image-container
       display flex

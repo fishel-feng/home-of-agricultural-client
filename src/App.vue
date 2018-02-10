@@ -9,20 +9,20 @@
   <div class="main">
     <router-view/>
   </div>
-  <mt-tabbar v-model="selected" class="tail-tab">
-    <mt-tab-item @click.native="selectItem" id="news">
+  <mt-tabbar @click.native="selectItem" v-model="selected" class="tail-tab">
+    <mt-tab-item  id="news">
       <img slot="icon" src="./assets/svg/home.svg"> 新闻
     </mt-tab-item>
-    <mt-tab-item @click.native="selectItem" id="wiki">
+    <mt-tab-item id="wiki">
       <img slot="icon" src="./assets/svg/wiki.svg"> 百科
     </mt-tab-item>
-    <mt-tab-item @click.native="selectItem" id="question">
+    <mt-tab-item id="question">
       <img slot="icon" src="./assets/svg/question.svg"> 问专家
     </mt-tab-item>
-    <mt-tab-item @click.native="selectItem" id="circles">
+    <mt-tab-item id="circles">
       <img slot="icon" src="./assets/svg/circle.svg"> 农友圈
     </mt-tab-item>
-    <mt-tab-item @click.native="selectItem" id="user">
+    <mt-tab-item id="user">
       <img slot="icon" src="./assets/svg/user.svg"> 我的
     </mt-tab-item>
   </mt-tabbar>
@@ -38,7 +38,6 @@ export default {
   name: 'app',
   data () {
     return {
-      oldSelect: '',
       selected: this.$route.path.slice(1),
       messageCount: 0,
       title: { news: '新闻', wiki: '百科', question: '问专家', circles: '农友圈', user: '我的' }
@@ -52,7 +51,13 @@ export default {
   },
   methods: {
     selectItem () {
-      this.$router.push('/' + this.selected)
+      if (this.selected === 'news' && this.selected === 'wiki') {
+        this.verifyLogin(() => {
+          this.$router.push('/' + this.selected)
+        })
+      } else {
+        this.$router.push('/' + this.selected)
+      }
     },
     showMessageCenter () {
       this.$router.push('/message')
@@ -72,25 +77,6 @@ export default {
       axios.get('http://localhost:7001/user/getUserIndex').then(res => {
         this.saveUserInfo(res.data.data.user)
       })
-    }
-  },
-  watch: {
-    '$route' (to, from) {
-      // console.log(to.path)
-      // todo 重构路由结构，提取抽象组件
-      this.selected = to.path.slice(1)
-      // this.$router.push('/' + this.selected)
-      // this.tailList.forEach(element => {
-      //   if (to.path.substring(1).startsWith(element.id)) {
-      //     this.title = element.text
-      //   }
-      // })
-      // if (from.path === '/message') {
-      //   this.messageCount = 0
-      // }
-    },
-    selected (newVal, oldVal) {
-      this.oldSelect = oldVal
     }
   },
   sockets: {

@@ -152,7 +152,7 @@ export default {
       margin-bottom 20px
     .head-wrapper
       overflow hidden
-      padding 20px
+      padding 10px
       .note
         line-height 16px
         font-size 10px
@@ -161,6 +161,8 @@ export default {
         float right
         height 20px
     .desc
+      margin 5px 0
+      border-radius 10px
       padding 5px
       font-size 14px
       line-height 20px
