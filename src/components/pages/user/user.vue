@@ -10,7 +10,7 @@
         <div>{{description}}</div>
       </div>
     </div>
-    <div class="center">
+    <div class="center" id="scroll">
       <mt-cell title="我的收藏" to="/user/collections" is-link :value="collectionCount"/>
       <mt-cell title="我的动态" to="/user/circles" is-link :value="circleCount"/>
       <mt-cell title="我的提问" to="/user/questions" is-link :value="questionCount"/>
@@ -26,19 +26,19 @@
     <div class="btn-wrapper">
       <mt-button @click.native="logout" class="btn-logout" type="danger">退出登录</mt-button>
     </div>
-    <router-view/>
     <div @click="hideImage" v-if="showImage" class="image-wrapper">
       <img class="big-image" :src="currentImage" alt="">
     </div>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import { accountTestMixin, showImageMixin } from '@/common/js/mixin'
+import { accountTestMixin, showImageMixin, disableScrollMixin } from '@/common/js/mixin'
 import { mapActions } from 'vuex'
 import axios from 'axios'
 export default {
-  mixins: [accountTestMixin, showImageMixin],
+  mixins: [accountTestMixin, showImageMixin, disableScrollMixin],
   data () {
     return {
       nickName: '',
@@ -87,6 +87,16 @@ export default {
   },
   mounted () {
     this.verifyLogin(this.getData)
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to.path !== '/user') {
+        this.disable_scroll()
+      }
+      if (to.path === '/user') {
+        this.enable_scroll()
+      }
+    }
   }
 }
 </script>

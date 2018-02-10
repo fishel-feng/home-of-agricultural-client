@@ -37,9 +37,9 @@
 <script>
   import axios from 'axios'
   import { Toast, MessageBox } from 'mint-ui'
-  import { showImageMixin, accountTestMixin, getTimeMixin, disableScrollMixin } from '@/common/js/mixin'
+  import { showImageMixin, accountTestMixin, getTimeMixin } from '@/common/js/mixin'
   export default {
-    mixins: [ showImageMixin, accountTestMixin, getTimeMixin, disableScrollMixin ],
+    mixins: [ showImageMixin, accountTestMixin, getTimeMixin ],
     props: {
       questions: {
         type: Array,

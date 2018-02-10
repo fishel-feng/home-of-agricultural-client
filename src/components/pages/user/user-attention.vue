@@ -4,18 +4,75 @@
       <mt-header fixed title="我关注的问题">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <question-list baseUrl="http://localhost:7001/user/getAttentions/"/>
+      <question-list ref="question-list" class="question-list" @refresh="reload" @showDetail="getQuestionInfo"  @load="getQuestionList" :questions="questions" :loading="loading" :showLoading="showLoading"/>
     </div>
   </transition>
 </template>
 
 <script>
-import QuestionList from '@/components/abstract/question-list'
-export default {
-  components: {
-    QuestionList
+  import { disableScrollMixin } from '@/common/js/mixin'
+  import axios from 'axios'
+  import QuestionList from '@/components/abstract/question-list'
+  export default {
+    mixins: [ disableScrollMixin ],
+    data () {
+      return {
+        loading: false,
+        showLoading: false,
+        questions: []
+      }
+    },
+    mounted () {
+      this.getQuestionList()
+    },
+    components: {
+      QuestionList
+    },
+    methods: {
+      addQuestion () {
+        this.$router.push('/question/addQuestion')
+      },
+      selectItem () {
+        this.$router.push('/question/selectItem')
+      },
+      getPageContent () {
+        this.questions = []
+        this.getQuestionList()
+      },
+      getQuestionList (callback) {
+        let last = this.questions.length ? this.questions[this.questions.length - 1].time : new Date().toISOString()
+        this.showLoading = true
+        this.loading = true
+        axios.get('http://localhost:7001/user/getAttentions/' + last).then(res => {
+          this.questions.push(...res.data.data.questions)
+          if (callback) {
+            callback()
+          }
+          setTimeout(() => {
+            this.loading = false
+            this.showLoading = false
+          }, 2000)
+        })
+      },
+      reload (callback) {
+        this.questions = []
+        this.getQuestionList(callback)
+      },
+      getQuestionInfo (id) {
+        this.$router.push('/user/question/' + id)
+      }
+    },
+    watch: {
+      '$route' (to, from) {
+        if (to.path !== '/user/attentions') {
+          this.disable_scroll()
+        }
+        if (to.path === '/user/attentions') {
+          this.enable_scroll()
+        }
+      }
+    }
   }
-}
 </script>
 
 <style lang="stylus" scoped>

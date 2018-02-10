@@ -4,7 +4,7 @@
       <mt-tab-item id="">全部动态</mt-tab-item>
       <mt-tab-item id="attention">关注的人</mt-tab-item>
     </mt-navbar>
-    <circle-list class="circle-list" @refresh="reload" @load="getCircleList" ref="circle-list" :circles="circles" :loading="loading" :showLoading="showLoading"/>
+    <circle-list class="circle-list" @refresh="reload" @load="getCircleList" :circles="circles" :loading="loading" :showLoading="showLoading"/>
     <div class="btn-add" @click="addCircle">+</div>
   </div>
 </template>
@@ -12,9 +12,9 @@
 <script>
 import axios from 'axios'
 import CircleList from '@/components/abstract/circle-list'
-import { accountTestMixin } from '@/common/js/mixin'
+import { accountTestMixin, disableScrollMixin } from '@/common/js/mixin'
 export default {
-  mixins: [accountTestMixin],
+  mixins: [accountTestMixin, disableScrollMixin],
   data () {
     return {
       selected: '',
@@ -62,15 +62,15 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      if (from.path === '/question/addCircle' && from.query.flag) {
+      if (from.path === '/circles/addCircle' && from.query.flag) {
         this.selected = ''
         this.getPageContent()
       }
       if (to.path !== '/circles') {
-        this.$refs['circle-list'].disable_scroll()
+        this.disable_scroll()
       }
       if (to.path === '/circles') {
-        this.$refs['circle-list'].enable_scroll()
+        this.enable_scroll()
       }
     }
   }

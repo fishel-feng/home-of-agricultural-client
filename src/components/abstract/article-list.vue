@@ -20,9 +20,7 @@
 </template>
 
 <script>
-  import {disableScrollMixin} from '@/common/js/mixin'
   export default {
-    mixins: [disableScrollMixin],
     props: {
       newsList: {
         type: Array,

@@ -54,11 +54,11 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
-  import { showImageMixin, accountTestMixin, getTimeMixin, disableScrollMixin } from '@/common/js/mixin'
+  import { showImageMixin, accountTestMixin, getTimeMixin } from '@/common/js/mixin'
   import { Toast, MessageBox } from 'mint-ui'
   import axios from 'axios'
   export default {
-    mixins: [ showImageMixin, accountTestMixin, getTimeMixin, disableScrollMixin ],
+    mixins: [ showImageMixin, accountTestMixin, getTimeMixin ],
     props: {
       circles: {
         type: Array,
@@ -123,9 +123,6 @@
         this.verifyLogin(() => {
           this.$router.push(`/circles/addComment?id=${circleId}`)
         })
-      },
-      isLiked (id) {
-        return this.likes.indexOf(id) !== -1
       },
       isMine (userId) {
         return userId === this.myId

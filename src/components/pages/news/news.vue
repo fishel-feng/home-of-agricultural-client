@@ -5,27 +5,31 @@
     </mt-navbar>
     <div class="content">
       <div v-if="!selected">
-        <mt-swipe class="swipe" :auto="4000">
-          <mt-swipe-item @click.native="getArticleInfo(item.articleId)" class="swipe-item" v-for="(item,index) in scroll" :key="index">
-            <span class="title">{{item.title}}</span>
-            <img class="image" :src="item.imageUrl" alt="" width="100%" height="100%">
-          </mt-swipe-item>
-        </mt-swipe>
-        <div class="main-wrapper">
-          <div class="today-hot-wrapper">
-            <div class="today-hot">
-              <img src="../../../assets/svg/hot.svg" alt="" width="20px">
-              今日热点
+        <div>
+          <mt-swipe class="swipe" :auto="4000">
+            <mt-swipe-item @click.native="getArticleInfo(item.articleId)" class="swipe-item" v-for="(item,index) in scroll" :key="index">
+              <span class="title">{{item.title}}</span>
+              <img class="image" :src="item.imageUrl" alt="" width="100%" height="100%">
+            </mt-swipe-item>
+          </mt-swipe>
+          <div class="main-wrapper">
+            <div class="today-hot-wrapper">
+              <div class="today-hot">
+                <img src="../../../assets/svg/hot.svg" alt="" width="20px">
+                今日热点
+              </div>
             </div>
+            <ul id="scroll">
+              <li @click="getArticleInfo(item.articleId)" v-for="item in hotList" :key="item.rank" class="list-wrapper">
+                {{item.rank}} {{item.title}}
+              </li>
+            </ul>
           </div>
-          <li @click="getArticleInfo(item.articleId)" v-for="item in hotList" :key="item.rank" class="list-wrapper">
-              {{item.rank}} {{item.title}}
-          </li>
+          <router-view/>
         </div>
-        <router-view/>
       </div>
       <div v-else>
-        <article-list ref="article-list" @load="getArticleList" :newsList="newsList" :loading="loading" :showLoading="showLoading"/>
+        <article-list @load="getArticleList" :newsList="newsList" :loading="loading" :showLoading="showLoading"/>
       </div>
     </div>
   </div>
@@ -33,8 +37,10 @@
 
 <script>
 import axios from 'axios'
+import {disableScrollMixin} from '@/common/js/mixin'
 import ArticleList from '@/components/abstract/article-list'
 export default {
+  mixins: [disableScrollMixin],
   data () {
     return {
       navList: [{itemName: '首页', navUrl: ''},
@@ -96,10 +102,10 @@ export default {
   watch: {
     '$route' (to, from) {
       if (to.path !== '/news') {
-        this.$refs['article-list'].disable_scroll()
+        this.disable_scroll()
       }
       if (from.path !== '/news') {
-        this.$refs['article-list'].enable_scroll()
+        this.enable_scroll()
       }
     }
   }

@@ -4,16 +4,64 @@
       <mt-header fixed title="我发表的动态">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <circle-list baseUrl="http://127.0.0.1:7001/user/getCircles/"/>
+      <circle-list class="circle-list" @refresh="reload" @load="getCircleList" :circles="circles" :loading="loading" :showLoading="showLoading"/>
     </div>
   </transition>
 </template>
 
 <script>
+import axios from 'axios'
 import CircleList from '@/components/abstract/circle-list'
+import { accountTestMixin, disableScrollMixin } from '@/common/js/mixin'
 export default {
+  mixins: [accountTestMixin, disableScrollMixin],
+  data () {
+    return {
+      loading: false,
+      showLoading: false,
+      circles: []
+    }
+  },
   components: {
     CircleList
+  },
+  mounted () {
+    this.getCircleList()
+  },
+  methods: {
+    getCircleList (callback) {
+      let last = this.circles.length ? this.circles[this.circles.length - 1].time : new Date().toISOString()
+      this.showLoading = true
+      this.loading = true
+      axios.get('http://localhost:7001/user/getCircles/' + last).then(res => {
+        this.circles.push(...res.data.data.circleList)
+        if (callback) {
+          callback()
+        }
+        setTimeout(() => {
+          this.loading = false
+          this.showLoading = false
+        }, 2000)
+      })
+    },
+    getPageContent () {
+      this.circles = []
+      this.getCircleList()
+    },
+    reload (callback) {
+      this.questions = []
+      this.getCircleList(callback)
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to.path !== '/user/circles') {
+        this.disable_scroll()
+      }
+      if (to.path === '/user/circles') {
+        this.enable_scroll()
+      }
+    }
   }
 }
 </script>

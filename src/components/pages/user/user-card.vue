@@ -85,7 +85,7 @@
               description: this.user.description,
               headImage: this.user.headImage,
               nickName: this.user.nickName,
-              userId: this.$route.params.id
+              userId: this.$route.query.id
             })
             this.$socket.emit('follow', this.token, this.$route.query.id)
           }
@@ -93,9 +93,10 @@
       },
       unFollowUser () {
         axios.post(`http://127.0.0.1:7001/user/cancelFollow`, {
-          targetId: this.$route.params.id
+          targetId: this.$route.query.id
         }).then(res => {
           if (res.data.code === 200) {
+            console.log(res.data)
             this.deleteFollowing(this.$route.query.id)
           }
         })
