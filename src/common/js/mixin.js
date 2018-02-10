@@ -78,3 +78,17 @@ export const getTimeMixin = {
     }
   }
 }
+
+export const disableScrollMixin = {
+  methods: {
+    disable_scroll () {
+      this.scrollTop = document.getElementById('scroll').scrollTop
+      document.getElementById('scroll').classList.add('modal-show')
+      document.getElementById('scroll').style.top = -this.scrollTop + 'px'
+    },
+    enable_scroll () {
+      document.getElementById('scroll').classList.remove('modal-show')
+      document.getElementById('scroll').scrollTop = this.scrollTop
+    }
+  }
+}

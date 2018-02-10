@@ -1,6 +1,6 @@
 <template>
   <div class="article-list">
-    <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" :infinite-scroll-distance="15" infinite-scroll-immediate-check="false">
+    <ul id="scroll" v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" :infinite-scroll-distance="15" infinite-scroll-immediate-check="false">
       <li v-for="news in newsList" @click="getArticleInfo(news)" class="list-item">
         <h2 class="title">{{news.title}}</h2>
         <p class="desc">{{news.desc}}</p>
@@ -20,7 +20,9 @@
 </template>
 
 <script>
+  import {disableScrollMixin} from '@/common/js/mixin'
   export default {
+    mixins: [disableScrollMixin],
     props: {
       newsList: {
         type: Array,
@@ -40,9 +42,7 @@
         this.$router.push(this.$route.path + '/' + article.articleId)
       },
       loadMore () {
-        setTimeout(() => {
-          this.$emit('load')
-        }, 2000)
+        this.$emit('load')
       }
     }
   }

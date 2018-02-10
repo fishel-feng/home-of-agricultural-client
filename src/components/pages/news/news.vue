@@ -25,7 +25,7 @@
         <router-view/>
       </div>
       <div v-else>
-        <article-list @load="getArticleList" :newsList="newsList" :loading="loading" :showLoading="showLoading"/>
+        <article-list ref="article-list" @load="getArticleList" :newsList="newsList" :loading="loading" :showLoading="showLoading"/>
       </div>
     </div>
   </div>
@@ -76,21 +76,31 @@ export default {
       }
     },
     getArticleInfo (id) {
-      this.loading = true
       this.$router.push('/news/' + id)
     },
     getArticleList () {
-      if (this.$route.path !== '/news') {
-        return
-      }
       this.showLoading = true
       this.loading = true
       axios.get(`http://localhost:7001/news/getArticleListByPage/${this.selected}/${this.page}`).then(res => {
+        if (this.newsList.length) {
+          setTimeout(() => {
+            this.loading = false
+            this.showLoading = false
+          }, 2000)
+        }
         this.newsList.push(...res.data.data.articles)
-        this.showLoading = false
-        this.loading = false
       })
       this.page++
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to.path !== '/news') {
+        this.$refs['article-list'].disable_scroll()
+      }
+      if (from.path !== '/news') {
+        this.$refs['article-list'].enable_scroll()
+      }
     }
   }
 }
