@@ -1,5 +1,5 @@
 <template>
-  <!-- <transition name="top"> -->
+   <transition name="slide">
     <div class="circle-add">
       <mt-header fixed title="发表动态">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
@@ -18,7 +18,7 @@
       </div>
       <uploader @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/circle'"/>
     </div>
-  <!-- </transition> -->
+   </transition>
 </template>
 
 <script>
@@ -89,7 +89,7 @@ export default {
   left 0
   right 0
   z-index 100
-  margin-top 50px
+  padding-top 50px
   background #fff
   .hint
     color #4b4b4b

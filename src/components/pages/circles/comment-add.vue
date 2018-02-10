@@ -1,5 +1,5 @@
 <template>
-  <!-- <transition name="top"> -->
+   <transition name="slide">
     <div class="comment-add">
       <mt-header fixed :title="this.$route.query.targetId ? `回复评论 ${this.$route.query.targetName}` : '添加评论'">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-  <!-- </transition> -->
+   </transition>
 </template>
 
 <script>
@@ -65,7 +65,7 @@ export default {
   left 0
   right 0
   z-index 100
-  margin-top 50px
+  padding-top 50px
   background #fff
   .hint
     color #4b4b4b

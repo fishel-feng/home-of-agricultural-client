@@ -1,7 +1,7 @@
 <template>
   <div class="news">
-    <mt-navbar fixed class="nav" v-model="selected">
-      <mt-tab-item @click.native="getPageContent" v-for="nav in navList" :key="nav.itemName" :id="nav.navUrl">{{nav.itemName}}</mt-tab-item>
+    <mt-navbar @click.native="getPageContent" fixed class="nav" v-model="selected">
+      <mt-tab-item v-for="nav in navList" :key="nav.itemName" :id="nav.navUrl">{{nav.itemName}}</mt-tab-item>
     </mt-navbar>
     <div class="content">
       <div v-if="!selected">

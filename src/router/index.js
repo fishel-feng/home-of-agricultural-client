@@ -69,12 +69,6 @@ const Circles = (resolve) => {
   })
 }
 
-const CircleType = (resolve) => {
-  import('@/components/pages/circles/circle-type').then((module) => {
-    resolve(module)
-  })
-}
-
 const CircleAdd = (resolve) => {
   import('@/components/pages/circles/circle-add').then((module) => {
     resolve(module)
@@ -248,28 +242,20 @@ export default new Router({
       component: Circles,
       children: [
         {
+          path: 'addCircle',
+          component: CircleAdd
+        },
+        {
+          path: 'addComment',
+          component: CommentAdd
+        },
+        {
           path: 'comment',
-          component: CircleType,
-          children: [
-            {
-              path: ':circleId',
-              component: CommentList
-            }
-          ]
+          component: CommentList
         },
         {
           path: 'like',
-          component: CircleType,
-          children: [
-            {
-              path: ':circleId',
-              component: LikeList
-            }
-          ]
-        },
-        {
-          path: ':type',
-          component: CircleType
+          component: LikeList
         }
       ]
     },
@@ -322,14 +308,6 @@ export default new Router({
     {
       path: '/resetPassword',
       component: UserForm
-    },
-    {
-      path: '/addCircle',
-      component: CircleAdd
-    },
-    {
-      path: '/addComment',
-      component: CommentAdd
     },
     {
       path: '/editUserInfo',

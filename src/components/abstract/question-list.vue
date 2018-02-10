@@ -65,9 +65,7 @@
         return userId === this.myId
       },
       loadMore () {
-        setTimeout(() => {
-          this.$emit('load')
-        }, 2000)
+        this.$emit('load')
       },
       deleteQuestion (questionId) {
         MessageBox.confirm('确定删除这条内容吗？', {

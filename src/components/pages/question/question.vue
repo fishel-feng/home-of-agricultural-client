@@ -1,9 +1,9 @@
 <template>
   <div class="question">
-    <mt-navbar v-model="selected">
-      <mt-tab-item @click.native="getPageContent" id="">全部</mt-tab-item>
-      <mt-tab-item @click.native="getPageContent" v-for="(tag,index) in tags" :key="index" :id="tag._id">{{tag.tagName}}</mt-tab-item>
-      <mt-tab-item @click.native="selectItem">+</mt-tab-item>
+    <mt-navbar @click.native="getPageContent" v-model="selected">
+      <mt-tab-item id="">全部</mt-tab-item>
+      <mt-tab-item v-for="(tag,index) in tags" :key="index" :id="tag._id">{{tag.tagName}}</mt-tab-item>
+      <mt-tab-item @click.native.stop="selectItem">+</mt-tab-item>
     </mt-navbar>
     <question-list ref="question-list" class="question-list" @refresh="reload" @showDetail="getQuestionInfo"  @load="getQuestionList" :questions="questions" :loading="loading" :showLoading="showLoading"/>
     <div @click="addQuestion" class="btn-add">问</div>
@@ -58,8 +58,10 @@ export default {
         if (callback) {
           callback()
         }
-        this.showLoading = false
-        this.loading = false
+        setTimeout(() => {
+          this.loading = false
+          this.showLoading = false
+        }, 2000)
       })
     },
     reload (callback) {
