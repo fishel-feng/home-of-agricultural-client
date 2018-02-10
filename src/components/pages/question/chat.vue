@@ -22,7 +22,7 @@
         <mt-field class="input-text" type="text" v-model="message"/>
         <mt-button @click.native="sendMessage" class="btn-submit" type="primary" size="small" >发送</mt-button>
       </div>
-      <div v-show="showUploader">
+      <div class="uploader-wrapper" v-show="showUploader">
         <uploader :submitText="'发送图片'" :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/chat'"/>
       </div>
     </div>
@@ -192,6 +192,8 @@
       .btn-submit
         height 100%
         width 60px
+    .uploader-wrapper
+      background #fff
   .image-wrapper
     display flex
     align-items center

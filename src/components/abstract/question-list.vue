@@ -1,7 +1,7 @@
 <template>
   <div class="question-list">
     <mt-loadmore :top-method="loadTop" ref="loadmore">
-      <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
+      <ul id="scroll" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
         <li class="item" v-for="(item,index) in questions" :key="index" @click="showQuestionInfo(item._id)">
           <div class="title">
             {{item.title}}
@@ -37,9 +37,9 @@
 <script>
   import axios from 'axios'
   import { Toast, MessageBox } from 'mint-ui'
-  import { showImageMixin, accountTestMixin, getTimeMixin } from '@/common/js/mixin'
+  import { showImageMixin, accountTestMixin, getTimeMixin, disableScrollMixin } from '@/common/js/mixin'
   export default {
-    mixins: [ showImageMixin, accountTestMixin, getTimeMixin ],
+    mixins: [ showImageMixin, accountTestMixin, getTimeMixin, disableScrollMixin ],
     props: {
       questions: {
         type: Array,

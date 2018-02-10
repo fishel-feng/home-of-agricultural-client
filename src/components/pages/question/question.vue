@@ -5,7 +5,7 @@
       <mt-tab-item @click.native="getPageContent" v-for="(tag,index) in tags" :key="index" :id="tag._id">{{tag.tagName}}</mt-tab-item>
       <mt-tab-item @click.native="selectItem">+</mt-tab-item>
     </mt-navbar>
-    <question-list class="question-list" @refresh="reload" @showDetail="getQuestionInfo"  @load="getQuestionList" :questions="questions" :loading="loading" :showLoading="showLoading"/>
+    <question-list ref="question-list" class="question-list" @refresh="reload" @showDetail="getQuestionInfo"  @load="getQuestionList" :questions="questions" :loading="loading" :showLoading="showLoading"/>
     <div @click="addQuestion" class="btn-add">问</div>
   </div>
 </template>
@@ -25,6 +25,9 @@ export default {
   },
   mounted () {
     this.getQuestionList()
+    if (this.$route.path !== '/question') {
+      this.$refs['question-list'].disable_scroll()
+    }
   },
   computed: {
     ...mapGetters([
@@ -46,9 +49,6 @@ export default {
       this.getQuestionList()
     },
     getQuestionList (callback) {
-      if (this.$route.path !== '/question') {
-        return
-      }
       let url = this.selected ? `/getQuestionList/${this.selected}/` : '/getAllQuestionList/'
       let last = this.questions.length ? this.questions[this.questions.length - 1].time : new Date().toISOString()
       this.showLoading = true
@@ -86,8 +86,11 @@ export default {
         })
         this.getPageContent()
       }
-      if (to.path === '/question' && this.loading) {
-        this.loading = false
+      if (to.path !== '/question') {
+        this.$refs['question-list'].disable_scroll()
+      }
+      if (to.path === '/question') {
+        this.$refs['question-list'].enable_scroll()
       }
     }
   }
