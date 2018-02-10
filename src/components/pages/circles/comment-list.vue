@@ -5,7 +5,7 @@
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <div class="container">
-        <ul>
+        <ul id="inner-scroll">
           <li v-for="(comment, index) in comments" :key="index" @click="giveComment(comment.userId, comment.nickName)" class="item">
             <div class="user-info">
               <div>
@@ -22,16 +22,17 @@
           </li>
         </ul>
       </div>
+      <router-view/>
     </div>
   </transition>
 </template>
 
 <script>
   import {MessageBox, Toast} from 'mint-ui'
-  import {getTimeMixin, accountTestMixin} from '@/common/js/mixin'
+  import {getTimeMixin, accountTestMixin, disableScrollMixin} from '@/common/js/mixin'
   import axios from 'axios'
   export default {
-    mixins: [getTimeMixin, accountTestMixin],
+    mixins: [getTimeMixin, accountTestMixin, disableScrollMixin],
     data () {
       return {
         comments: []
@@ -42,14 +43,14 @@
     },
     methods: {
       getData () {
-        axios.get(`http://127.0.0.1:7001/circle/getComment/${this.$route.params.circleId}`).then(res => {
+        axios.get(`http://127.0.0.1:7001/circle/getComment/${this.$route.query.id}`).then(res => {
           if (res.data.code === 200) {
             this.comments = res.data.data.comments
           }
         })
       },
       giveComment (targetId, targetName) {
-        this.$router.push(`/addComment?id=${this.$route.params.circleId}&targetId=${targetId}&targetName=${targetName}`)
+        this.$router.push(`/circles/comment/replyComment?id=${this.$route.query.id}&targetId=${targetId}&targetName=${targetName}`)
       },
       getUserInfo (userId) {
         this.$router.push(`/user/${userId}`)
@@ -61,7 +62,7 @@
           cancelButtonText: '取消'
         }).then(action => {
           axios.post('http://localhost:7001/circle/deleteComment', {
-            circleId: this.$route.params.circleId,
+            circleId: this.$route.query.id,
             commentId: commentId
           }).then(res => {
             if (res.data.code === 200) {
@@ -79,6 +80,20 @@
         }).catch(e => {
         })
       }
+    },
+    watch: {
+      '$route' (to, from) {
+        // if (from.path === '/question/addCircle' && from.query.flag) {
+        //   this.selected = ''
+        //   this.getPageContent()
+        // }
+        if (to.path !== '/circles/comment') {
+          this.disable_scroll('inner-scroll')
+        }
+        if (to.path === '/circles/comment') {
+          this.enable_scroll('inner-scroll')
+        }
+      }
     }
   }
 </script>
@@ -87,10 +102,8 @@
 <style lang="stylus" scoped>
   .slide-enter-active, .slide-leave-active
     transition all 0.3s
-
   .slide-enter, .slide-leave-to
     transform translate3d(100%, 0, 0)
-
   .comment-list
     position fixed
     overflow-y auto

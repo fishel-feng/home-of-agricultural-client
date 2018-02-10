@@ -246,16 +246,22 @@ export default new Router({
           component: CircleAdd
         },
         {
+          path: 'like',
+          component: LikeList
+        },
+        {
           path: 'addComment',
           component: CommentAdd
         },
         {
           path: 'comment',
-          component: CommentList
-        },
-        {
-          path: 'like',
-          component: LikeList
+          component: CommentList,
+          children: [
+            {
+              path: 'replyComment',
+              component: CommentAdd
+            }
+          ]
         }
       ]
     },

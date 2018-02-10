@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     initData () {
-      const circleId = this.$route.params.circleId
+      const circleId = this.$route.query.id
       axios.get(`http://localhost:7001/circle/getLikeList/${circleId}`).then(res => {
         this.likes = res.data.data.likes
       })

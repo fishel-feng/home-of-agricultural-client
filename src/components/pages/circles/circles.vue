@@ -11,7 +11,7 @@
 
 <script>
 import axios from 'axios'
-import CircleList from '@/components/pages/circles/circle-list'
+import CircleList from '@/components/abstract/circle-list'
 import { accountTestMixin } from '@/common/js/mixin'
 export default {
   mixins: [accountTestMixin],
@@ -62,11 +62,16 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      // if (to.path === '/circles/all') {
-      //   this.selected = 'all'
-      // } else if (to.path === '/circles/attention') {
-      //   this.selected = 'attention'
-      // }
+      if (from.path === '/question/addCircle' && from.query.flag) {
+        this.selected = ''
+        this.getPageContent()
+      }
+      if (to.path !== '/circles') {
+        this.$refs['circle-list'].disable_scroll()
+      }
+      if (to.path === '/circles') {
+        this.$refs['circle-list'].enable_scroll()
+      }
     }
   }
 }

@@ -58,6 +58,7 @@ export default {
         images: this.images
       }).then(res => {
         if (res.data.code === 200) {
+          this.$router.replace('/question/addCircle?flag=' + true)
           this.$router.go(-1)
         }
       })
