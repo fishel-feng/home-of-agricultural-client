@@ -58,7 +58,8 @@ export default {
       this.$router.push('/message')
     },
     ...mapActions([
-      'addMessages'
+      'addMessages',
+      'saveUserInfo'
     ]),
     ...mapMutations({
       setMessage: 'SET_MESSAGES'
@@ -67,6 +68,9 @@ export default {
       axios.get('http://127.0.0.1:7001/user/showMessage').then(res => {
         this.messages = res.data.data.messages
         this.setMessage(this.messages)
+      })
+      axios.get('http://localhost:7001/user/getUserIndex').then(res => {
+        this.saveUserInfo(res.data.data.user)
       })
     }
   },

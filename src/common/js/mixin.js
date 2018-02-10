@@ -84,7 +84,7 @@ export const disableScrollMixin = {
     disable_scroll (id = 'scroll') {
       this.scrollTop = document.getElementById('scroll').scrollTop
       document.getElementById(id).classList.add('modal-show')
-      document.getElementById(id).style.top = -this.scrollTop + 'px'
+      // document.getElementById(id).style.top = -this.scrollTop + 'px'
     },
     enable_scroll (id = 'scroll') {
       document.getElementById(id).classList.remove('modal-show')

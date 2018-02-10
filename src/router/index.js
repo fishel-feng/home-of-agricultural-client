@@ -296,6 +296,14 @@ export default new Router({
         {
           path: 'followers',
           component: FollowerList
+        },
+        {
+          path: 'about',
+          component: About
+        },
+        {
+          path: 'certification',
+          component: Certification
         }
       ]
     },
@@ -318,14 +326,6 @@ export default new Router({
     {
       path: '/editUserInfo',
       component: UserEdit
-    },
-    {
-      path: '/about',
-      component: About
-    },
-    {
-      path: '/certification',
-      component: Certification
     },
     {
       path: '/message',

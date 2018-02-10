@@ -20,8 +20,8 @@
       <mt-cell title="关注我的人" to="/user/followers" is-link :value="followerCount"/>
     </div>
     <div class="foot">
-      <mt-cell title="专家认证" to="/certification" is-link/>
-      <mt-cell title="关于我们" to="/about" is-link/>
+      <mt-cell title="专家认证" to="/user/certification" is-link/>
+      <mt-cell title="关于我们" to="/user/about" is-link/>
     </div>
     <div class="btn-wrapper">
       <mt-button @click.native="logout" class="btn-logout" type="danger">退出登录</mt-button>
@@ -67,11 +67,9 @@ export default {
         this.nickName = user.nickName
         this.description = user.description
         this.headImage = user.headImage
-        this.saveUserInfo(user)
       })
     },
     ...mapActions([
-      'saveUserInfo',
       'addToken'
     ]),
     logout () {

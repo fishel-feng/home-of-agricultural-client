@@ -1,6 +1,6 @@
 
 <template>
-  <!-- <transition name="bottom"> -->
+  <transition name="slide">
     <div class="about">
       <mt-header fixed title="关于">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
@@ -11,7 +11,7 @@
       <div>联系方式</div>
       <div>&copy;</div>
     </div>
-  <!-- </transition> -->
+  </transition>
 </template>
 
 <script>
@@ -33,7 +33,7 @@ export default {
   left 0
   right 0
   z-index 100
-  margin-top 40px
+  padding-top 40px
   background #fff
 </style>
 
