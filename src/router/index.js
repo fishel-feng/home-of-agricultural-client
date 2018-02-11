@@ -189,6 +189,62 @@ const UserEdit = (resolve) => {
   })
 }
 
+const CircleFragment = [
+  {
+    path: 'userCard',
+    component: UserCard
+  },
+  {
+    path: 'like',
+    component: LikeList
+  },
+  {
+    path: 'addComment',
+    component: CommentAdd
+  },
+  {
+    path: 'comment',
+    component: CommentList,
+    children: [
+      {
+        path: 'replyComment',
+        component: CommentAdd
+      },
+      {
+        path: 'userCard',
+        component: UserCard
+      }
+    ]
+  }
+]
+
+const QuestionFragment = [
+  {
+    path: ':questionId',
+    component: QuestionInfo,
+    children: [
+      {
+        path: 'addAnswer',
+        component: AnswerAdd
+      },
+      {
+        path: 'expert',
+        component: ExpertList,
+        children: [
+          {
+            path: 'userCard',
+            component: UserCard
+          }
+        ]
+      },
+      {
+        path: 'chat',
+        component: Chat
+      }
+    ]
+  }
+]
+
 export default new Router({
   routes: [
     {
@@ -213,6 +269,7 @@ export default new Router({
       path: '/question',
       component: Question,
       children: [
+        ...QuestionFragment,
         {
           path: 'selectItem',
           component: SelectItem
@@ -220,26 +277,6 @@ export default new Router({
         {
           path: 'addQuestion',
           component: QuestionAdd
-        },
-        {
-          path: ':questionId',
-          component: QuestionInfo,
-          children: [
-            {
-              path: 'addAnswer',
-              component: AnswerAdd
-            },
-            {
-              path: 'expert',
-              component: ExpertList,
-              children: [
-                {
-                  path: 'user',
-                  component: UserCard
-                }
-              ]
-            }
-          ]
         }
       ]
     },
@@ -247,27 +284,10 @@ export default new Router({
       path: '/circles',
       component: Circles,
       children: [
+        ...CircleFragment,
         {
           path: 'addCircle',
           component: CircleAdd
-        },
-        {
-          path: 'like',
-          component: LikeList
-        },
-        {
-          path: 'addComment',
-          component: CommentAdd
-        },
-        {
-          path: 'comment',
-          component: CommentList,
-          children: [
-            {
-              path: 'replyComment',
-              component: CommentAdd
-            }
-          ]
         }
       ]
     },
@@ -276,28 +296,42 @@ export default new Router({
       component: User,
       children: [
         {
+          path: 'userCard',
+          component: UserCard
+        },
+        {
           path: 'edit',
           component: UserEdit
         },
         {
           path: 'collections',
-          component: UserCollection
+          component: UserCollection,
+          children: [
+            {
+              path: ':articleId',
+              component: ArticleInfo
+            }
+          ]
         },
         {
           path: 'circles',
-          component: UserCircle
+          component: UserCircle,
+          children: CircleFragment
         },
         {
           path: 'questions',
-          component: UserQuestion
+          component: UserQuestion,
+          children: QuestionFragment
         },
         {
           path: 'attentions',
-          component: UserAttention
+          component: UserAttention,
+          children: QuestionFragment
         },
         {
           path: 'answers',
-          component: UserAnswer
+          component: UserAnswer,
+          children: QuestionFragment
         },
         {
           path: 'followings',
@@ -316,10 +350,6 @@ export default new Router({
           component: Certification
         }
       ]
-    },
-    {
-      path: '/userCard',
-      component: UserCard
     },
     {
       path: '/signIn',

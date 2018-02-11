@@ -4,7 +4,7 @@
       <mt-header fixed title="我关注的问题">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <question-list ref="question-list" class="question-list" @refresh="reload" @showDetail="getQuestionInfo"  @load="getQuestionList" :questions="questions" :loading="loading" :showLoading="showLoading"/>
+      <question-list ref="question-list" class="question-list" @refresh="reload" @load="getQuestionList" :questions="questions" :loading="loading" :showLoading="showLoading"/>
     </div>
   </transition>
 </template>
@@ -55,9 +55,6 @@
       reload (callback) {
         this.questions = []
         this.getQuestionList(callback)
-      },
-      getQuestionInfo (id) {
-        this.$router.push('/user/question/' + id)
       }
     }
   }

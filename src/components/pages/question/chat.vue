@@ -1,35 +1,37 @@
 <template>
-  <div class="chat">
-    <mt-header fixed :title="this.$route.query.userName">
-      <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
-    </mt-header>
-    <mt-loadmore :top-method="loadTop" ref="loadmore">
-      <ul class="messages" ref="div">
-        <div class="load-hint" v-show="messageList.length > 30">{{hint}}</div>
-        <li  v-for="(item, index) in messageList" :key="index" ref="li">
-          <div v-if="item.type==='text'" :class="item.sender!==myId?'message-item':'message-item right'">
-            <span>{{item.content}}</span>
-          </div>
-          <div v-if="item.type==='image'" :class="item.sender!==myId?'message-item':'message-item right'">
-            <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/chat/${item.content}`)" :src="`http://127.0.0.1:7001/public/chat/${item.content}`" alt="" width="120px" height="120px">
-          </div>
-        </li>
-      </ul>
-    </mt-loadmore>
-    <div class="input-wrapper">
-      <div class="input-area">
-        <div class="btn-add" @click="sendImage">+</div>
-        <mt-field class="input-text" type="text" v-model="message"/>
-        <mt-button @click.native="sendMessage" class="btn-submit" type="primary" size="small" >发送</mt-button>
+  <transition name="slide">
+    <div class="chat">
+      <mt-header fixed :title="this.$route.query.userName">
+        <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
+      </mt-header>
+      <mt-loadmore :top-method="loadTop" ref="loadmore">
+        <ul class="messages" ref="div">
+          <div class="load-hint" v-show="messageList.length > 30">{{hint}}</div>
+          <li  v-for="(item, index) in messageList" :key="index" ref="li">
+            <div v-if="item.type==='text'" :class="item.sender!==myId?'message-item':'message-item right'">
+              <span>{{item.content}}</span>
+            </div>
+            <div v-if="item.type==='image'" :class="item.sender!==myId?'message-item':'message-item right'">
+              <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/chat/${item.content}`)" :src="`http://127.0.0.1:7001/public/chat/${item.content}`" alt="" width="120px" height="120px">
+            </div>
+          </li>
+        </ul>
+      </mt-loadmore>
+      <div class="input-wrapper">
+        <div class="input-area">
+          <div class="btn-add" @click="sendImage">+</div>
+          <mt-field class="input-text" type="text" v-model="message"/>
+          <mt-button @click.native="sendMessage" class="btn-submit" type="primary" size="small" >发送</mt-button>
+        </div>
+        <div class="uploader-wrapper" v-show="showUploader">
+          <uploader :submitText="'发送图片'" :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/chat'"/>
+        </div>
       </div>
-      <div class="uploader-wrapper" v-show="showUploader">
-        <uploader :submitText="'发送图片'" :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/chat'"/>
+      <div @click="hideImage" v-if="showImage" class="image-wrapper">
+        <img class="big-image" :src="currentImage" alt="">
       </div>
     </div>
-    <div @click="hideImage" v-if="showImage" class="image-wrapper">
-      <img class="big-image" :src="currentImage" alt="">
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -136,6 +138,10 @@
 </script>
 
 <style lang="stylus" scoped>
+.slide-enter-active, .slide-leave-active
+  transition all 0.3s
+.slide-enter, .slide-leave-to
+  transform translate3d(100%, 0, 0)
 .chat
   position fixed
   overflow-y auto

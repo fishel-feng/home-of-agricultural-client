@@ -86,13 +86,13 @@
         this.$emit('load')
       },
       getUserCard (userId) {
-        this.$router.push(`/userCard?id=${userId}`)
+        this.$router.push(`${this.$route.path}/userCard?userId=${userId}`)
       },
       getCommentList (circleId) {
-        this.$router.push(`/circles/comment?id=${circleId}`)
+        this.$router.push(`${this.$route.path}/comment?id=${circleId}`)
       },
       getLikeList (circleId) {
-        this.$router.push(`/circles/like?id=${circleId}`)
+        this.$router.push(`${this.$route.path}/like?id=${circleId}`)
       },
       giveLike (circle) {
         this.verifyLogin(() => {
@@ -121,7 +121,7 @@
       },
       giveComment (circleId) {
         this.verifyLogin(() => {
-          this.$router.push(`/circles/addComment?id=${circleId}`)
+          this.$router.push(`${this.$route.path}/addComment?id=${circleId}`)
         })
       },
       isMine (userId) {

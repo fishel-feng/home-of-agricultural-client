@@ -7,6 +7,7 @@
       <ul class="wrapper">
         <li class="titleList" v-for="(item,index) in collections" :key="index" @click="showArticleInfo(item.articleId)">{{item.title}}</li>
       </ul>
+      <router-view/>
     </div>
   </transition>
 </template>
@@ -36,7 +37,7 @@ export default {
       })
     },
     showArticleInfo (articleId) {
-      this.$router.push(`/news/user/${articleId}`)
+      this.$router.push(this.$route.path + '/' + articleId)
     }
   }
 }

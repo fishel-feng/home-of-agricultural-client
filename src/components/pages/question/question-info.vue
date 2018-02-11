@@ -120,10 +120,10 @@
         })
       },
       getExpertList () {
-        this.$router.push(`/question/${this.question._id}/expert?tag=${this.question.tag.tagName}&questionId=${this.$route.params.questionId}`)
+        this.$router.push(`${this.$route.path}/expert?tag=${this.question.tag.tagName}&questionId=${this.$route.params.questionId}`)
       },
       addAnswer () {
-        this.$router.push(`/question/${this.question._id}/addAnswer`)
+        this.$router.push(`${this.$route.path}/addAnswer`)
       },
       deleteAnswer (answerId) {
         MessageBox.confirm('确定删除这条内容吗？', {
@@ -154,7 +154,7 @@
         return userId === this.myId
       },
       sendMessage (answer) {
-        this.$router.push(`/chat?userId=${answer.userId}&userName=${answer.nickName}`)
+        this.$router.push(`${this.$route.path}/chat?userId=${answer.userId}&userName=${answer.nickName}`)
       },
       ...mapActions([
         'addAttention',

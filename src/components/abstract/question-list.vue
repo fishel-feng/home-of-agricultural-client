@@ -56,7 +56,7 @@
     },
     methods: {
       showQuestionInfo (id) {
-        this.$emit('showDetail', id)
+        this.$router.push(this.$route.path + '/' + id)
       },
       loadTop () {
         this.$emit('refresh', this.$refs.loadmore.onTopLoaded)

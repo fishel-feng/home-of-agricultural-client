@@ -5,7 +5,7 @@
       <mt-tab-item v-for="(tag,index) in tags" :key="index" :id="tag._id">{{tag.tagName}}</mt-tab-item>
       <mt-tab-item @click.native.stop="selectItem">+</mt-tab-item>
     </mt-navbar>
-    <question-list ref="question-list" class="question-list" @refresh="reload" @showDetail="getQuestionInfo"  @load="getQuestionList" :questions="questions" :loading="loading" :showLoading="showLoading"/>
+    <question-list ref="question-list" class="question-list" @refresh="reload" @load="getQuestionList" :questions="questions" :loading="loading" :showLoading="showLoading"/>
     <div @click="addQuestion" class="btn-add">问</div>
   </div>
 </template>
@@ -64,9 +64,6 @@ export default {
     reload (callback) {
       this.questions = []
       this.getQuestionList(callback)
-    },
-    getQuestionInfo (id) {
-      this.$router.push('/question/' + id)
     }
   },
   watch: {

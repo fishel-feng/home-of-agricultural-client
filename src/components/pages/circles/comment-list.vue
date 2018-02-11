@@ -50,10 +50,10 @@
         })
       },
       giveComment (targetId, targetName) {
-        this.$router.push(`/circles/comment/replyComment?id=${this.$route.query.id}&targetId=${targetId}&targetName=${targetName}`)
+        this.$router.push(`${this.$route.path}/replyComment?id=${this.$route.query.id}&targetId=${targetId}&targetName=${targetName}`)
       },
       getUserInfo (userId) {
-        this.$router.push(`/user/${userId}`)
+        this.$router.push(`${this.$route.path}/userCard?userId=${userId}`)
       },
       deleteComment (commentId) {
         MessageBox.confirm('确定删除这条内容吗？', {

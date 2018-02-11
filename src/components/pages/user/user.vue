@@ -80,7 +80,7 @@ export default {
       this.$router.push('/user/edit')
     },
     showUserInfo () {
-      this.$router.push(`/userCard?id=${this.myId}`)
+      this.$router.push(`/user/userCard?userId=${this.myId}`)
     }
   },
   mounted () {
