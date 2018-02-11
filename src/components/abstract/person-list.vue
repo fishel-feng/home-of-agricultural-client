@@ -14,6 +14,7 @@
         </div>
       </li>
     </ul>
+    <router-view/>
   </div>
 </template>
 
@@ -36,7 +37,7 @@ export default {
   methods: {
     showUserCard (item) {
       const id = item.userId ? item.userId : item._id
-      this.$router.push(`/userCard?id=${id}`)
+      this.$router.push(this.$route.path + '/user?userId=' + id)
     },
     select (item) {
       this.$emit('select', item)

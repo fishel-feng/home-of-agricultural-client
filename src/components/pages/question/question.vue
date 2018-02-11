@@ -25,9 +25,6 @@ export default {
   },
   mounted () {
     this.getQuestionList()
-    if (this.$route.path !== '/question') {
-      this.disable_scroll()
-    }
   },
   computed: {
     ...mapGetters([

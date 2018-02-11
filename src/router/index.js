@@ -231,7 +231,13 @@ export default new Router({
             },
             {
               path: 'expert',
-              component: ExpertList
+              component: ExpertList,
+              children: [
+                {
+                  path: 'user',
+                  component: UserCard
+                }
+              ]
             }
           ]
         }

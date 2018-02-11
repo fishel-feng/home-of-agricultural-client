@@ -1,5 +1,6 @@
 <template>
-  <div class="user-card">
+  <transition name="slide">
+    <div class="user-card">
     <mt-header title="用户资料">
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
@@ -38,6 +39,7 @@
       </div>
     </div>
   </div>
+  </transition>
 </template>
 
 <script>
@@ -70,7 +72,7 @@
     },
     methods: {
       getData () {
-        axios.get(`http://127.0.0.1:7001/user/getUserInfo/${this.$route.query.id}`).then(res => {
+        axios.get(`http://127.0.0.1:7001/user/getUserInfo/${this.$route.query.userId}`).then(res => {
           if (res.data.code === 200) {
             this.user = res.data.data.user
           }
@@ -78,26 +80,26 @@
       },
       followUser () {
         axios.post(`http://127.0.0.1:7001/user/giveFollow`, {
-          targetId: this.$route.query.id
+          targetId: this.$route.query.userId
         }).then(res => {
           if (res.data.code === 200) {
             this.addFollowing({
               description: this.user.description,
               headImage: this.user.headImage,
               nickName: this.user.nickName,
-              userId: this.$route.query.id
+              userId: this.$route.query.userId
             })
-            this.$socket.emit('follow', this.token, this.$route.query.id)
+            this.$socket.emit('follow', this.token, this.$route.query.userId)
           }
         })
       },
       unFollowUser () {
         axios.post(`http://127.0.0.1:7001/user/cancelFollow`, {
-          targetId: this.$route.query.id
+          targetId: this.$route.query.userId
         }).then(res => {
           if (res.data.code === 200) {
             console.log(res.data)
-            this.deleteFollowing(this.$route.query.id)
+            this.deleteFollowing(this.$route.query.userId)
           }
         })
       },
@@ -110,6 +112,10 @@
 </script>
 
 <style lang="stylus" scoped>
+  .slide-enter-active, .slide-leave-active
+    transition all 0.3s
+  .slide-enter, .slide-leave-to
+    transform translate3d(100%, 0, 0)
   .user-card
     position fixed
     overflow-y auto
