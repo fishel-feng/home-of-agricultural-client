@@ -123,7 +123,7 @@
         background rgba(153,255,255,0.3)
         padding 10px
         .today-hot-wrapper
-          font-size 20px
+          font-size $font-size-large-x
           padding 20px
           .today-hot
             padding 10px
@@ -132,6 +132,6 @@
             text-align center
         .list-wrapper
           padding 10px
-          font-size 16px
+          font-size $font-size-medium-x
           margin 20px
 </style>

@@ -31,144 +31,138 @@
 </template>
 
 <script>
-import { accountTestMixin } from '@/common/js/mixin'
-import { Toast } from 'mint-ui'
-import { mapGetters, mapActions } from 'vuex'
-import axios from 'axios'
-export default {
-  mixins: [accountTestMixin],
-  data () {
-    return {
-      articleId: '',
-      article: {},
-      isCollected: false
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'collections',
-      'token'
-    ])
-  },
-  mounted () {
-    this.initData()
-  },
-  watch: {
-    '$route' (to, from) {
-      this.initData()
-    }
-  },
-  methods: {
-    ...mapActions([
-      'addCollection',
-      'deleteCollection'
-    ]),
-    initData () {
-      this.articleId = this.$route.params.articleId
-      axios.get(`http://localhost:7001/news/getArticleInfo/${this.articleId}`).then(res => {
-        if (res && res.data.code === 200) {
-          this.article = res.data.data
-        }
-      })
-      this.testCollectionState()
+  import {accountTestMixin} from '@/common/js/mixin'
+  import {Toast} from 'mint-ui'
+  import {mapGetters, mapActions} from 'vuex'
+  import axios from 'axios'
+  export default {
+    mixins: [accountTestMixin],
+    data () {
+      return {
+        article: {},
+        isCollected: false
+      }
     },
-    testCollectionState () {
-      if (this.collections.length) {
-        this.collections.forEach(element => {
-          if (element.articleId === this.articleId) {
+    computed: {
+      ...mapGetters([
+        'collections',
+        'token'
+      ])
+    },
+    mounted () {
+      this.initData()
+    },
+    methods: {
+      ...mapActions([
+        'addCollection',
+        'deleteCollection'
+      ]),
+      initData () {
+        axios.get(`http://localhost:7001/news/getArticleInfo/${this.$route.params.articleId}`).then(res => {
+          if (res && res.data.code === 200) {
+            this.article = res.data.data
+          }
+        })
+        this.testCollectionState()
+      },
+      testCollectionState () {
+        if (this.collections.length) {
+          this.collections.forEach(element => {
+            if (element.articleId === this.$route.params.articleId) {
+              this.isCollected = true
+            }
+          })
+        }
+      },
+      _addToCollection () {
+        const articleId = this.$route.params.articleId
+        const title = this.article.title
+        axios.post('http://localhost:7001/news/addToCollections', {
+          articleId,
+          title
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.addCollection({articleId, title})
+            Toast({
+              message: '收藏成功',
+              position: 'bottom',
+              duration: 3000
+            })
             this.isCollected = true
           }
         })
+      },
+      addToCollection () {
+        this.verifyLogin(this._addToCollection)
+      },
+      deleteFromCollection () {
+        const articleId = this.$route.params.articleId
+        axios.post('http://localhost:7001/news/deleteFromCollections', {
+          articleId
+        }, {
+          headers: {
+            Authorization: this.token
+          }
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.deleteCollection(articleId)
+            Toast({
+              message: '取消收藏成功',
+              position: 'bottom',
+              duration: 3000
+            })
+            this.isCollected = false
+          }
+        })
       }
-    },
-    _addToCollection () {
-      const articleId = this.articleId
-      const title = this.article.title
-      axios.post('http://localhost:7001/news/addToCollections', {
-        articleId,
-        title
-      }, {
-        headers: {
-          Authorization: this.token
-        }
-      }).then(res => {
-        if (res.data.code === 200) {
-          this.addCollection({articleId, title})
-          Toast({
-            message: '收藏成功',
-            position: 'bottom',
-            duration: 3000
-          })
-          this.isCollected = true
-        }
-      })
-    },
-    addToCollection () {
-      this.verifyLogin(this._addToCollection)
-    },
-    deleteFromCollection () {
-      const articleId = this.articleId
-      axios.post('http://localhost:7001/news/deleteFromCollections', {
-        articleId
-      }, {
-        headers: {
-          Authorization: this.token
-        }
-      }).then(res => {
-        if (res.data.code === 200) {
-          this.deleteCollection(articleId)
-          Toast({
-            message: '取消收藏成功',
-            position: 'bottom',
-            duration: 3000
-          })
-          this.isCollected = false
-        }
-      })
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>
-.slide-enter-active, .slide-leave-active
-  transition all 0.3s
-.slide-enter, .slide-leave-to
-  transform translate3d(100%, 0, 0)
-.article-info
-  position fixed
-  overflow-y auto
-  top 0
-  left 0
-  width 100%
-  height 100%
-  z-index 100
-  background #fff
-  .content-wrapper
-    margin-top 40px
-    padding 10px
-    .title
-      font-size 18px
-      margin-bottom 20px
-    .head-wrapper
-      overflow hidden
-      padding 10px
-      .note
-        line-height 16px
-        font-size 10px
-        float left
-      .btn-wrapper
-        float right
-        height 20px
-    .desc
-      margin 5px 0
-      border-radius 10px
-      padding 5px
-      font-size 14px
-      line-height 20px
-      background #eee
-    .article-content
-      font-size 15px
-      padding 10px
-      line-height 20px
+  @import "../../../assets/stylus/variable"
+  .slide-enter-active, .slide-leave-active
+    transition all 0.3s
+  .slide-enter, .slide-leave-to
+    transform translate3d(100%, 0, 0)
+  .article-info
+    position fixed
+    overflow-y auto
+    top 0
+    left 0
+    width 100%
+    height 100%
+    z-index 100
+    background $color-article-background
+    .content-wrapper
+      margin-top 40px
+      padding $font-size-small-s
+      .title
+        font-size $font-size-large
+        margin-bottom 20px
+      .head-wrapper
+        overflow hidden
+        padding 10px
+        .note
+          line-height 16px
+          font-size $font-size-small-s
+          float left
+        .btn-wrapper
+          float right
+          height 20px
+      .desc
+        margin 5px 0
+        border-radius 10px
+        padding 5px
+        font-size $font-size-medium
+        line-height 20px
+        background $color-article-desc-background
+      .article-content
+        font-size $font-size-medium-x
+        padding 10px
+        line-height 20px
 </style>

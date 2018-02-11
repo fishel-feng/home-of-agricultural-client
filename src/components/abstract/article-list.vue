@@ -49,32 +49,32 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../assets/stylus/variable"
   .article-list
-    background #ccc
     padding-top 3px
     .list-item
-      background #fff
+      background $color-list-item-background
       margin-bottom 3px
       display block
       padding 15px
       .title
         font-weight bold
-        font-size 18px
+        font-size $font-size-large
       .desc
         margin 5px
-        font-size 14px
+        font-size $font-size-medium
         color #4b4b4b
       .date
-        font-size 12px
+        font-size $font-size-small
       .read
         float right
-        font-size 12px
+        font-size $font-size-small
     .load-wrapper
       padding-top 10px
-      background #fff
+      background $color-list-item-background
       position relative
       width 100%
       height 30px
       text-align center
-      font-size 14px
+      font-size $font-size-medium
 </style>
