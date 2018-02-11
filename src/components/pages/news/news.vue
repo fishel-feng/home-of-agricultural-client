@@ -1,6 +1,6 @@
 <template>
   <div class="news">
-    <mt-navbar @click.native="getPageContent" fixed class="nav" v-model="selected">
+    <mt-navbar @click.native="getPageContent" class="nav" v-model="selected">
       <mt-tab-item v-for="nav in navList" :key="nav.itemName" :id="nav.navUrl">{{nav.itemName}}</mt-tab-item>
     </mt-navbar>
     <div class="content">
@@ -19,7 +19,7 @@
                 今日热点
               </div>
             </div>
-            <ul id="scroll">
+            <ul>
               <li @click="getArticleInfo(item.articleId)" v-for="item in hotList" :key="item.rank" class="list-wrapper">
                 {{item.rank}} {{item.title}}
               </li>
@@ -37,10 +37,8 @@
 
 <script>
 import axios from 'axios'
-import {disableScrollMixin} from '@/common/js/mixin'
 import ArticleList from '@/components/abstract/article-list'
 export default {
-  mixins: [disableScrollMixin],
   data () {
     return {
       navList: [{itemName: '首页', navUrl: ''},
@@ -70,8 +68,10 @@ export default {
   methods: {
     initData () {
       axios.get('http://127.0.0.1:7001/news/getArticleIndex').then(res => {
-        this.scroll = res.data.data.scroll
-        this.hotList = res.data.data.todayNews
+        if (res.data.code === 200) {
+          this.scroll = res.data.data.scroll
+          this.hotList = res.data.data.todayNews
+        }
       })
     },
     getPageContent () {
@@ -98,30 +98,19 @@ export default {
       })
       this.page++
     }
-  },
-  watch: {
-    '$route' (to, from) {
-      if (to.path !== '/news') {
-        this.disable_scroll()
-      }
-      if (from.path !== '/news') {
-        this.enable_scroll()
-      }
-    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
 .news
-  margin-bottom 43px
   width 100%
   .nav
     width 100%
+    padding-bottom 0
   .content
-    margin-top 46px
+    background #ccc
     .swipe
-      background #ccc
       padding-top 3px
       height 215px
       position relative

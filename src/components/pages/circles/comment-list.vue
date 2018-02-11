@@ -5,7 +5,7 @@
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <div class="container">
-        <ul id="inner-scroll">
+        <ul>
           <li v-for="(comment, index) in comments" :key="index" @click="giveComment(comment.userId, comment.nickName)" class="item">
             <div class="user-info">
               <div>
@@ -29,10 +29,10 @@
 
 <script>
   import {MessageBox, Toast} from 'mint-ui'
-  import {getTimeMixin, accountTestMixin, disableScrollMixin} from '@/common/js/mixin'
+  import {getTimeMixin, accountTestMixin} from '@/common/js/mixin'
   import axios from 'axios'
   export default {
-    mixins: [getTimeMixin, accountTestMixin, disableScrollMixin],
+    mixins: [getTimeMixin, accountTestMixin],
     data () {
       return {
         comments: []
@@ -87,12 +87,6 @@
         //   this.selected = ''
         //   this.getPageContent()
         // }
-        if (to.path !== '/circles/comment') {
-          this.disable_scroll('inner-scroll')
-        }
-        if (to.path === '/circles/comment') {
-          this.enable_scroll('inner-scroll')
-        }
       }
     }
   }

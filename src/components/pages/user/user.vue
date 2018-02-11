@@ -10,7 +10,7 @@
         <div>{{description}}</div>
       </div>
     </div>
-    <div class="center" id="scroll">
+    <div class="center">
       <mt-cell title="我的收藏" to="/user/collections" is-link :value="collectionCount"/>
       <mt-cell title="我的动态" to="/user/circles" is-link :value="circleCount"/>
       <mt-cell title="我的提问" to="/user/questions" is-link :value="questionCount"/>
@@ -34,11 +34,11 @@
 </template>
 
 <script>
-import { accountTestMixin, showImageMixin, disableScrollMixin } from '@/common/js/mixin'
+import { accountTestMixin, showImageMixin } from '@/common/js/mixin'
 import { mapActions } from 'vuex'
 import axios from 'axios'
 export default {
-  mixins: [accountTestMixin, showImageMixin, disableScrollMixin],
+  mixins: [accountTestMixin, showImageMixin],
   data () {
     return {
       nickName: '',
@@ -85,23 +85,12 @@ export default {
   },
   mounted () {
     this.verifyLogin(this.getData)
-  },
-  watch: {
-    '$route' (to, from) {
-      if (to.path !== '/user') {
-        this.disable_scroll()
-      }
-      if (to.path === '/user') {
-        this.enable_scroll()
-      }
-    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
 .user
-  margin-bottom 55px
   width: 100%
   .head
     display flex

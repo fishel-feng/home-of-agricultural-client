@@ -12,9 +12,9 @@
 <script>
 import axios from 'axios'
 import CircleList from '@/components/abstract/circle-list'
-import { accountTestMixin, disableScrollMixin } from '@/common/js/mixin'
+import { accountTestMixin } from '@/common/js/mixin'
 export default {
-  mixins: [accountTestMixin, disableScrollMixin],
+  mixins: [accountTestMixin],
   data () {
     return {
       selected: '',
@@ -66,12 +66,6 @@ export default {
         this.selected = ''
         this.getPageContent()
       }
-      if (to.path !== '/circles') {
-        this.disable_scroll()
-      }
-      if (to.path === '/circles') {
-        this.enable_scroll()
-      }
     }
   }
 }
@@ -79,7 +73,6 @@ export default {
 
 <style lang="stylus" scoped>
 .circle
-  margin-bottom 55px
   width: 100%
   .circle-list
     padding-top 3px

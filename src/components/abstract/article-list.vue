@@ -1,6 +1,6 @@
 <template>
   <div class="article-list">
-    <ul id="scroll" v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" :infinite-scroll-distance="15" infinite-scroll-immediate-check="false">
+    <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" :infinite-scroll-distance="15" infinite-scroll-immediate-check="false">
       <li v-for="news in newsList" @click="getArticleInfo(news)" class="list-item">
         <h2 class="title">{{news.title}}</h2>
         <p class="desc">{{news.desc}}</p>

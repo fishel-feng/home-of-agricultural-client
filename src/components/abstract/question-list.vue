@@ -1,7 +1,7 @@
 <template>
   <div class="question-list">
     <mt-loadmore :top-method="loadTop" ref="loadmore">
-      <ul id="scroll" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
+      <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
         <li class="item" v-for="(item,index) in questions" :key="index" @click="showQuestionInfo(item._id)">
           <div class="title">
             {{item.title}}

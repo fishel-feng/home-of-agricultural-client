@@ -12,11 +12,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { disableScrollMixin } from '@/common/js/mixin'
 import axios from 'axios'
 import QuestionList from '@/components/abstract/question-list'
 export default {
-  mixins: [ disableScrollMixin ],
   data () {
     return {
       selected: '',
@@ -90,12 +88,6 @@ export default {
         })
         this.getPageContent()
       }
-      if (to.path !== '/question') {
-        this.disable_scroll()
-      }
-      if (to.path === '/question') {
-        this.enable_scroll()
-      }
     }
   }
 }
@@ -103,7 +95,6 @@ export default {
 
 <style lang="stylus" scoped>
 .question
-  margin-bottom 55px
   width: 100%
   .question-list
     padding-top 3px

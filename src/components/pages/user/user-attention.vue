@@ -10,11 +10,9 @@
 </template>
 
 <script>
-  import { disableScrollMixin } from '@/common/js/mixin'
   import axios from 'axios'
   import QuestionList from '@/components/abstract/question-list'
   export default {
-    mixins: [ disableScrollMixin ],
     data () {
       return {
         loading: false,
@@ -60,16 +58,6 @@
       },
       getQuestionInfo (id) {
         this.$router.push('/user/question/' + id)
-      }
-    },
-    watch: {
-      '$route' (to, from) {
-        if (to.path !== '/user/attentions') {
-          this.disable_scroll()
-        }
-        if (to.path === '/user/attentions') {
-          this.enable_scroll()
-        }
       }
     }
   }

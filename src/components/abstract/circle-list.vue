@@ -1,7 +1,7 @@
 <template>
   <div class="circle-list">
     <mt-loadmore :top-method="loadTop" ref="loadmore">
-      <ul id="scroll" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
+      <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
         <li v-for="(item, index) in circles" :key="index" class="list-item" ref="li">
           <div class="head-image">
             <img @click="getUserCard(item.userId)" :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="50px" height="50px">

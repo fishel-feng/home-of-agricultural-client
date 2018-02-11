@@ -28,8 +28,8 @@ export default {
 .wiki
   position absolute
   background: #ccc
-  top 40px
-  bottom 55px
+  top 0
+  bottom 0
   width: 100%
   .container
     padding 50px 0

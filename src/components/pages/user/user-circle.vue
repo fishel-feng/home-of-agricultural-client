@@ -12,9 +12,9 @@
 <script>
 import axios from 'axios'
 import CircleList from '@/components/abstract/circle-list'
-import { accountTestMixin, disableScrollMixin } from '@/common/js/mixin'
+import { accountTestMixin } from '@/common/js/mixin'
 export default {
-  mixins: [accountTestMixin, disableScrollMixin],
+  mixins: [accountTestMixin],
   data () {
     return {
       loading: false,
@@ -51,16 +51,6 @@ export default {
     reload (callback) {
       this.questions = []
       this.getCircleList(callback)
-    }
-  },
-  watch: {
-    '$route' (to, from) {
-      if (to.path !== '/user/circles') {
-        this.disable_scroll()
-      }
-      if (to.path === '/user/circles') {
-        this.enable_scroll()
-      }
     }
   }
 }

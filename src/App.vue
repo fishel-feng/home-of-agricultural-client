@@ -38,7 +38,7 @@ export default {
   name: 'app',
   data () {
     return {
-      selected: this.$route.path.slice(1),
+      selected: 'news',
       messageCount: 0,
       title: { news: '新闻', wiki: '百科', question: '问专家', circles: '农友圈', user: '我的' }
     }
@@ -79,6 +79,21 @@ export default {
       })
     }
   },
+  watch: {
+    '$route' (to, from) {
+      // todo 重构路由结构，提取抽象组件
+      this.selected = to.path.slice(1)
+      // this.$router.push('/' + this.selected)
+      // this.tailList.forEach(element => {
+      //   if (to.path.substring(1).startsWith(element.id)) {
+      //     this.title = element.text
+      //   }
+      // })
+      // if (from.path === '/message') {
+      //   this.messageCount = 0
+      // }
+    }
+  },
   sockets: {
     chat () {
       //
@@ -110,7 +125,12 @@ export default {
     right 3px
     position absolute
 .main
-  margin-top 40px
+  z-index 1
+  position fixed
+  overflow-y auto
+  top 40px
+  bottom 55px
+  width 100%
 .tail-tab
   position fixed
 </style>
