@@ -19,31 +19,33 @@
 </template>
 
 <script>
-export default {
-  props: {
-    data: {
-      type: Array,
-      default: []
+  import {goToRelativePathMixin} from '@/common/js/mixin'
+  export default {
+    mixins: [goToRelativePathMixin],
+    props: {
+      data: {
+        type: Array,
+        default: []
+      },
+      showButton: {
+        type: Boolean,
+        default: false
+      },
+      text: {
+        type: String,
+        default: ''
+      }
     },
-    showButton: {
-      type: Boolean,
-      default: false
-    },
-    text: {
-      type: String,
-      default: ''
-    }
-  },
-  methods: {
-    showUserCard (item) {
-      const id = item.userId ? item.userId : item._id
-      this.$router.push(this.$route.path + '/userCard?userId=' + id)
-    },
-    select (item) {
-      this.$emit('select', item)
+    methods: {
+      showUserCard (item) {
+        const id = item.userId ? item.userId : item._id
+        this.goToRelativePath('/userCard?userId=' + id)
+      },
+      select (item) {
+        this.$emit('select', item)
+      }
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>

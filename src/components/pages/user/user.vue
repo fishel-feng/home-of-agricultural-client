@@ -11,6 +11,9 @@
       </div>
     </div>
     <div class="center">
+      <mt-cell title="最近联系" to="/user/recent" is-link/>
+    </div>
+    <div class="center">
       <mt-cell title="我的收藏" to="/user/collections" is-link :value="collectionCount"/>
       <mt-cell title="我的动态" to="/user/circles" is-link :value="circleCount"/>
       <mt-cell title="我的提问" to="/user/questions" is-link :value="questionCount"/>
@@ -19,7 +22,7 @@
       <mt-cell title="我关注的人" to="/user/followings" is-link :value="followingCount"/>
       <mt-cell title="关注我的人" to="/user/followers" is-link :value="followerCount"/>
     </div>
-    <div class="foot">
+    <div class="center">
       <mt-cell title="专家认证" to="/user/certification" is-link/>
       <mt-cell title="关于我们" to="/user/about" is-link/>
     </div>
@@ -110,8 +113,6 @@ export default {
           font-size 10px
           color #ccc
   .center
-    padding 10px 15px
-  .foot
     padding 10px 15px
   .btn-wrapper
     padding 10px 15px

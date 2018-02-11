@@ -148,13 +148,13 @@ const FollowerList = (resolve) => {
 }
 
 const SignIn = (resolve) => {
-  import('@/components/pages/user/sign-in').then((module) => {
+  import('@/components/pages/others/sign-in').then((module) => {
     resolve(module)
   })
 }
 
 const UserForm = (resolve) => {
-  import('@/components/pages/user/user-form').then((module) => {
+  import('@/components/pages/others/user-form').then((module) => {
     resolve(module)
   })
 }
@@ -178,7 +178,7 @@ const Certification = (resolve) => {
 }
 
 const MessageCenter = (resolve) => {
-  import('@/components/pages/user/message-center').then((module) => {
+  import('@/components/pages/others/message-center').then((module) => {
     resolve(module)
   })
 }
@@ -304,6 +304,10 @@ export default new Router({
           component: UserEdit
         },
         {
+          path: 'recent',
+          component: Recent
+        },
+        {
           path: 'collections',
           component: UserCollection,
           children: [
@@ -365,15 +369,13 @@ export default new Router({
     },
     {
       path: '/message',
-      component: MessageCenter
-    },
-    {
-      path: '/chat',
-      component: Chat
-    },
-    {
-      path: '/recent',
-      component: Recent
+      component: MessageCenter,
+      children: [
+        {
+          path: 'recent',
+          component: Recent
+        }
+      ]
     }
   ]
 })

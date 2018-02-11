@@ -54,11 +54,11 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
-  import { showImageMixin, accountTestMixin, getTimeMixin } from '@/common/js/mixin'
+  import { showImageMixin, accountTestMixin, getTimeMixin, goToRelativePathMixin } from '@/common/js/mixin'
   import { Toast, MessageBox } from 'mint-ui'
   import axios from 'axios'
   export default {
-    mixins: [ showImageMixin, accountTestMixin, getTimeMixin ],
+    mixins: [ showImageMixin, accountTestMixin, getTimeMixin, goToRelativePathMixin ],
     props: {
       circles: {
         type: Array,
@@ -86,13 +86,13 @@
         this.$emit('load')
       },
       getUserCard (userId) {
-        this.$router.push(`${this.$route.path}/userCard?userId=${userId}`)
+        this.goToRelativePath('userCard?userId=' + userId)
       },
       getCommentList (circleId) {
-        this.$router.push(`${this.$route.path}/comment?id=${circleId}`)
+        this.goToRelativePath('comment?id=' + circleId)
       },
       getLikeList (circleId) {
-        this.$router.push(`${this.$route.path}/like?id=${circleId}`)
+        this.goToRelativePath('like?id=' + circleId)
       },
       giveLike (circle) {
         this.verifyLogin(() => {
@@ -121,7 +121,7 @@
       },
       giveComment (circleId) {
         this.verifyLogin(() => {
-          this.$router.push(`${this.$route.path}/addComment?id=${circleId}`)
+          this.goToRelativePath('addComment?id=' + circleId)
         })
       },
       isMine (userId) {

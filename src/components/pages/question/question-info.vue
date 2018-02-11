@@ -59,12 +59,12 @@
 </template>
 
 <script>
-  import { getTimeMixin, accountTestMixin, showImageMixin } from '@/common/js/mixin'
-  import { Toast, MessageBox } from 'mint-ui'
-  import { mapGetters, mapActions } from 'vuex'
+  import {getTimeMixin, accountTestMixin, showImageMixin, goToRelativePathMixin} from '@/common/js/mixin'
+  import {Toast, MessageBox} from 'mint-ui'
+  import {mapGetters, mapActions} from 'vuex'
   import axios from 'axios'
   export default {
-    mixins: [ getTimeMixin, accountTestMixin, showImageMixin ],
+    mixins: [getTimeMixin, accountTestMixin, showImageMixin, goToRelativePathMixin],
     data () {
       return {
         question: {},
@@ -120,10 +120,10 @@
         })
       },
       getExpertList () {
-        this.$router.push(`${this.$route.path}/expert?tag=${this.question.tag.tagName}&questionId=${this.$route.params.questionId}`)
+        this.goToRelativePath(`expert?tag=${this.question.tag.tagName}&questionId=${this.$route.params.questionId}`)
       },
       addAnswer () {
-        this.$router.push(`${this.$route.path}/addAnswer`)
+        this.goToRelativePath('addAnswer')
       },
       deleteAnswer (answerId) {
         MessageBox.confirm('确定删除这条内容吗？', {
@@ -154,7 +154,7 @@
         return userId === this.myId
       },
       sendMessage (answer) {
-        this.$router.push(`${this.$route.path}/chat?userId=${answer.userId}&userName=${answer.nickName}`)
+        this.goToRelativePath(`chat?userId=${answer.userId}&userName=${answer.nickName}`)
       },
       ...mapActions([
         'addAttention',

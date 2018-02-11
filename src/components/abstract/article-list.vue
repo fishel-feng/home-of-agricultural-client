@@ -20,7 +20,9 @@
 </template>
 
 <script>
+  import {goToRelativePathMixin} from '@/common/js/mixin'
   export default {
+    mixins: [goToRelativePathMixin],
     props: {
       newsList: {
         type: Array,
@@ -37,7 +39,7 @@
     },
     methods: {
       getArticleInfo (article) {
-        this.$router.push(this.$route.path + '/' + article.articleId)
+        this.goToRelativePath(article.articleId)
       },
       loadMore () {
         this.$emit('load')

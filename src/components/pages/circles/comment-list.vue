@@ -29,10 +29,10 @@
 
 <script>
   import {MessageBox, Toast} from 'mint-ui'
-  import {getTimeMixin, accountTestMixin} from '@/common/js/mixin'
+  import {getTimeMixin, accountTestMixin, goToRelativePathMixin} from '@/common/js/mixin'
   import axios from 'axios'
   export default {
-    mixins: [getTimeMixin, accountTestMixin],
+    mixins: [getTimeMixin, accountTestMixin, goToRelativePathMixin],
     data () {
       return {
         comments: []
@@ -50,10 +50,10 @@
         })
       },
       giveComment (targetId, targetName) {
-        this.$router.push(`${this.$route.path}/replyComment?id=${this.$route.query.id}&targetId=${targetId}&targetName=${targetName}`)
+        this.goToRelativePath(`replyComment?id=${this.$route.query.id}&targetId=${targetId}&targetName=${targetName}`)
       },
       getUserInfo (userId) {
-        this.$router.push(`${this.$route.path}/userCard?userId=${userId}`)
+        this.goToRelativePath('userCard?userId=' + userId)
       },
       deleteComment (commentId) {
         MessageBox.confirm('确定删除这条内容吗？', {

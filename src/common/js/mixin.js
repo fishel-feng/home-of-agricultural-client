@@ -78,3 +78,11 @@ export const getTimeMixin = {
     }
   }
 }
+
+export const goToRelativePathMixin = {
+  methods: {
+    goToRelativePath (path) {
+      this.$router.push(this.$route.path + '/' + path)
+    }
+  }
+}

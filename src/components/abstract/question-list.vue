@@ -37,9 +37,9 @@
 <script>
   import axios from 'axios'
   import { Toast, MessageBox } from 'mint-ui'
-  import { showImageMixin, accountTestMixin, getTimeMixin } from '@/common/js/mixin'
+  import { showImageMixin, accountTestMixin, getTimeMixin, goToRelativePathMixin } from '@/common/js/mixin'
   export default {
-    mixins: [ showImageMixin, accountTestMixin, getTimeMixin ],
+    mixins: [ showImageMixin, accountTestMixin, getTimeMixin, goToRelativePathMixin ],
     props: {
       questions: {
         type: Array,
@@ -56,7 +56,7 @@
     },
     methods: {
       showQuestionInfo (id) {
-        this.$router.push(this.$route.path + '/' + id)
+        this.goToRelativePath(id)
       },
       loadTop () {
         this.$emit('refresh', this.$refs.loadmore.onTopLoaded)
