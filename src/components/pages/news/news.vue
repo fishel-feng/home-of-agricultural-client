@@ -36,102 +36,102 @@
 </template>
 
 <script>
-import axios from 'axios'
-import ArticleList from '@/components/abstract/article-list'
-export default {
-  data () {
-    return {
-      navList: [{itemName: '首页', navUrl: ''},
-        {itemName: '头条', navUrl: 'toutiao'},
-        {itemName: '热点', navUrl: 'redian'},
-        {itemName: '种植', navUrl: 'zhongzhi'},
-        {itemName: '养殖', navUrl: 'yangzhi'},
-        {itemName: '农资', navUrl: 'nongzi'},
-        {itemName: '电商', navUrl: 'dianshang'},
-        {itemName: '休闲', navUrl: 'xiuxian'},
-        {itemName: '全部', navUrl: 'list'}],
-      selected: '',
-      scroll: [],
-      hotList: [],
-      newsList: [],
-      page: 1,
-      loading: false,
-      showLoading: false
-    }
-  },
-  components: {
-    ArticleList
-  },
-  mounted () {
-    this.initData()
-  },
-  methods: {
-    initData () {
-      axios.get('http://127.0.0.1:7001/news/getArticleIndex').then(res => {
-        if (res.data.code === 200) {
-          this.scroll = res.data.data.scroll
-          this.hotList = res.data.data.todayNews
-        }
-      })
-    },
-    getPageContent () {
-      if (this.selected) {
-        this.newsList = []
-        this.page = 1
-        this.getArticleList()
+  import axios from 'axios'
+  import ArticleList from '@/components/abstract/article-list'
+  export default {
+    data () {
+      return {
+        navList: [{itemName: '首页', navUrl: ''},
+          {itemName: '头条', navUrl: 'toutiao'},
+          {itemName: '热点', navUrl: 'redian'},
+          {itemName: '种植', navUrl: 'zhongzhi'},
+          {itemName: '养殖', navUrl: 'yangzhi'},
+          {itemName: '农资', navUrl: 'nongzi'},
+          {itemName: '电商', navUrl: 'dianshang'},
+          {itemName: '休闲', navUrl: 'xiuxian'},
+          {itemName: '全部', navUrl: 'list'}],
+        selected: '',
+        scroll: [],
+        hotList: [],
+        newsList: [],
+        page: 1,
+        loading: false,
+        showLoading: false
       }
     },
-    getArticleInfo (id) {
-      this.$router.push('/news/' + id)
+    components: {
+      ArticleList
     },
-    getArticleList () {
-      this.showLoading = true
-      this.loading = true
-      axios.get(`http://localhost:7001/news/getArticleListByPage/${this.selected}/${this.page}`).then(res => {
-        if (this.newsList.length) {
-          setTimeout(() => {
-            this.loading = false
-            this.showLoading = false
-          }, 2000)
+    mounted () {
+      this.initData()
+    },
+    methods: {
+      initData () {
+        axios.get('http://127.0.0.1:7001/news/getArticleIndex').then(res => {
+          if (res.data.code === 200) {
+            this.scroll = res.data.data.scroll
+            this.hotList = res.data.data.todayNews
+          }
+        })
+      },
+      getPageContent () {
+        if (this.selected) {
+          this.newsList = []
+          this.page = 1
+          this.getArticleList()
         }
-        this.newsList.push(...res.data.data.articles)
-      })
-      this.page++
+      },
+      getArticleInfo (id) {
+        this.$router.push('/news/' + id)
+      },
+      getArticleList () {
+        this.showLoading = true
+        this.loading = true
+        axios.get(`http://localhost:7001/news/getArticleListByPage/${this.selected}/${this.page}`).then(res => {
+          if (this.newsList.length) {
+            setTimeout(() => {
+              this.loading = false
+              this.showLoading = false
+            }, 2000)
+          }
+          this.newsList.push(...res.data.data.articles)
+        })
+        this.page++
+      }
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>
-.news
-  width 100%
-  .nav
+  @import "../../../assets/stylus/variable"
+  .news
     width 100%
-    padding-bottom 0
-  .content
-    background #ccc
-    .swipe
-      padding-top 3px
-      height 215px
-      position relative
-      .title
-        position absolute
-        padding 5px
-        top 20px
-        background rgba(204,204,204,0.5)
-    .main-wrapper
-      background rgba(153,255,255,0.3)
-      padding 10px
-      .today-hot-wrapper
-        font-size 20px
-        padding 20px
-        .today-hot
-          padding 10px
-          margin 5px
-          background #9cf
-          text-align center
-      .list-wrapper
+    .nav
+      width 100%
+    .content
+      background $color-background
+      .swipe
+        padding-top 3px
+        height 215px
+        position relative
+        .title
+          position absolute
+          padding 5px
+          top 20px
+          background $color-news-title-background
+      .main-wrapper
+        background rgba(153,255,255,0.3)
         padding 10px
-        font-size 16px
-        margin 20px
+        .today-hot-wrapper
+          font-size 20px
+          padding 20px
+          .today-hot
+            padding 10px
+            margin 5px
+            background #9cf
+            text-align center
+        .list-wrapper
+          padding 10px
+          font-size 16px
+          margin 20px
 </style>

@@ -37,97 +37,97 @@
 </template>
 
 <script>
-import { accountTestMixin, showImageMixin } from '@/common/js/mixin'
-import { mapActions } from 'vuex'
-import axios from 'axios'
-export default {
-  mixins: [accountTestMixin, showImageMixin],
-  data () {
-    return {
-      nickName: '',
-      description: '',
-      headImage: '',
-      followingCount: 0,
-      followerCount: 0,
-      answerCount: 0,
-      questionCount: 0,
-      attentionCount: 0,
-      circleCount: 0,
-      collectionCount: 0
+  import {accountTestMixin, showImageMixin} from '@/common/js/mixin'
+  import {mapActions} from 'vuex'
+  import axios from 'axios'
+  export default {
+    mixins: [accountTestMixin, showImageMixin],
+    data () {
+      return {
+        nickName: '',
+        description: '',
+        headImage: '',
+        followingCount: 0,
+        followerCount: 0,
+        answerCount: 0,
+        questionCount: 0,
+        attentionCount: 0,
+        circleCount: 0,
+        collectionCount: 0
+      }
+    },
+    methods: {
+      getData () {
+        axios.get('http://localhost:7001/user/getUserIndex').then(res => {
+          const user = res.data.data.user
+          this.collectionCount = user.collectionCount
+          this.circleCount = user.circleCount
+          this.questionCount = user.questionCount
+          this.attentionCount = user.attentionCount
+          this.answerCount = user.answerCount
+          this.followingCount = user.followingCount
+          this.followerCount = user.followerCount
+          this.nickName = user.nickName
+          this.description = user.description
+          this.headImage = user.headImage
+        })
+      },
+      ...mapActions([
+        'addToken'
+      ]),
+      logout () {
+        this.addToken('')
+        this.$router.push('/')
+      },
+      editInfo () {
+        this.$router.push('/user/edit')
+      },
+      showUserInfo () {
+        this.$router.push(`/user/userCard?userId=${this.myId}`)
+      }
+    },
+    mounted () {
+      this.verifyLogin(this.getData)
     }
-  },
-  methods: {
-    getData () {
-      axios.get('http://localhost:7001/user/getUserIndex').then(res => {
-        const user = res.data.data.user
-        this.collectionCount = user.collectionCount
-        this.circleCount = user.circleCount
-        this.questionCount = user.questionCount
-        this.attentionCount = user.attentionCount
-        this.answerCount = user.answerCount
-        this.followingCount = user.followingCount
-        this.followerCount = user.followerCount
-        this.nickName = user.nickName
-        this.description = user.description
-        this.headImage = user.headImage
-      })
-    },
-    ...mapActions([
-      'addToken'
-    ]),
-    logout () {
-      this.addToken('')
-      this.$router.push('/')
-    },
-    editInfo () {
-      this.$router.push('/user/edit')
-    },
-    showUserInfo () {
-      this.$router.push(`/user/userCard?userId=${this.myId}`)
-    }
-  },
-  mounted () {
-    this.verifyLogin(this.getData)
   }
-}
 </script>
 
 <style lang="stylus" scoped>
-.user
-  width: 100%
-  .head
-    display flex
-    min-height 80px
-    padding 15px
-    .desc
-      padding 10px
+  .user
+    width: 100%
+    .head
       display flex
-      flex-direction column
-      justify-content space-between
-      .name-wrapper
+      min-height 80px
+      padding 15px
+      .desc
+        padding 10px
         display flex
-        flex-direction row
+        flex-direction column
         justify-content space-between
-        align-items center
-        .btn-edit
-          font-size 10px
-          color #ccc
-  .center
-    padding 10px 15px
-  .btn-wrapper
-    padding 10px 15px
-    .btn-logout
-      width 100%
-  .image-wrapper
-    display flex
-    align-items center
-    position fixed
-    background rgba(0, 0, 0, 0.8)
-    z-index 200
-    top 0
-    right 0
-    left 0
-    bottom 0
-    .big-image
-      width 100%
+        .name-wrapper
+          display flex
+          flex-direction row
+          justify-content space-between
+          align-items center
+          .btn-edit
+            font-size 10px
+            color #ccc
+    .center
+      padding 10px 15px
+    .btn-wrapper
+      padding 10px 15px
+      .btn-logout
+        width 100%
+    .image-wrapper
+      display flex
+      align-items center
+      position fixed
+      background rgba(0, 0, 0, 0.8)
+      z-index 200
+      top 0
+      right 0
+      left 0
+      bottom 0
+      .big-image
+        width 100%
 </style>
