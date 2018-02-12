@@ -10,10 +10,10 @@
 </template>
 
 <script>
-  import {accountTestMixin} from '@/common/js/mixin'
+  import {accountTestMixin, goToRelativePathMixin} from '@/common/js/mixin'
   import PersonList from '@/components/abstract/person-list'
   export default {
-    mixins: [accountTestMixin],
+    mixins: [accountTestMixin, goToRelativePathMixin],
     components: {
       PersonList
     },
@@ -27,7 +27,7 @@
     },
     methods: {
       sendMessage (item) {
-        this.$router.push(`/chat?userId=${item.userId}&userName=${item.nickName}`)
+        this.goToRelativePath(`chat?userId=${item.userId}&userName=${item.nickName}`)
       },
       initData () {
         this.$axios.get('/user/getRecent').then(res => {

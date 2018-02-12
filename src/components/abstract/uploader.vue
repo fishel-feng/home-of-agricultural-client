@@ -1,5 +1,5 @@
 <template>
-<div class="vue-uploader">
+<div class="uploader">
   <div class="file-list">
     <section v-for="(file, index) of files" :key="index" class="file-item draggable-item">
       <img :src="file.src" alt="">
@@ -138,15 +138,15 @@ export default {
 </script>
 
 <style>
-.vue-uploader {
+.uploader {
   border: 1px solid #e5e5e5;
 }
 
-.vue-uploader .file-list {
+.uploader .file-list {
   padding: 10px 0;
 }
 
-.vue-uploader .file-list:after {
+.uploader .file-list:after {
   content: '';
   display: block;
   clear: both;
@@ -156,20 +156,20 @@ export default {
   font-size: 0;
 }
 
-.vue-uploader .file-list .file-item {
+.uploader .file-list .file-item {
   float: left;
   position: relative;
   width: 100px;
   text-align: center;
 }
 
-.vue-uploader .file-list .file-item img {
+.uploader .file-list .file-item img {
   width: 80px;
   height: 80px;
   border: 1px solid #ececec;
 }
 
-.vue-uploader .file-list .file-item .file-remove {
+.uploader .file-list .file-item .file-remove {
   position: absolute;
   right: 12px;
   display: none;
@@ -184,11 +184,11 @@ export default {
   background: rgba(0, 0, 0, 0.5);
 }
 
-.vue-uploader .file-list .file-item:hover .file-remove {
+.uploader .file-list .file-item:hover .file-remove {
   display: inline;
 }
 
-.vue-uploader .file-list .file-item .file-name {
+.uploader .file-list .file-item .file-name {
   margin: 0;
   height: 40px;
   word-break: break-all;
@@ -199,7 +199,7 @@ export default {
   -webkit-box-orient: vertical;
 }
 
-.vue-uploader .add {
+.uploader .add {
   width: 80px;
   height: 80px;
   margin-left: 10px;
@@ -211,7 +211,7 @@ export default {
   cursor: pointer;
 }
 
-.vue-uploader .upload-func {
+.uploader .upload-func {
   display: flex;
   padding: 10px;
   margin: 0;
@@ -219,11 +219,11 @@ export default {
   border-top: 1px solid #ececec;
 }
 
-.vue-uploader .upload-func .progress-bar {
+.uploader .upload-func .progress-bar {
   flex-grow: 1;
 }
 
-.vue-uploader .upload-func .progress-bar section {
+.uploader .upload-func .progress-bar section {
   margin-top: 5px;
   background: #00b4aa;
   border-radius: 3px;
@@ -233,7 +233,7 @@ export default {
   transition: all .5s ease;
 }
 
-.vue-uploader>input[type="file"] {
+.uploader>input[type="file"] {
   display: none;
 }
 </style>

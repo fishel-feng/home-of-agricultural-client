@@ -6,6 +6,7 @@ import 'mint-ui/lib/style.css'
 import App from './App'
 import router from './router'
 import store from './store'
+import fastclick from 'fastclick'
 import VueSocketio from 'vue-socket.io'
 import axios from 'axios'
 import {loadToken} from '@/common/js/cache'
@@ -27,6 +28,8 @@ axios.interceptors.request.use(config => {
 }, err => {
   return Promise.reject(err)
 })
+
+fastclick.attach(document.body)
 
 /* eslint-disable no-new */
 new Vue({

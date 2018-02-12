@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "fastclick": "^1.0.6",
     "good-storage": "^1.0.1",
     "jsencrypt": "^2.3.1",
     "mint-ui": "^2.2.12",

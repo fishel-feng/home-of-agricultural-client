@@ -245,6 +245,23 @@ const QuestionFragment = [
   }
 ]
 
+const RecentFragment = [
+  {
+    path: 'recent',
+    component: Recent,
+    children: [
+      {
+        path: 'userCard',
+        component: UserCard
+      },
+      {
+        path: 'chat',
+        component: Chat
+      }
+    ]
+  }
+]
+
 export default new Router({
   routes: [
     {
@@ -303,10 +320,7 @@ export default new Router({
           path: 'edit',
           component: UserEdit
         },
-        {
-          path: 'recent',
-          component: Recent
-        },
+        ...RecentFragment,
         {
           path: 'collections',
           component: UserCollection,
@@ -356,6 +370,11 @@ export default new Router({
       ]
     },
     {
+      path: '/message',
+      component: MessageCenter,
+      children: RecentFragment
+    },
+    {
       path: '/signIn',
       component: SignIn
     },
@@ -366,16 +385,6 @@ export default new Router({
     {
       path: '/resetPassword',
       component: UserForm
-    },
-    {
-      path: '/message',
-      component: MessageCenter,
-      children: [
-        {
-          path: 'recent',
-          component: Recent
-        }
-      ]
     }
   ]
 })

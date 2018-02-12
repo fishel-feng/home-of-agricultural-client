@@ -39,7 +39,7 @@
     methods: {
       showUserCard (item) {
         const id = item.userId ? item.userId : item._id
-        this.goToRelativePath('/userCard?userId=' + id)
+        this.goToRelativePath('userCard?userId=' + id)
       },
       select (item) {
         this.$emit('select', item)

@@ -4,7 +4,7 @@
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
     <div class="message-container">
-      <div class="chat-message" @click="$router.push('/recent')">
+      <div class="chat-message" @click="$router.push('/message/recent')">
         聊天消息<mt-badge size="normal" type="error">无最新消息</mt-badge>
       </div>
       <div v-for="(item, index) in messages" :key="index">
@@ -58,6 +58,7 @@
         </div>
       </div>
     </div>
+    <router-view/>
   </div>
 </template>
 
