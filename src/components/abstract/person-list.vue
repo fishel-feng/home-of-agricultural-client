@@ -49,26 +49,27 @@
 </script>
 
 <style lang="stylus" scoped>
-.person-list
-  background #ccc
-  .item
-    margin-bottom 3px
-    padding 10px
-    min-height 70px
-    display flex
-    background #fff
-    justify-content space-between
-    align-items center
-    .user-wrapper
+  @import "../../assets/stylus/variable"
+  .person-list
+    background $color-background
+    .item
+      margin-bottom 3px
+      padding 10px
+      min-height 70px
       display flex
-      .text
+      background $color-list-item-background
+      justify-content space-between
+      align-items center
+      .user-wrapper
         display flex
-        flex-direction column
-        justify-content space-around
-        margin-left 10px
-        font-size 12px
-        .nick-name
-          font-size 16px
-    .btn-wrapper
-      min-width 60px
+        .text
+          display flex
+          flex-direction column
+          justify-content space-around
+          margin-left 10px
+          font-size $font-size-small
+          .nick-name
+            font-size $font-size-medium-x
+      .btn-wrapper
+        min-width 60px
 </style>

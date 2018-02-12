@@ -21,57 +21,57 @@
 </template>
 
 <script>
-import {accountTestMixin} from '@/common/js/mixin'
-export default {
-  mixins: [ accountTestMixin ],
-  data () {
-    return {
-      content: ''
-    }
-  },
-  computed: {
-    rest () {
-      return 300 - this.content.length
-    }
-  },
-  methods: {
-    submit () {
-      this.$axios.post('/circle/addComment', {
-        circleId: this.$route.query.id,
-        content: this.content,
-        targetId: this.$route.query.targetId ? this.$route.query.targetId : ''
-      }).then(res => {
-        if (res.data.code === 200) {
-          let url = this.$route.query.targetId ? `${this.$route.path}?flag=true` : `${this.$route.path}?index=${this.$route.query.index}&flag=true`
-          this.$router.replace(url)
-          this.$socket.emit('comment', this.token, this.$route.query.id, this.$route.query.targetId)
-          this.$router.go(-1)
-        }
-      })
+  import {accountTestMixin} from '@/common/js/mixin'
+  export default {
+    mixins: [ accountTestMixin ],
+    data () {
+      return {
+        content: ''
+      }
+    },
+    computed: {
+      rest () {
+        return 300 - this.content.length
+      }
+    },
+    methods: {
+      submit () {
+        this.$axios.post('/circle/addComment', {
+          circleId: this.$route.query.id,
+          content: this.content,
+          targetId: this.$route.query.targetId ? this.$route.query.targetId : ''
+        }).then(res => {
+          if (res.data.code === 200) {
+            let url = this.$route.query.targetId ? `${this.$route.path}?flag=true` : `${this.$route.path}?index=${this.$route.query.index}&flag=true`
+            this.$router.replace(url)
+            this.$socket.emit('comment', this.token, this.$route.query.id, this.$route.query.targetId)
+            this.$router.go(-1)
+          }
+        })
+      }
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>
-.slide-enter-active, .slide-leave-active
-  transition all 0.3s
-.slide-enter, .slide-leave-to
-  transform translate3d(100%, 0, 0)
-.comment-add
-  position fixed
-  overflow-y auto
-  top 0
-  bottom 0
-  left 0
-  right 0
-  z-index 100
-  padding-top 50px
-  background #fff
-  .hint
-    color #4b4b4b
-    padding 20px
-    display flex
-    justify-content space-between
-    margin-top 20px
+  .slide-enter-active, .slide-leave-active
+    transition all 0.3s
+  .slide-enter, .slide-leave-to
+    transform translate3d(100%, 0, 0)
+  .comment-add
+    position fixed
+    overflow-y auto
+    top 0
+    bottom 0
+    left 0
+    right 0
+    z-index 100
+    padding-top 50px
+    background #fff
+    .hint
+      color $color-hint
+      padding 20px
+      display flex
+      justify-content space-between
+      margin-top 20px
 </style>

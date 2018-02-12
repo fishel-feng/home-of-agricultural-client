@@ -22,79 +22,80 @@
 </template>
 
 <script>
-import {Toast} from 'mint-ui'
-import Uploader from '@/components/abstract/uploader'
-import {accountTestMixin} from '@/common/js/mixin'
-export default {
-  mixins: [ accountTestMixin ],
-  data () {
-    return {
-      content: '',
-      hasImage: false,
-      images: []
-    }
-  },
-  components: {
-    Uploader
-  },
-  computed: {
-    rest () {
-      return 300 - this.content.length
-    }
-  },
-  methods: {
-    submit () {
-      if (this.hasImage) {
-        Toast({
-          message: '有未上传的图片，请上传完毕或取消上传后再继续',
-          position: 'bottom',
-          duration: 3000
-        })
-        return
+  import {Toast} from 'mint-ui'
+  import Uploader from '@/components/abstract/uploader'
+  import {accountTestMixin} from '@/common/js/mixin'
+  export default {
+    mixins: [ accountTestMixin ],
+    data () {
+      return {
+        content: '',
+        hasImage: false,
+        images: []
       }
-      this.$axios.post('/circle/addCircle', {
-        content: this.content,
-        images: this.images
-      }).then(res => {
-        if (res.data.code === 200) {
-          this.$router.replace('/question/addCircle?flag=' + true)
-          this.$router.go(-1)
+    },
+    components: {
+      Uploader
+    },
+    computed: {
+      rest () {
+        return 300 - this.content.length
+      }
+    },
+    methods: {
+      submit () {
+        if (this.hasImage) {
+          Toast({
+            message: '有未上传的图片，请上传完毕或取消上传后再继续',
+            position: 'bottom',
+            duration: 3000
+          })
+          return
         }
-      })
-    },
-    clearImage () {
-      this.hasImage = false
-    },
-    addImage () {
-      this.hasImage = true
-    },
-    uploadSuccess (images) {
-      this.images = images
-      this.hasImage = false
+        this.$axios.post('/circle/addCircle', {
+          content: this.content,
+          images: this.images
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.$router.replace('/question/addCircle?flag=' + true)
+            this.$router.go(-1)
+          }
+        })
+      },
+      clearImage () {
+        this.hasImage = false
+      },
+      addImage () {
+        this.hasImage = true
+      },
+      uploadSuccess (images) {
+        this.images = images
+        this.hasImage = false
+      }
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>
-.slide-enter-active, .slide-leave-active
-  transition all 0.3s
-.slide-enter, .slide-leave-to
-  transform translate3d(100%, 0, 0)
-.circle-add
-  position fixed
-  overflow-y auto
-  top 0
-  bottom 0
-  left 0
-  right 0
-  z-index 100
-  padding-top 50px
-  background #fff
-  .hint
-    color #4b4b4b
-    padding 20px
-    display flex
-    justify-content space-between
-    margin-top 20px
+  @import "../../../assets/stylus/variable"
+  .slide-enter-active, .slide-leave-active
+    transition all 0.3s
+  .slide-enter, .slide-leave-to
+    transform translate3d(100%, 0, 0)
+  .circle-add
+    position fixed
+    overflow-y auto
+    top 0
+    bottom 0
+    left 0
+    right 0
+    z-index 100
+    padding-top 50px
+    background $color-article-background
+    .hint
+      color $color-hint
+      padding 20px
+      display flex
+      justify-content space-between
+      margin-top 20px
 </style>

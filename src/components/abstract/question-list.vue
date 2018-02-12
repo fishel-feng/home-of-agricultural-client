@@ -94,27 +94,28 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../assets/stylus/variable"
   .question-list
-    background #ccc
+    background $color-background
     .item
       position relative
-      background #fff
+      background $color-list-item-background
       margin-bottom 3px
       padding 10px
       .title
         padding-right 30px
-        font-size 18px
+        font-size $font-size-large
         font-weight bold
         position relative
         .btn-del
-          font-size 10px
+          font-size $font-size-small-s
           position absolute
           right 0
           top 0
       .desc
         margin  5px
-        font-size 14px
-        color #4b4b4b
+        font-size $font-size-medium
+        color $color-hint
       .image
         padding 10px
         overflow hidden
@@ -125,15 +126,15 @@
         min-height 14px
         display flex
         justify-content space-between
-        font-size 12px
+        font-size $font-size-small
     .load-wrapper
       padding-top 10px
-      background #fff
+      background $color-load-wrapper-background
       position relative
       width 100%
       height 30px
       text-align center
-      font-size 14px
+      font-size $font-size-medium
     .image-wrapper
       display flex
       align-items center

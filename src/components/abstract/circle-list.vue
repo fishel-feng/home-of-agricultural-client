@@ -165,10 +165,11 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../assets/stylus/variable"
   .circle-list
-    background #ccc
+    background $color-background
     .list-item
-      background #fff
+      background $color-list-item-background
       margin-bottom 3px
       min-height 10px
       display flex
@@ -176,7 +177,7 @@
         padding 10px
         flex none
       .circle-content
-        font-size 14px
+        font-size $font-size-medium
         padding 10px
         flex auto
         display flex
@@ -187,23 +188,23 @@
           justify-content space-between
           align-items center
           .nick-name
-            color #f63
+            color $color-user-name
           .btn-del
-            font-size 10px
+            font-size $font-size-small-s
         .circle-image
           overflow hidden
           img
             margin 5px
             float left
         .circle-tail
-          font-size 10px
+          font-size $font-size-small-s
           display flex
           justify-content space-between
           .circle-mark
             display flex
             flex-direction column
             .btn-info
-              color #9cf
+              color $color-can-be-click
           .circle-action
             padding 5px
             display flex
@@ -213,12 +214,12 @@
               top 2px
     .load-wrapper
       padding-top 10px
-      background #fff
+      background $color-load-wrapper-background
       position relative
       width 100%
       height 30px
       text-align center
-      font-size 14px
+      font-size $font-size-medium
     .image-wrapper
       display flex
       align-items center

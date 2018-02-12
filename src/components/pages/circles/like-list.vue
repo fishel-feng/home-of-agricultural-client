@@ -50,7 +50,7 @@
     left 0
     right 0
     z-index 100
-    background #fff
+    background $color-article-background
     .container
       position fixed
       overflow-y auto

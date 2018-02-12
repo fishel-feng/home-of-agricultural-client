@@ -363,7 +363,12 @@ export default new Router({
         },
         {
           path: 'followings',
-          component: FollowingList
+          component: FollowingList,
+          children: [
+            {
+              path: 'userCard',
+              component: UserCard
+            }]
         },
         {
           path: 'followers',

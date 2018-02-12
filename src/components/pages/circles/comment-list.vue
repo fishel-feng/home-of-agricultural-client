@@ -92,6 +92,7 @@
 
 
 <style lang="stylus" scoped>
+  @import "../../../assets/stylus/variable"
   .slide-enter-active, .slide-leave-active
     transition all 0.3s
   .slide-enter, .slide-leave-to
@@ -103,25 +104,25 @@
     left 0
     right 0
     z-index 100
-    background #fff
+    background $color-article-background
     .container
       width 100%
       position fixed
       overflow-y auto
       top 40px
       bottom 0
-      background #ccc
+      background $color-background
       .item
-        background #fff
+        background $color-list-item-background
         padding 10px
         margin-bottom 3px
         .user-info
           display flex
           justify-content space-between
           margin-bottom 15px
-          font-size 16px
+          font-size $font-size-medium-x
           .nickname
-            color #0f0
+            color $color-user-name
           .right
             font-size 10px
             display flex
@@ -129,5 +130,5 @@
               margin-left 5px
         .content
           line-height: normal
-          font-size 16px
+          font-size $font-size-medium-x
 </style>

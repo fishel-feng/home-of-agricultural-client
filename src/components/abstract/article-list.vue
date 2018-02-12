@@ -71,7 +71,7 @@
         font-size $font-size-small
     .load-wrapper
       padding-top 10px
-      background $color-list-item-background
+      background $color-load-wrapper-background
       position relative
       width 100%
       height 30px

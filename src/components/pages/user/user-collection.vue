@@ -24,12 +24,6 @@
     mounted () {
       this.verifyLogin(this.initData)
     },
-    watch: {
-      '$route' (to, from) {
-        // todo url 重写
-        this.initData()
-      }
-    },
     methods: {
       initData () {
         this.$axios.get('/user/getCollections').then(res => {
