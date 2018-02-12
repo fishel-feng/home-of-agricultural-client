@@ -70,11 +70,11 @@
         setMessage: 'SET_MESSAGES'
       }),
       initData () {
-        axios.get('http://127.0.0.1:7001/user/showMessage').then(res => {
+        axios.get('/user/showMessage').then(res => {
           this.messages = res.data.data.messages
           this.setMessage(this.messages)
         })
-        axios.get('http://localhost:7001/user/getUserIndex').then(res => {
+        axios.get('/user/getUserIndex').then(res => {
           this.saveUserInfo(res.data.data.user)
         })
       }
@@ -83,23 +83,19 @@
       '$route' (to, from) {
         // todo 重构路由结构，提取抽象组件
         this.selected = to.path.slice(1)
-        // this.$router.push('/' + this.selected)
-        // this.tailList.forEach(element => {
-        //   if (to.path.substring(1).startsWith(element.id)) {
-        //     this.title = element.text
-        //   }
-        // })
-        // if (from.path === '/message') {
-        //   this.messageCount = 0
-        // }
+        if (from.path === '/message') {
+          this.messageCount = 0
+        }
       }
     },
     sockets: {
       chat () {
-        //
+        // TODO 接收消息状态，初始化消息 完成消息中心页面跳转 修复技术错误，写完两个页面，重构for...of循环爬取百科页面 整理页面信息 打包
       },
       message (content) {
-        this.addMessages(content)
+        if (content) {
+          this.addMessages(content)
+        }
         this.messageCount++
       }
     }
