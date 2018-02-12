@@ -5,9 +5,9 @@
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
       <div class="form-wrapper">
-        <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone"/>
-        <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"/>
-        <mt-field label="重复密码" placeholder="请再次输入密码" type="password" v-model="repeatPassword"/>
+        <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone"></mt-field>
+        <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"></mt-field>
+        <mt-field label="重复密码" placeholder="请再次输入密码" type="password" v-model="repeatPassword"></mt-field>
         <mt-field label="验证码" v-model="captcha">
           <mt-button v-if="!waiting" @click.native="sendCode" plain type="primary" class="btn-code" height="45px" width="100px">发送验证码</mt-button>
           <mt-button v-if="waiting" disabled plain type="primary" class="btn-code" height="45px" width="100px">{{count}}s后重新发送</mt-button>

@@ -22,7 +22,7 @@
       <div class="input-wrapper">
         <div class="input-area">
           <div class="btn-add" @click="sendImage">+</div>
-          <mt-field class="input-text" type="text" v-model="message"/>
+          <mt-field class="input-text" type="text" v-model="message"></mt-field>
           <mt-button @click.native="sendMessage" class="btn-submit" type="primary" size="small" >发送</mt-button>
         </div>
         <div class="uploader-wrapper" v-show="showUploader">

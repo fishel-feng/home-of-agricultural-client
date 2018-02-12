@@ -22,7 +22,7 @@
           </li>
         </ul>
       </div>
-      <router-view/>
+      <router-view></router-view>
     </div>
   </transition>
 </template>
@@ -44,7 +44,7 @@
       getData () {
         this.$axios.get(`/circle/getComment/${this.$route.query.id}`).then(res => {
           if (res.data.code === 200) {
-            this.comments = res.data.data.comments
+            this.comments.push(...res.data.data.comments)
           }
         })
       },
@@ -82,10 +82,9 @@
     },
     watch: {
       '$route' (to, from) {
-        // if (from.path === '/question/addCircle' && from.query.flag) {
-        //   this.selected = ''
-        //   this.getPageContent()
-        // }
+        if (from.path.indexOf('replyComment') !== -1 && from.query.flag) {
+          this.getData()
+        }
       }
     }
   }

@@ -196,7 +196,13 @@ const CircleFragment = [
   },
   {
     path: 'like',
-    component: LikeList
+    component: LikeList,
+    children: [
+      {
+        path: 'userCard',
+        component: UserCard
+      }
+    ]
   },
   {
     path: 'addComment',

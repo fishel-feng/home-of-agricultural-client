@@ -56,7 +56,7 @@
       <div @click="hideImage" v-if="showImage" class="image-wrapper">
         <img class="big-image" :src="currentImage" alt="">
       </div>
-      <router-view/>
+      <router-view></router-view>
     </div>
   </transition>
 </template>

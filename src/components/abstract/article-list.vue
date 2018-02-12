@@ -15,7 +15,7 @@
         <mt-spinner class="loading" type="triple-bounce" v-show="showLoading"></mt-spinner>
       </div>
     </ul>
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 

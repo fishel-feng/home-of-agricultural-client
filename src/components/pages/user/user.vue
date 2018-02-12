@@ -11,20 +11,20 @@
       </div>
     </div>
     <div class="center">
-      <mt-cell title="最近联系" to="/user/recent" is-link/>
+      <mt-cell title="最近联系" to="/user/recent" is-link></mt-cell>
     </div>
     <div class="center">
-      <mt-cell title="我的收藏" to="/user/collections" is-link :value="collectionCount"/>
-      <mt-cell title="我的动态" to="/user/circles" is-link :value="circleCount"/>
-      <mt-cell title="我的提问" to="/user/questions" is-link :value="questionCount"/>
-      <mt-cell title="我关注的问题" to="/user/attentions" is-link :value="attentionCount"/>
-      <mt-cell title="我回答的问题" to="/user/answers" is-link :value="answerCount"/>
-      <mt-cell title="我关注的人" to="/user/followings" is-link :value="followingCount"/>
-      <mt-cell title="关注我的人" to="/user/followers" is-link :value="followerCount"/>
+      <mt-cell title="我的收藏" to="/user/collections" is-link :value="collectionCount"></mt-cell>
+      <mt-cell title="我的动态" to="/user/circles" is-link :value="circleCount"></mt-cell>
+      <mt-cell title="我的提问" to="/user/questions" is-link :value="questionCount"></mt-cell>
+      <mt-cell title="我关注的问题" to="/user/attentions" is-link :value="attentionCount"></mt-cell>
+      <mt-cell title="我回答的问题" to="/user/answers" is-link :value="answerCount"></mt-cell>
+      <mt-cell title="我关注的人" to="/user/followings" is-link :value="followingCount"></mt-cell>
+      <mt-cell title="关注我的人" to="/user/followers" is-link :value="followerCount"></mt-cell>
     </div>
     <div class="center">
-      <mt-cell title="专家认证" to="/user/certification" is-link/>
-      <mt-cell title="关于我们" to="/user/about" is-link/>
+      <mt-cell title="专家认证" to="/user/certification" is-link></mt-cell>
+      <mt-cell title="关于我们" to="/user/about" is-link></mt-cell>
     </div>
     <div class="btn-wrapper">
       <mt-button @click.native="logout" class="btn-logout" type="danger">退出登录</mt-button>
@@ -32,7 +32,7 @@
     <div @click="hideImage" v-if="showImage" class="image-wrapper">
       <img class="big-image" :src="currentImage" alt="">
     </div>
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 

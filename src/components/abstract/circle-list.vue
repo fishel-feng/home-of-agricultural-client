@@ -32,7 +32,7 @@
                 <span v-if="likes.indexOf(item._id) !== -1" @click="cancelLike(item)">
                   取消赞 <img src="../../assets/svg/liked.svg" alt="" width="14px">
                 </span>
-                <span @click="giveComment(item._id)">
+                <span @click="giveComment(item._id, index)">
                   评论 <img src="../../assets/svg/comment.svg" alt="" width="14px">
                 </span>
               </div>
@@ -48,7 +48,7 @@
     <div @click="hideImage" v-if="showImage" class="image-wrapper">
       <img class="big-image" :src="currentImage" alt="">
     </div>
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -118,9 +118,9 @@
           })
         })
       },
-      giveComment (circleId) {
+      giveComment (circleId, index) {
         this.verifyLogin(() => {
-          this.goToRelativePath('addComment?id=' + circleId)
+          this.goToRelativePath(`addComment?id=${circleId}&index=${index}`)
         })
       },
       isMine (userId) {
@@ -153,6 +153,13 @@
         'addLike',
         'deleteLike'
       ])
+    },
+    watch: {
+      '$route' (to, from) {
+        if (from.path.indexOf('addComment') !== -1 && from.query.flag) {
+          this.circles[from.query.index].commentCount++
+        }
+      }
     }
   }
 </script>

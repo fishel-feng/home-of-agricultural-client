@@ -4,7 +4,9 @@
       <mt-header title="点赞的人">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <person-list :data="likes"/>
+      <div class="container">
+        <person-list :data="likes"/>
+      </div>
     </div>
   </transition>
 </template>
@@ -27,7 +29,9 @@
       initData () {
         const circleId = this.$route.query.id
         this.$axios.get(`/circle/getLikeList/${circleId}`).then(res => {
-          this.likes = res.data.data.likes
+          if (res.data.code === 200) {
+            this.likes.push(...res.data.data.likes)
+          }
         })
       }
     }
@@ -41,11 +45,16 @@
     transform translate3d(100%, 0, 0)
   .like-list
     position fixed
-    overflow-y auto
     top 0
     bottom 0
     left 0
     right 0
     z-index 100
     background #fff
+    .container
+      position fixed
+      overflow-y auto
+      bottom 0
+      top 40px
+      width 100%
 </style>

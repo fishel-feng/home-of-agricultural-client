@@ -66,11 +66,7 @@ export default {
       this.files.forEach((item) => {
         formData.append(item.name, item.file)
       })
-      axios.post(this.src, formData, {
-        headers: {
-          Authorization: this.token
-        }
-      }).then(res => {
+      axios.post(this.src, formData).then(res => {
         if (res.data.code === 200 && res.data.data.length) {
           this.$emit('success', res.data.data)
           // this.status = 'finished'

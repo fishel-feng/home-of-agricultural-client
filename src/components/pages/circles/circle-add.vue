@@ -7,7 +7,7 @@
           发表
         </div>
       </mt-header>
-      <mt-field placeholder="输入此刻想法" :attr="{ maxlength: 300 }" type="textarea" rows="6" v-model="content"/>
+      <mt-field placeholder="输入此刻想法" :attr="{ maxlength: 300 }" type="textarea" rows="6" v-model="content"></mt-field>
       <div class="hint">
         <div>
           最多300字

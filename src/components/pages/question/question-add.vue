@@ -7,15 +7,15 @@
           提问
         </div>
       </mt-header>
-      <mt-field placeholder="在此输入问题标题" :attr="{ maxlength: 20 }" v-model="title"/>
-      <mt-field placeholder="在此输入问题详细描述" type="textarea" rows="6" v-model="content"/>
+      <mt-field placeholder="在此输入问题标题" :attr="{ maxlength: 20 }" v-model="title"></mt-field>
+      <mt-field placeholder="在此输入问题详细描述" type="textarea" rows="6" v-model="content"></mt-field>
       <div class="tag-wrapper">
         <div>问题标签：{{tag}}</div>
         <mt-button @click.native="tagRadio = true" type="primary" size="small">选择问题标签</mt-button>
       </div>
       <uploader @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/question'"/>
       <mt-popup @click.native="tagRadio = false" v-model="tagRadio" class="tag-radio">
-        <mt-radio align="right" v-model="tag" :options="tags"/>
+        <mt-radio align="right" v-model="tag" :options="tags"></mt-radio>
       </mt-popup>
     </div>
   </transition>
