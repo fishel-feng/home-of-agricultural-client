@@ -129,7 +129,6 @@
     transform translate3d(100%, 0, 0)
   .user-edit
     position fixed
-    overflow-y auto
     top 0
     bottom 0
     left 0
@@ -137,8 +136,13 @@
     z-index 100
     background $color-article-background
     .container
+      z-index 200
+      position fixed
+      overflow-y auto
+      top 40px
+      bottom 0
+      width 100%
       padding 10px
-      margin-top 40px
       .head-image-container
         display flex
         align-items center

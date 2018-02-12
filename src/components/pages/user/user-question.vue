@@ -4,7 +4,9 @@
       <mt-header fixed title="我提问的问题">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <question-list ref="question-list" class="question-list" @refresh="reload" @load="getQuestionList" :questions="questions" :loading="loading" :showLoading="showLoading"/>
+      <div class="container">
+        <question-list ref="question-list" class="question-list" @refresh="reload" @load="getQuestionList" :questions="questions" :loading="loading" :showLoading="showLoading"/>
+      </div>
     </div>
   </transition>
 </template>
@@ -74,6 +76,12 @@
     right 0
     z-index 100
     background $color-article-background
-    padding-top 40px
+    .container
+      z-index 200
+      width 100%
+      position fixed
+      overflow-y auto
+      top 40px
+      bottom 0
 </style>
 

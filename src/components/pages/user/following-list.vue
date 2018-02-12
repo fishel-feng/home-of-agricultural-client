@@ -4,7 +4,9 @@
       <mt-header title="我关注的人">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <person-list :data="followings"/>
+      <div class="container">
+        <person-list :data="followings"/>
+      </div>
     </div>
    </transition>
 </template>
@@ -39,4 +41,11 @@ export default {
     right 0
     z-index 100
     background $color-article-background
+    .container
+      z-index 200
+      width 100%
+      position fixed
+      overflow-y auto
+      top 40px
+      bottom 0
 </style>

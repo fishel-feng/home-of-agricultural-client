@@ -251,7 +251,7 @@
               display flex
               align-items center
               .nick-name
-                color $color-can-be-click
+                color $color-user-name
                 margin-left 10px
               .expert-container
                 margin-left 10px

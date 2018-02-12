@@ -52,6 +52,7 @@
     z-index 100
     background $color-article-background
     .wrapper
+      z-index 200
       width 100%
       position fixed
       overflow-y auto

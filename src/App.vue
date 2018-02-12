@@ -7,7 +7,7 @@
     </div>
   </mt-header>
   <div class="main">
-    <router-view/>
+    <router-view></router-view>
   </div>
   <mt-tabbar @click.native="selectItem" v-model="selected" class="tail-tab">
     <mt-tab-item  id="news">
@@ -30,107 +30,107 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { mapActions, mapMutations } from 'vuex'
-import { accountTestMixin } from '@/common/js/mixin'
-export default {
-  mixins: [accountTestMixin],
-  name: 'app',
-  data () {
-    return {
-      selected: 'news',
-      messageCount: 0,
-      title: { news: '新闻', wiki: '百科', question: '问专家', circles: '农友圈', user: '我的' }
-    }
-  },
-  mounted () {
-    this.verifyLogin(() => {
-      this.$socket.emit('login', this.token)
-      this.initData()
-    })
-  },
-  methods: {
-    selectItem () {
-      if (this.selected === 'news' && this.selected === 'wiki') {
-        this.verifyLogin(() => {
-          this.$router.push('/' + this.selected)
-        })
-      } else {
-        this.$router.push('/' + this.selected)
+  import axios from 'axios'
+  import { mapActions, mapMutations } from 'vuex'
+  import { accountTestMixin } from '@/common/js/mixin'
+  export default {
+    mixins: [accountTestMixin],
+    name: 'app',
+    data () {
+      return {
+        selected: 'news',
+        messageCount: 0,
+        title: { news: '新闻', wiki: '百科', question: '问专家', circles: '农友圈', user: '我的' }
       }
     },
-    showMessageCenter () {
-      this.$router.push('/message')
-    },
-    ...mapActions([
-      'addMessages',
-      'saveUserInfo'
-    ]),
-    ...mapMutations({
-      setMessage: 'SET_MESSAGES'
-    }),
-    initData () {
-      axios.get('http://127.0.0.1:7001/user/showMessage').then(res => {
-        this.messages = res.data.data.messages
-        this.setMessage(this.messages)
+    mounted () {
+      this.verifyLogin(() => {
+        this.$socket.emit('login', this.token)
+        this.initData()
       })
-      axios.get('http://localhost:7001/user/getUserIndex').then(res => {
-        this.saveUserInfo(res.data.data.user)
-      })
-    }
-  },
-  watch: {
-    '$route' (to, from) {
-      // todo 重构路由结构，提取抽象组件
-      this.selected = to.path.slice(1)
-      // this.$router.push('/' + this.selected)
-      // this.tailList.forEach(element => {
-      //   if (to.path.substring(1).startsWith(element.id)) {
-      //     this.title = element.text
-      //   }
-      // })
-      // if (from.path === '/message') {
-      //   this.messageCount = 0
-      // }
-    }
-  },
-  sockets: {
-    chat () {
-      //
     },
-    message (content) {
-      this.addMessages(content)
-      this.messageCount++
+    methods: {
+      selectItem () {
+        if (this.selected === 'news' && this.selected === 'wiki') {
+          this.verifyLogin(() => {
+            this.$router.push('/' + this.selected)
+          })
+        } else {
+          this.$router.push('/' + this.selected)
+        }
+      },
+      showMessageCenter () {
+        this.$router.push('/message')
+      },
+      ...mapActions([
+        'addMessages',
+        'saveUserInfo'
+      ]),
+      ...mapMutations({
+        setMessage: 'SET_MESSAGES'
+      }),
+      initData () {
+        axios.get('http://127.0.0.1:7001/user/showMessage').then(res => {
+          this.messages = res.data.data.messages
+          this.setMessage(this.messages)
+        })
+        axios.get('http://localhost:7001/user/getUserIndex').then(res => {
+          this.saveUserInfo(res.data.data.user)
+        })
+      }
+    },
+    watch: {
+      '$route' (to, from) {
+        // todo 重构路由结构，提取抽象组件
+        this.selected = to.path.slice(1)
+        // this.$router.push('/' + this.selected)
+        // this.tailList.forEach(element => {
+        //   if (to.path.substring(1).startsWith(element.id)) {
+        //     this.title = element.text
+        //   }
+        // })
+        // if (from.path === '/message') {
+        //   this.messageCount = 0
+        // }
+      }
+    },
+    sockets: {
+      chat () {
+        //
+      },
+      message (content) {
+        this.addMessages(content)
+        this.messageCount++
+      }
     }
   }
-}
 </script>
 
 <style lang="stylus">
-.icon-wrapper
-  position relative
-  .dot
-    position absolute
-    width 4px
-    height 4px
-    background red
-    border 2px red solid
-    border-radius 50%
-    right 2px
-    top -12px
+  .icon-wrapper
+    position relative
+    .dot
+      position absolute
+      width 4px
+      height 4px
+      background red
+      border 2px red solid
+      border-radius 50%
+      right 2px
+      top -12px
+      z-index 1
+    .message-icon
+      display block
+      bottom -8px
+      right 3px
+      position absolute
+  .main
     z-index 1
-  .message-icon
-    display block
-    bottom -8px
-    right 3px
-    position absolute
-.main
-  z-index 1
-  position fixed
-  overflow-y auto
-  top 40px
-  bottom 55px
-  width 100%
-.tail-tab
-  position fixed
+    position fixed
+    overflow-y auto
+    top 40px
+    bottom 55px
+    width 100%
+  .tail-tab
+    position fixed
 </style>

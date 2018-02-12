@@ -43,8 +43,8 @@
         }).then(res => {
           if (res.data.code === 200) {
             let url = this.$route.query.targetId ? `${this.$route.path}?flag=true` : `${this.$route.path}?index=${this.$route.query.index}&flag=true`
-            this.$router.replace(url)
             this.$socket.emit('comment', this.token, this.$route.query.id, this.$route.query.targetId)
+            this.$router.replace(url)
             this.$router.go(-1)
           }
         })

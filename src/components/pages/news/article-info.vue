@@ -123,10 +123,11 @@
     left 0
     width 100%
     height 100%
-    z-index 100
+    z-index 500
     background $color-article-background
     .content-wrapper
       position fixed
+      z-index 500
       overflow-y auto
       top 40px
       bottom 0

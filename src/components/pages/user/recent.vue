@@ -4,7 +4,9 @@
       <mt-header title="最近联系的人">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <person-list @select="sendMessage" :showButton="true" :text="'发消息'" :data="recent"/>
+      <div class="container">
+        <person-list @select="sendMessage" :showButton="true" :text="'发消息'" :data="recent"/>
+      </div>
     </div>
   </transition>
 </template>
@@ -55,4 +57,11 @@
     right 0
     z-index 100
     background $color-article-background
+    .container
+      z-index 200
+      width 100%
+      position fixed
+      overflow-y auto
+      top 40px
+      bottom 0
 </style>

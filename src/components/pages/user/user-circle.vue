@@ -4,7 +4,9 @@
       <mt-header fixed title="我发表的动态">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <circle-list class="circle-list" @refresh="reload" @load="getCircleList" :circles="circles" :loading="loading" :showLoading="showLoading"/>
+      <div class="container">
+        <circle-list class="circle-list" @refresh="reload" @load="getCircleList" :circles="circles" :loading="loading" :showLoading="showLoading"/>
+      </div>
     </div>
   </transition>
 </template>
@@ -70,6 +72,12 @@ export default {
     right 0
     z-index 100
     background $color-article-background
-    padding-top 40px
+    .container
+      z-index 200
+      width 100%
+      position fixed
+      overflow-y auto
+      top 40px
+      bottom 0
 </style>
 
