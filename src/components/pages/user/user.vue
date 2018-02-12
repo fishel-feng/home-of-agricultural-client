@@ -92,6 +92,7 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../../assets/stylus/variable"
   .user
     width: 100%
     .head
@@ -110,7 +111,7 @@
           align-items center
           .btn-edit
             font-size 10px
-            color #ccc
+            color $color-background
     .center
       padding 10px 15px
     .btn-wrapper

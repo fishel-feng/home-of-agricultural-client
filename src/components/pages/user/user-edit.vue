@@ -122,38 +122,39 @@
 </script>
 
 <style lang="stylus" scoped>
-.slide-enter-active, .slide-leave-active
-  transition all 0.3s
-.slide-enter, .slide-leave-to
-  transform translate3d(100%, 0, 0)
-.user-edit
-  position fixed
-  overflow-y auto
-  top 0
-  bottom 0
-  left 0
-  right 0
-  z-index 100
-  background #fff
-  .container
-    padding 10px
-    margin-top 40px
-    .head-image-container
-      display flex
-      align-items center
-      span
+  @import "../../../assets/stylus/variable"
+  .slide-enter-active, .slide-leave-active
+    transition all 0.3s
+  .slide-enter, .slide-leave-to
+    transform translate3d(100%, 0, 0)
+  .user-edit
+    position fixed
+    overflow-y auto
+    top 0
+    bottom 0
+    left 0
+    right 0
+    z-index 100
+    background $color-article-background
+    .container
+      padding 10px
+      margin-top 40px
+      .head-image-container
+        display flex
+        align-items center
+        span
+          margin-left 10px
+          margin-right 60px
+        img
+          margin-right 10px
+      .gender
         margin-left 10px
-        margin-right 60px
-      img
-        margin-right 10px
-    .gender
-      margin-left 10px
-      display flex
-      flex-direction row
-      align-items center
-      span
-        margin-right 50px
-    .btn-submit
-      margin-top 10px
-      width 100%
+        display flex
+        flex-direction row
+        align-items center
+        span
+          margin-right 50px
+      .btn-submit
+        margin-top 10px
+        width 100%
 </style>

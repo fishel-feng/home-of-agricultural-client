@@ -117,6 +117,7 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../../assets/stylus/variable"
   .slide-enter-active, .slide-leave-active
     transition all 0.3s
   .slide-enter, .slide-leave-to
@@ -129,7 +130,7 @@
     left 0
     right 0
     z-index 100
-    background #fff
+    background $color-article-background
     padding-top 50px
     .tag-wrapper
       display flex
@@ -140,5 +141,5 @@
       width 90%
       overflow-y auto
       height 80%
-      background-color #fff
+      background-color $color-article-background
 </style>

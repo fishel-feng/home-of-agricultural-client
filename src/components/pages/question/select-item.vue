@@ -86,22 +86,23 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.slide-enter-active, .slide-leave-active
-  transition all 0.3s
-.slide-enter, .slide-leave-to
-  transform translate3d(100%, 0, 0)
-.select-item
-  position fixed
-  overflow-y auto
-  top 0
-  bottom 0
-  left 0
-  right 0
-  z-index 1000
-  background #fff
-  padding-top 40px
-  .btn-wrapper
-    padding 15px
-    .btn-submit
-      width 100%
+  @import "../../../assets/stylus/variable"
+  .slide-enter-active, .slide-leave-active
+    transition all 0.3s
+  .slide-enter, .slide-leave-to
+    transform translate3d(100%, 0, 0)
+  .select-item
+    position fixed
+    overflow-y auto
+    top 0
+    bottom 0
+    left 0
+    right 0
+    z-index 1000
+    background $color-article-background
+    padding-top 40px
+    .btn-wrapper
+      padding 15px
+      .btn-submit
+        width 100%
 </style>

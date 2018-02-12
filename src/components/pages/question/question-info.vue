@@ -176,6 +176,7 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../../assets/stylus/variable"
   .slide-enter-active, .slide-leave-active
     transition all 0.3s
   .slide-enter, .slide-leave-to
@@ -187,7 +188,7 @@
     left 0
     right 0
     z-index 1000
-    background #fff
+    background $color-article-background
     .content-wrapper
       width 100%
       position fixed
@@ -196,7 +197,7 @@
       bottom 0
       .question-title
         padding 10px
-        font-size 20px
+        font-size $font-size-large-x
       .question-image
         overflow hidden
         padding 10px
@@ -206,7 +207,7 @@
       .question-content
         line-height: normal
         padding 10px
-        font-size 16px
+        font-size $font-size-medium-x
       .questioner-info
         padding 10px
         display flex
@@ -217,9 +218,9 @@
           flex 1
           display flex
           align-items center
-          font-size 12px
+          font-size $font-size-small
         .nick-name
-          color #218dff
+          color $color-user-name
         .location
           margin-left 10px
           margin-right 10px
@@ -227,20 +228,20 @@
         display flex
         div
           border-radius 5px
-          color white
-          border 1px solid #cdcdcd
+          color $color-article-background
+          border 1px solid $color-article-desc-background
           line-height 40px
           height 40px
           text-align center
           flex 1
-          background #26a2ff
+          background $color-can-be-click
       .answer-container
-        background #ccc
+        background $color-background
         .answer-item
           padding 10px
           line-height normal
           margin 3px 0
-          background #fff
+          background $color-list-item-background
           .answer-title
             display flex
             align-items center
@@ -250,27 +251,27 @@
               display flex
               align-items center
               .nick-name
-                color #218dff
+                color $color-can-be-click
                 margin-left 10px
               .expert-container
                 margin-left 10px
                 .expert-state
-                  color #f2e822
-                  font-size 12px
-                  background coral
+                  color $color-expert-font
+                  font-size $font-size-small
+                  background $color-expert-background
                   padding 2px 5px
                   border-radius 5px
                 .btn-message-send
                   margin-left 10px
                   border-radius 5px
                   padding 2px 5px
-                  font-size 12px
-                  background #ccc
+                  font-size $font-size-small
+                  background $color-background
             .right-container
               display flex
               flex-direction column
               align-items flex-end
-              font-size 10px
+              font-size $font-size-small-s
           .answer-images
             overflow hidden
             padding 10px

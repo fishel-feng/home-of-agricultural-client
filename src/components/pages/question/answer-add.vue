@@ -80,6 +80,7 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../../assets/stylus/variable"
   .slide-enter-active, .slide-leave-active
     transition all 0.3s
   .slide-enter, .slide-leave-to
@@ -92,5 +93,5 @@
     right 0
     z-index 100
     padding-top 50px
-    background #fff
+    background $color-article-background
 </style>

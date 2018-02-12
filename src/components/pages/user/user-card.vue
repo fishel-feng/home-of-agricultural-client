@@ -111,6 +111,7 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../../assets/stylus/variable"
   .slide-enter-active, .slide-leave-active
     transition all 0.3s
   .slide-enter, .slide-leave-to
@@ -123,7 +124,7 @@
     left 0
     right 0
     z-index 100
-    background #fff
+    background $color-article-background
     .content-wrapper
       padding-top 10px
       display flex
@@ -131,20 +132,20 @@
       align-items center
       .nickname
         font-weight 500
-        font-size 20px
+        font-size $font-size-large
         margin 6px 0
       .expert-state
-        color #f2e822
-        font-size 16px
-        background coral
+        color $color-expert-font
+        font-size $font-size-medium-x
+        background $color-expert-background
         padding 5px 15px
         border-radius 5px
       .description
-        font-size 16px
+        font-size $font-size-medium-x
         margin 6px 0
       .information
         font-style italic
-        font-size 14px
+        font-size $font-size-medium
         margin 3px 0
         span
           margin 0 10px
@@ -155,8 +156,8 @@
       overflow hidden
       width 100%
       div
-        border 1px solid #cccccc
-        background: #efefef
+        border 1px solid $color-background
+        background: $color-article-desc-background
         box-sizing border-box
         padding 10px
         display flex

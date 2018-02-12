@@ -90,39 +90,40 @@
 </script>
 
 <style lang="stylus" scoped>
-.message-center
-  position fixed
-  overflow-y auto
-  top 0
-  bottom 0
-  left 0
-  right 0
-  z-index 100
-  background #fff
-  .message-container
-    margin-top 40px
-    .chat-message
-      background #ccc
-      line-height normal
-      min-height 50px
-      display flex
-      align-items center
-      padding 10px
-      justify-content space-between
-    .message-item
-      line-height normal
-      min-height 50px
-      display flex
-      align-items center
-      padding 10px
-      background radial-gradient(#ccc, #fff);
-      justify-content space-between
-      .time
-        font-size 10px
-        padding-left 5px
-      .nick-name
-        color #f63
-      .question-title
-        color #83adff
+  @import "../../../assets/stylus/variable"
+  .message-center
+    position fixed
+    overflow-y auto
+    top 0
+    bottom 0
+    left 0
+    right 0
+    z-index 100
+    background $color-article-background
+    .message-container
+      margin-top 40px
+      .chat-message
+        background $color-background
+        line-height normal
+        min-height 50px
+        display flex
+        align-items center
+        padding 10px
+        justify-content space-between
+      .message-item
+        line-height normal
+        min-height 50px
+        display flex
+        align-items center
+        padding 10px
+        background $color-message-background
+        justify-content space-between
+        .time
+          font-size $font-size-small-s
+          padding-left 5px
+        .nick-name
+          color $color-user-name
+        .question-title
+          color $color-can-be-click
 </style>
 

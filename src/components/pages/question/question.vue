@@ -87,6 +87,7 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../../assets/stylus/variable"
   .question
     width: 100%
     .question-list
@@ -102,6 +103,6 @@
       position fixed
       right 10px
       bottom 65px
-      color #fff
-      background-color #26a2ff
+      color $color-article-background
+      background-color $color-can-be-click
 </style>

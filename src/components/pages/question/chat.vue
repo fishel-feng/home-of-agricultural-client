@@ -139,81 +139,82 @@
 </script>
 
 <style lang="stylus" scoped>
-.slide-enter-active, .slide-leave-active
-  transition all 0.3s
-.slide-enter, .slide-leave-to
-  transform translate3d(100%, 0, 0)
-.chat
-  position fixed
-  overflow-y auto
-  top 0
-  bottom 0
-  left 0
-  right 0
-  z-index 100
-  background #fff
-  .main-wrapper
-    top 40px
-    bottom 48px
-    width 100%
+  @import "../../../assets/stylus/variable"
+  .slide-enter-active, .slide-leave-active
+    transition all 0.3s
+  .slide-enter, .slide-leave-to
+    transform translate3d(100%, 0, 0)
+  .chat
     position fixed
     overflow-y auto
-    .load-hint
-      text-align center
-    .right
-      justify-content flex-end
-    .left
-      justify-content flex-start
-    .message-item
-      width 100%
-      display flex
-      span
-        background #ccc
-        margin 5px
-        padding 10px
-        max-width 60%
-      img
-        background #ccc
-        margin 5px
-        padding 10px
-        max-width 60%
-  .input-wrapper
-    position fixed
-    bottom 0
-    width 100%
-    .input-area
-      display flex
-      height 48px
-      .btn-add
-        font-weight bolder
-        font-size 35px
-        text-align center
-        line-height 40px
-        width 45px
-        height 45px
-        border solid 1px #26a2ff
-        border-radius 50%
-        color #26a2ff
-        background-color #fff
-      .input-text
-        flex 1
-        border-radius 10px
-        border #218dff solid 1px
-      .btn-submit
-        height 100%
-        width 60px
-    .uploader-wrapper
-      background #fff
-  .image-wrapper
-    display flex
-    align-items center
-    position fixed
-    background rgba(0, 0, 0, 0.8)
-    z-index 200
     top 0
-    right 0
-    left 0
     bottom 0
-    .big-image
+    left 0
+    right 0
+    z-index 100
+    background $color-article-background
+    .main-wrapper
+      top 40px
+      bottom 48px
       width 100%
+      position fixed
+      overflow-y auto
+      .load-hint
+        text-align center
+      .right
+        justify-content flex-end
+      .left
+        justify-content flex-start
+      .message-item
+        width 100%
+        display flex
+        span
+          background $color-background
+          margin 5px
+          padding 10px
+          max-width 60%
+        img
+          background $color-article-background
+          margin 5px
+          padding 10px
+          max-width 60%
+    .input-wrapper
+      position fixed
+      bottom 0
+      width 100%
+      .input-area
+        display flex
+        height 48px
+        .btn-add
+          font-weight bolder
+          font-size 35px
+          text-align center
+          line-height 40px
+          width 45px
+          height 45px
+          border solid 1px $color-can-be-click
+          border-radius 50%
+          color $color-can-be-click
+          background-color #fff
+        .input-text
+          flex 1
+          border-radius 10px
+          border $color-can-be-click solid 1px
+        .btn-submit
+          height 100%
+          width 60px
+      .uploader-wrapper
+        background $color-article-background
+    .image-wrapper
+      display flex
+      align-items center
+      position fixed
+      background rgba(0, 0, 0, 0.8)
+      z-index 200
+      top 0
+      right 0
+      left 0
+      bottom 0
+      .big-image
+        width 100%
 </style>

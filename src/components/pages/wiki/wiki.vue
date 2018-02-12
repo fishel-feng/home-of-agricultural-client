@@ -25,18 +25,19 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.wiki
-  position absolute
-  background: #ccc
-  top 0
-  bottom 0
-  width: 100%
-  .container
-    padding 50px 0
-    display flex
-    flex-direction column
-    justify-content center
-    align-items center
-    .btn-submit
-      margin-top 20px
+  @import "../../../assets/stylus/variable"
+  .wiki
+    position absolute
+    background $color-background
+    top 0
+    bottom 0
+    width: 100%
+    .container
+      padding 50px 0
+      display flex
+      flex-direction column
+      justify-content center
+      align-items center
+      .btn-submit
+        margin-top 20px
 </style>

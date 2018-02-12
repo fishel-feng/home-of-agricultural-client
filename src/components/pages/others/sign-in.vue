@@ -64,32 +64,33 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.slide-enter-active, .slide-leave-active
-  transition: all 0.3s
-.slide-enter, .slide-leave-to
-  transform: translate3d(100%, 0, 0)
-.sign-in
-  position fixed
-  overflow-y auto
-  top 0
-  bottom 0
-  left 0
-  right 0
-  z-index 100
-  background #fff
-  padding 20px
-  .form-wrapper
-    margin-top 40px
-    display flex
-    flex-direction column
-    .btn-code
-      font-size 10px
-    .submit
-      margin-top 20px
-      flex  1
-  .tail-wrapper
-    color #9cf
-    margin-top 40px
-    display flex
-    justify-content space-between
+  @import "../../../assets/stylus/variable"
+  .slide-enter-active, .slide-leave-active
+    transition: all 0.3s
+  .slide-enter, .slide-leave-to
+    transform: translate3d(100%, 0, 0)
+  .sign-in
+    position fixed
+    overflow-y auto
+    top 0
+    bottom 0
+    left 0
+    right 0
+    z-index 100
+    background $color-article-background
+    padding 20px
+    .form-wrapper
+      margin-top 40px
+      display flex
+      flex-direction column
+      .btn-code
+        font-size $font-size-small-s
+      .submit
+        margin-top 20px
+        flex  1
+    .tail-wrapper
+      color $color-can-be-click
+      margin-top 40px
+      display flex
+      justify-content space-between
 </style>
