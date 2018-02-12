@@ -96,6 +96,11 @@
       },
       uploadSuccess (images) {
         this.images = images
+        Toast({
+          message: '上传图片成功',
+          position: 'bottom',
+          duration: 2000
+        })
         this.hasImage = false
       },
       getTag () {

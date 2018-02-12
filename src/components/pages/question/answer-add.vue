@@ -55,6 +55,7 @@
         }).then(res => {
           if (res.data.code === 200) {
             this.$socket.emit('answer', this.token, this.$route.params.questionId)
+            this.$router.replace(this.$route.path + '?flag=true')
             this.$router.go(-1)
           }
         })
@@ -64,6 +65,11 @@
       },
       uploadSuccess (images) {
         this.images = images
+        Toast({
+          message: '上传图片成功',
+          position: 'bottom',
+          duration: 2000
+        })
         this.hasImage = false
       },
       clearImage () {

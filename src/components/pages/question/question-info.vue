@@ -8,14 +8,14 @@
         <div class="question-title">{{question.title}}</div>
         <div class="question-content">{{question.content}}</div>
         <div class="question-image">
-          <div v-for="(image, i) in question.images">
+          <div v-for="(image, i) in question.images" :key="i">
             <img @click.stop="showBigImage(`http://localhost:7001/public/question/${image}`)" :src="`http://localhost:7001/public/question/${image}`" width="100px" height="100px"  alt="">
           </div>
         </div>
         <div class="questioner-info">
           <img :src="`http://localhost:7001/public/headImage/${question.headImage}`" width="30px" height="30px" alt="">
           <div class="questioner-desc">
-            <div class="nick-name">{{question.nickName}}</div>
+            <div class="nick-name" @click="showUserInfo(question.userId)">{{question.nickName}}</div>
             <div class="location">{{question.location}}</div>
             <div>{{getTime(question.time)}}</div>
           </div>
@@ -27,17 +27,20 @@
           <div @click="addAnswer">我要回答</div>
         </div>
         <ul class="answer-container">
-          <li v-for="(answer, index) in question.answers" :key="index" class="answer-item">
+          <li v-for="(answer, index) in answers" :key="index" class="answer-item">
             <div class="answer-title">
               <div class="title-container">
-                <img src="../../../assets/svg/hot.svg" width="30px" height="30px" alt="">
-                <div class="nick-name">{{answer.nickName}}</div>
-                <div class="expert-state">
-                  <span>{{answer.certification}}</span>
-                  <span class="btn-message-send" v-show="answer.certification && !isMine(answer.userId)" @click.stop="sendMessage(answer)"><img src="../../../assets/svg/chat.svg" width="12px" alt=""> 问专家</span>
+                <img :src="`http://localhost:7001/public/headImage/${answer.headImage}`" width="30px" height="30px" alt="">
+                <div class="nick-name" @click="showUserInfo(answer.userId)">{{answer.nickName}}</div>
+                <div class="expert-container">
+                  <span class="expert-state" v-show="answer.certification"><img src="../../../assets/svg/v.svg" width="12px" height="12px" alt=""> {{answer.certification}}专家</span>
+                  <span class="btn-message-send" v-show="answer.certification && myId!==answer.userId" @click.stop="sendMessage(answer)"><img src="../../../assets/svg/chat.svg" width="12px" alt=""> 问专家</span>
                 </div>
               </div>
-              <div v-show="isMine(answer.userId)" @click.stop="deleteAnswer(answer._id)" class="btn-del">删除</div>
+              <div class="right-container">
+                <div>{{getTime(answer.time)}}</div>
+                <div v-show="myId===answer.userId" @click.stop="deleteAnswer(answer._id)" class="btn-del">删除</div>
+              </div>
             </div>
             <div>
               <div>{{answer.content}}</div>
@@ -67,6 +70,7 @@
     data () {
       return {
         question: {},
+        answers: [],
         attentionState: false
       }
     },
@@ -83,6 +87,7 @@
         this.$axios.get(`/question/getQuestion/${this.$route.params.questionId}`).then(res => {
           if (res.data.code === 200) {
             this.question = res.data.data
+            this.answers = this.question.answers.reverse()
             this.attentionState = this.attentions.indexOf(this.question._id) !== -1
           }
         })
@@ -124,6 +129,9 @@
       addAnswer () {
         this.goToRelativePath('addAnswer')
       },
+      showUserInfo (id) {
+        this.goToRelativePath('userCard?userId=' + id)
+      },
       deleteAnswer (answerId) {
         MessageBox.confirm('确定删除这条内容吗？', {
           title: '提示',
@@ -149,9 +157,6 @@
         }).catch(e => {
         })
       },
-      isMine (userId) {
-        return userId === this.myId
-      },
       sendMessage (answer) {
         this.goToRelativePath(`chat?userId=${answer.userId}&userName=${answer.nickName}`)
       },
@@ -159,6 +164,13 @@
         'addAttention',
         'deleteAttention'
       ])
+    },
+    watch: {
+      '$route' (to, from) {
+        if (from.path.indexOf('addAnswer') !== -1 && from.query.flag) {
+          this.getData()
+        }
+      }
     }
   }
 </script>
@@ -207,7 +219,7 @@
           align-items center
           font-size 12px
         .nick-name
-          color #0f0
+          color #218dff
         .location
           margin-left 10px
           margin-right 10px
@@ -238,16 +250,26 @@
               display flex
               align-items center
               .nick-name
+                color #218dff
                 margin-left 10px
-              .expert-state
+              .expert-container
                 margin-left 10px
+                .expert-state
+                  color #f2e822
+                  font-size 12px
+                  background coral
+                  padding 2px 5px
+                  border-radius 5px
                 .btn-message-send
                   margin-left 10px
                   border-radius 5px
-                  padding 2px
+                  padding 2px 5px
                   font-size 12px
                   background #ccc
-            .btn-del
+            .right-container
+              display flex
+              flex-direction column
+              align-items flex-end
               font-size 10px
           .answer-images
             overflow hidden

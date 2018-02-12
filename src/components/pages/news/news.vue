@@ -9,7 +9,7 @@
           <mt-swipe class="swipe" :auto="4000">
             <mt-swipe-item @click.native="getArticleInfo(item.articleId)" class="swipe-item" v-for="(item,index) in scroll" :key="index">
               <span class="title">{{item.title}}</span>
-              <img class="image" :src="item.imageUrl" alt="" width="100%" height="100%">
+              <img class="image" v-lazy="item.imageUrl" alt="" width="100%" height="100%">
             </mt-swipe-item>
           </mt-swipe>
           <div class="main-wrapper">

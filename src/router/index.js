@@ -240,6 +240,10 @@ const QuestionFragment = [
       {
         path: 'chat',
         component: Chat
+      },
+      {
+        path: 'userCard',
+        component: UserCard
       }
     ]
   }
