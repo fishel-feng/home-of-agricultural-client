@@ -56,7 +56,6 @@
   import { mapGetters, mapActions } from 'vuex'
   import { showImageMixin, accountTestMixin, getTimeMixin, goToRelativePathMixin } from '@/common/js/mixin'
   import { Toast, MessageBox } from 'mint-ui'
-  import axios from 'axios'
   export default {
     mixins: [ showImageMixin, accountTestMixin, getTimeMixin, goToRelativePathMixin ],
     props: {
@@ -96,7 +95,7 @@
       },
       giveLike (circle) {
         this.verifyLogin(() => {
-          axios.post('http://localhost:7001/circle/giveLike', {
+          this.$axios.post('/circle/giveLike', {
             circleId: circle._id
           }).then(res => {
             if (res.data.code === 200) {
@@ -109,7 +108,7 @@
       },
       cancelLike (circle) {
         this.verifyLogin(() => {
-          axios.post('http://localhost:7001/circle/cancelLike', {
+          this.$axios.post('/circle/cancelLike', {
             circleId: circle._id
           }).then(res => {
             if (res.data.code === 200) {
@@ -133,7 +132,7 @@
           confirmButtonText: '删除',
           cancelButtonText: '取消'
         }).then(() => {
-          axios.post('http://localhost:7001/circle/deleteCircle', {
+          this.$axios.post('/circle/deleteCircle', {
             circleId: circleId
           }).then(res => {
             if (res.data.code === 200) {

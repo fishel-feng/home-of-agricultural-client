@@ -11,98 +11,97 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import axios from 'axios'
-import QuestionList from '@/components/abstract/question-list'
-export default {
-  data () {
-    return {
-      selected: '',
-      loading: false,
-      showLoading: false,
-      questions: []
-    }
-  },
-  mounted () {
-    this.getQuestionList()
-  },
-  computed: {
-    ...mapGetters([
-      'tags'
-    ])
-  },
-  components: {
-    QuestionList
-  },
-  methods: {
-    addQuestion () {
-      this.$router.push('/question/addQuestion')
-    },
-    selectItem () {
-      this.$router.push('/question/selectItem')
-    },
-    getPageContent () {
-      this.questions = []
-      this.getQuestionList()
-    },
-    getQuestionList (callback) {
-      let url = this.selected ? `/getQuestionList/${this.selected}/` : '/getAllQuestionList/'
-      let last = this.questions.length ? this.questions[this.questions.length - 1].time : new Date().toISOString()
-      this.showLoading = true
-      this.loading = true
-      axios.get('http://localhost:7001/question' + url + last).then(res => {
-        this.questions.push(...res.data.data.questions)
-        if (callback) {
-          callback()
-        }
-        setTimeout(() => {
-          this.loading = false
-          this.showLoading = false
-        }, 2000)
-      })
-    },
-    reload (callback) {
-      this.questions = []
-      this.getQuestionList(callback)
-    }
-  },
-  watch: {
-    selected (newVal, oldVal) {
-      if (newVal === undefined) {
-        this.selected = oldVal
+  import { mapGetters } from 'vuex'
+  import QuestionList from '@/components/abstract/question-list'
+  export default {
+    data () {
+      return {
+        selected: '',
+        loading: false,
+        showLoading: false,
+        questions: []
       }
     },
-    '$route' (to, from) {
-      if (from.path === '/question/addQuestion' && from.query.tag) {
-        this.selected = ''
-        this.tags.forEach(item => {
-          if (from.query.tag === item.tagName) {
-            this.selected = item._id
+    mounted () {
+      this.getQuestionList()
+    },
+    computed: {
+      ...mapGetters([
+        'tags'
+      ])
+    },
+    components: {
+      QuestionList
+    },
+    methods: {
+      addQuestion () {
+        this.$router.push('/question/addQuestion')
+      },
+      selectItem () {
+        this.$router.push('/question/selectItem')
+      },
+      getPageContent () {
+        this.questions = []
+        this.getQuestionList()
+      },
+      getQuestionList (callback) {
+        let url = this.selected ? `/getQuestionList/${this.selected}/` : '/getAllQuestionList/'
+        let last = this.questions.length ? this.questions[this.questions.length - 1].time : new Date().toISOString()
+        this.showLoading = true
+        this.loading = true
+        this.$axios.get('/question' + url + last).then(res => {
+          this.questions.push(...res.data.data.questions)
+          if (callback) {
+            callback()
           }
+          setTimeout(() => {
+            this.loading = false
+            this.showLoading = false
+          }, 2000)
         })
-        this.getPageContent()
+      },
+      reload (callback) {
+        this.questions = []
+        this.getQuestionList(callback)
+      }
+    },
+    watch: {
+      selected (newVal, oldVal) {
+        if (newVal === undefined) {
+          this.selected = oldVal
+        }
+      },
+      '$route' (to, from) {
+        if (from.path === '/question/addQuestion' && from.query.tag) {
+          this.selected = ''
+          this.tags.forEach(item => {
+            if (from.query.tag === item.tagName) {
+              this.selected = item._id
+            }
+          })
+          this.getPageContent()
+        }
       }
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>
-.question
-  width: 100%
-  .question-list
-    padding-top 3px
-  .btn-add
-    font-weight bold
-    font-size 20px
-    text-align center
-    line-height 50px
-    width 50px
-    height 50px
-    border-radius 50%
-    position fixed
-    right 10px
-    bottom 65px
-    color #fff
-    background-color #26a2ff
+  .question
+    width: 100%
+    .question-list
+      padding-top 3px
+    .btn-add
+      font-weight bold
+      font-size 20px
+      text-align center
+      line-height 50px
+      width 50px
+      height 50px
+      border-radius 50%
+      position fixed
+      right 10px
+      bottom 65px
+      color #fff
+      background-color #26a2ff
 </style>

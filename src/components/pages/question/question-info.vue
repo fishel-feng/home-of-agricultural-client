@@ -62,7 +62,6 @@
   import {getTimeMixin, accountTestMixin, showImageMixin, goToRelativePathMixin} from '@/common/js/mixin'
   import {Toast, MessageBox} from 'mint-ui'
   import {mapGetters, mapActions} from 'vuex'
-  import axios from 'axios'
   export default {
     mixins: [getTimeMixin, accountTestMixin, showImageMixin, goToRelativePathMixin],
     data () {
@@ -81,7 +80,7 @@
     },
     methods: {
       getData () {
-        axios.get(`http://127.0.0.1:7001/question/getQuestion/${this.$route.params.questionId}`).then(res => {
+        this.$axios.get(`/question/getQuestion/${this.$route.params.questionId}`).then(res => {
           if (res.data.code === 200) {
             this.question = res.data.data
             this.attentionState = this.attentions.indexOf(this.question._id) !== -1
@@ -89,7 +88,7 @@
         })
       },
       giveAttention () {
-        axios.post('http://127.0.0.1:7001/question/attentionQuestion/', {
+        this.$axios.post('/question/attentionQuestion/', {
           questionId: this.question._id
         }).then(res => {
           console.log(res.data)
@@ -105,7 +104,7 @@
         })
       },
       removeAttention () {
-        axios.post('http://127.0.0.1:7001/question/removeAttentionQuestion/', {
+        this.$axios.post('/question/removeAttentionQuestion/', {
           questionId: this.question._id
         }).then(res => {
           if (res.data.code === 200) {
@@ -131,7 +130,7 @@
           confirmButtonText: '删除',
           cancelButtonText: '取消'
         }).then(action => {
-          axios.post('http://localhost:7001/question/deleteAnswer', {
+          this.$axios.post('/question/deleteAnswer', {
             questionId: this.$route.params.questionId,
             answerId: answerId
           }).then(res => {
@@ -165,104 +164,107 @@
 </script>
 
 <style lang="stylus" scoped>
-.slide-enter-active, .slide-leave-active
-  transition all 0.3s
-.slide-enter, .slide-leave-to
-  transform translate3d(100%, 0, 0)
-.question-info
-  position fixed
-  overflow-y auto
-  top 0
-  bottom 0
-  left 0
-  right 0
-  z-index 1000
-  background #fff
-  .content-wrapper
-    margin-top 40px
-    .question-title
-      padding 10px
-      font-size 20px
-    .question-image
-      overflow hidden
-      padding 10px
-      img
-        margin 5px
-        float left
-    .question-content
-      line-height: normal
-      padding 10px
-      font-size 16px
-    .questioner-info
-      padding 10px
-      display flex
-      justify-content space-between
-      img
-        margin-right 10px
-      .questioner-desc
-        flex 1
-        display flex
-        align-items center
-        font-size 12px
-      .nick-name
-        color #0f0
-      .location
-        margin-left 10px
-        margin-right 10px
-    .btn-question
-      display flex
-      div
-        border-radius 5px
-        color white
-        border 1px solid #cdcdcd
-        line-height 40px
-        height 40px
-        text-align center
-        flex 1
-        background #26a2ff
-    .answer-container
-      background #ccc
-      .answer-item
+  .slide-enter-active, .slide-leave-active
+    transition all 0.3s
+  .slide-enter, .slide-leave-to
+    transform translate3d(100%, 0, 0)
+  .question-info
+    position fixed
+    top 0
+    bottom 0
+    left 0
+    right 0
+    z-index 1000
+    background #fff
+    .content-wrapper
+      width 100%
+      position fixed
+      overflow-y auto
+      top 40px
+      bottom 0
+      .question-title
         padding 10px
-        line-height normal
-        margin 3px 0
-        background #fff
-        .answer-title
+        font-size 20px
+      .question-image
+        overflow hidden
+        padding 10px
+        img
+          margin 5px
+          float left
+      .question-content
+        line-height: normal
+        padding 10px
+        font-size 16px
+      .questioner-info
+        padding 10px
+        display flex
+        justify-content space-between
+        img
+          margin-right 10px
+        .questioner-desc
+          flex 1
           display flex
           align-items center
-          justify-content space-between
-          margin-bottom 10px
-          .title-container
+          font-size 12px
+        .nick-name
+          color #0f0
+        .location
+          margin-left 10px
+          margin-right 10px
+      .btn-question
+        display flex
+        div
+          border-radius 5px
+          color white
+          border 1px solid #cdcdcd
+          line-height 40px
+          height 40px
+          text-align center
+          flex 1
+          background #26a2ff
+      .answer-container
+        background #ccc
+        .answer-item
+          padding 10px
+          line-height normal
+          margin 3px 0
+          background #fff
+          .answer-title
             display flex
             align-items center
-            .nick-name
-              margin-left 10px
-            .expert-state
-              margin-left 10px
-              .btn-message-send
+            justify-content space-between
+            margin-bottom 10px
+            .title-container
+              display flex
+              align-items center
+              .nick-name
                 margin-left 10px
-                border-radius 5px
-                padding 2px
-                font-size 12px
-                background #ccc
-          .btn-del
-            font-size 10px
-        .answer-images
-          overflow hidden
-          padding 10px
-          img
-            margin 5px
-            float left
-  .image-wrapper
-    display flex
-    align-items center
-    position fixed
-    background rgba(0, 0, 0, 0.8)
-    z-index 200
-    top 0
-    right 0
-    left 0
-    bottom 0
-    .big-image
-      width 100%
+              .expert-state
+                margin-left 10px
+                .btn-message-send
+                  margin-left 10px
+                  border-radius 5px
+                  padding 2px
+                  font-size 12px
+                  background #ccc
+            .btn-del
+              font-size 10px
+          .answer-images
+            overflow hidden
+            padding 10px
+            img
+              margin 5px
+              float left
+    .image-wrapper
+      display flex
+      align-items center
+      position fixed
+      background rgba(0, 0, 0, 0.8)
+      z-index 200
+      top 0
+      right 0
+      left 0
+      bottom 0
+      .big-image
+        width 100%
 </style>

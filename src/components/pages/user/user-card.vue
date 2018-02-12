@@ -43,7 +43,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import {mapGetters, mapActions} from 'vuex'
   import { accountTestMixin } from '@/common/js/mixin'
   export default {
@@ -72,14 +71,14 @@
     },
     methods: {
       getData () {
-        axios.get(`http://127.0.0.1:7001/user/getUserInfo/${this.$route.query.userId}`).then(res => {
+        this.$axios.get(`/user/getUserInfo/${this.$route.query.userId}`).then(res => {
           if (res.data.code === 200) {
             this.user = res.data.data.user
           }
         })
       },
       followUser () {
-        axios.post(`http://127.0.0.1:7001/user/giveFollow`, {
+        this.$axios.post(`/user/giveFollow`, {
           targetId: this.$route.query.userId
         }).then(res => {
           if (res.data.code === 200) {
@@ -94,7 +93,7 @@
         })
       },
       unFollowUser () {
-        axios.post(`http://127.0.0.1:7001/user/cancelFollow`, {
+        this.$axios.post(`/user/cancelFollow`, {
           targetId: this.$route.query.userId
         }).then(res => {
           if (res.data.code === 200) {

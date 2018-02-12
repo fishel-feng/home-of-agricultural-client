@@ -10,7 +10,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import QuestionList from '@/components/abstract/question-list'
   export default {
     data () {
@@ -41,7 +40,7 @@
         let last = this.questions.length ? this.questions[this.questions.length - 1].time : new Date().toISOString()
         this.showLoading = true
         this.loading = true
-        axios.get('http://localhost:7001/user/getQuestions/' + last).then(res => {
+        this.$axios.get('/user/getQuestions/' + last).then(res => {
           this.questions.push(...res.data.data.questions)
           if (callback) {
             callback()

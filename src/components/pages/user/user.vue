@@ -39,7 +39,6 @@
 <script>
   import {accountTestMixin, showImageMixin} from '@/common/js/mixin'
   import {mapActions} from 'vuex'
-  import axios from 'axios'
   export default {
     mixins: [accountTestMixin, showImageMixin],
     data () {
@@ -58,7 +57,7 @@
     },
     methods: {
       getData () {
-        axios.get('http://localhost:7001/user/getUserIndex').then(res => {
+        this.$axios.get('/user/getUserIndex').then(res => {
           const user = res.data.data.user
           this.collectionCount = user.collectionCount
           this.circleCount = user.circleCount

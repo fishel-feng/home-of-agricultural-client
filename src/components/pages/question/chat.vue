@@ -4,19 +4,21 @@
       <mt-header fixed :title="this.$route.query.userName">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <mt-loadmore :top-method="loadTop" ref="loadmore">
-        <ul class="messages" ref="div">
-          <div class="load-hint" v-show="messageList.length > 30">{{hint}}</div>
-          <li  v-for="(item, index) in messageList" :key="index" ref="li">
-            <div v-if="item.type==='text'" :class="item.sender!==myId?'message-item':'message-item right'">
-              <span>{{item.content}}</span>
-            </div>
-            <div v-if="item.type==='image'" :class="item.sender!==myId?'message-item':'message-item right'">
-              <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/chat/${item.content}`)" :src="`http://127.0.0.1:7001/public/chat/${item.content}`" alt="" width="120px" height="120px">
-            </div>
-          </li>
-        </ul>
-      </mt-loadmore>
+      <div class="main-wrapper">
+        <mt-loadmore :top-method="loadTop" ref="loadmore">
+          <ul class="messages" ref="div">
+            <div class="load-hint" v-show="messageList.length > 30">{{hint}}</div>
+            <li  v-for="(item, index) in messageList" :key="index" ref="li">
+              <div v-if="item.type==='text'" :class="item.sender!==myId?'message-item':'message-item right'">
+                <span>{{item.content}}</span>
+              </div>
+              <div v-if="item.type==='image'" :class="item.sender!==myId?'message-item':'message-item right'">
+                <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/chat/${item.content}`)" :src="`http://127.0.0.1:7001/public/chat/${item.content}`" alt="" width="120px" height="120px">
+              </div>
+            </li>
+          </ul>
+        </mt-loadmore>
+      </div>
       <div class="input-wrapper">
         <div class="input-area">
           <div class="btn-add" @click="sendImage">+</div>
@@ -36,7 +38,6 @@
 
 <script>
   import Uploader from '@/components/abstract/uploader'
-  import axios from 'axios'
   import { showImageMixin, accountTestMixin } from '@/common/js/mixin'
   export default {
     mixins: [ showImageMixin, accountTestMixin ],
@@ -63,7 +64,7 @@
       getData (callback) {
         let chatId = this.myId < this.$route.query.userId ? this.myId + this.$route.query.userId : this.$route.query.userId + this.myId
         let time = this.messageList.length ? this.messageList[0].time : new Date().toISOString()
-        axios.get(`http://127.0.0.1:7001/question/getChat/${chatId}/${time}`).then(res => {
+        this.$axios.get(`/question/getChat/${chatId}/${time}`).then(res => {
           if (res.data.code === 200) {
             if (!callback) {
               this.messageList = res.data.data
@@ -151,9 +152,12 @@
   right 0
   z-index 100
   background #fff
-  .messages
-    margin-top 40px
-    margin-bottom 48px
+  .main-wrapper
+    top 40px
+    bottom 48px
+    width 100%
+    position fixed
+    overflow-y auto
     .load-hint
       text-align center
     .right

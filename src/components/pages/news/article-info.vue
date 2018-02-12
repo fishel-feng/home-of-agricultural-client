@@ -34,20 +34,29 @@
   import {accountTestMixin} from '@/common/js/mixin'
   import {Toast} from 'mint-ui'
   import {mapGetters, mapActions} from 'vuex'
-  import axios from 'axios'
   export default {
     mixins: [accountTestMixin],
     data () {
       return {
-        article: {},
-        isCollected: false
+        article: {}
       }
     },
     computed: {
       ...mapGetters([
         'collections',
         'token'
-      ])
+      ]),
+      isCollected () {
+        let res = false
+        if (this.collections.length) {
+          this.collections.forEach(element => {
+            if (element.articleId === this.$route.params.articleId) {
+              res = true
+            }
+          })
+        }
+        return res
+      }
     },
     mounted () {
       this.initData()
@@ -58,64 +67,43 @@
         'deleteCollection'
       ]),
       initData () {
-        axios.get(`http://localhost:7001/news/getArticleInfo/${this.$route.params.articleId}`).then(res => {
+        this.$axios.get(`/news/getArticleInfo/${this.$route.params.articleId}`).then(res => {
           if (res && res.data.code === 200) {
             this.article = res.data.data
           }
         })
-        this.testCollectionState()
-      },
-      testCollectionState () {
-        if (this.collections.length) {
-          this.collections.forEach(element => {
-            if (element.articleId === this.$route.params.articleId) {
-              this.isCollected = true
-            }
-          })
-        }
-      },
-      _addToCollection () {
-        const articleId = this.$route.params.articleId
-        const title = this.article.title
-        axios.post('http://localhost:7001/news/addToCollections', {
-          articleId,
-          title
-        }, {
-          headers: {
-            Authorization: this.token
-          }
-        }).then(res => {
-          if (res.data.code === 200) {
-            this.addCollection({articleId, title})
-            Toast({
-              message: '收藏成功',
-              position: 'bottom',
-              duration: 3000
-            })
-            this.isCollected = true
-          }
-        })
       },
       addToCollection () {
-        this.verifyLogin(this._addToCollection)
+        this.verifyLogin(() => {
+          const articleId = this.$route.params.articleId
+          const title = this.article.title
+          this.$axios.post('/news/addToCollections', {
+            articleId,
+            title
+          }).then(res => {
+            if (res.data.code === 200) {
+              this.addCollection({articleId, title})
+              Toast({
+                message: '收藏成功',
+                position: 'bottom',
+                duration: 2000
+              })
+            }
+          })
+        })
       },
       deleteFromCollection () {
         const articleId = this.$route.params.articleId
-        axios.post('http://localhost:7001/news/deleteFromCollections', {
+        this.$axios.post('/news/deleteFromCollections', {
           articleId
-        }, {
-          headers: {
-            Authorization: this.token
-          }
         }).then(res => {
           if (res.data.code === 200) {
             this.deleteCollection(articleId)
             Toast({
               message: '取消收藏成功',
               position: 'bottom',
-              duration: 3000
+              duration: 2000
             })
-            this.isCollected = false
           }
         })
       }
@@ -131,7 +119,6 @@
     transform translate3d(100%, 0, 0)
   .article-info
     position fixed
-    overflow-y auto
     top 0
     left 0
     width 100%
@@ -139,7 +126,10 @@
     z-index 100
     background $color-article-background
     .content-wrapper
-      margin-top 40px
+      position fixed
+      overflow-y auto
+      top 40px
+      bottom 0
       padding $font-size-small-s
       .title
         font-size $font-size-large

@@ -22,7 +22,6 @@
 import { Toast, MessageBox } from 'mint-ui'
 import { accountTestMixin } from '@/common/js/mixin'
 import { mapMutations, mapGetters } from 'vuex'
-import axios from 'axios'
 export default {
   mixins: [accountTestMixin],
   data () {
@@ -42,7 +41,7 @@ export default {
   methods: {
     submit () {
       this.setTags(this.value)
-      axios.post('http://localhost:7001/question/saveTags', {
+      this.$axios.post('/question/saveTags', {
         tags: this.value
       }).then(res => {
         if (res.data.code === 200) {
@@ -67,7 +66,7 @@ export default {
       })
     },
     initData () {
-      axios.get('http://localhost:7001/question/getTags').then(res => {
+      this.$axios.get('/question/getTags').then(res => {
         if (res.data.code === 200) {
           res.data.data.forEach(element => {
             this.options.push({

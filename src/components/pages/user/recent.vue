@@ -10,7 +10,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import {accountTestMixin} from '@/common/js/mixin'
   import PersonList from '@/components/abstract/person-list'
   export default {
@@ -31,7 +30,7 @@
         this.$router.push(`/chat?userId=${item.userId}&userName=${item.nickName}`)
       },
       initData () {
-        axios.get('http://127.0.0.1:7001/user/getRecent').then(res => {
+        this.$axios.get('/user/getRecent').then(res => {
           if (res.data.code === 200) {
             this.recent = res.data.data.recent
           }

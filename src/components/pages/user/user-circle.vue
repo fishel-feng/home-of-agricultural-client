@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import CircleList from '@/components/abstract/circle-list'
 import { accountTestMixin } from '@/common/js/mixin'
 export default {
@@ -33,7 +32,7 @@ export default {
       let last = this.circles.length ? this.circles[this.circles.length - 1].time : new Date().toISOString()
       this.showLoading = true
       this.loading = true
-      axios.get('http://localhost:7001/user/getCircles/' + last).then(res => {
+      this.$axios.get('/user/getCircles/' + last).then(res => {
         this.circles.push(...res.data.data.circleList)
         if (callback) {
           callback()

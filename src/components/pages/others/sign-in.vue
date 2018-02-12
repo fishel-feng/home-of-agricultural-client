@@ -22,7 +22,6 @@
 <script>
 import { loginMixin } from '@/common/js/mixin'
 import { encryptPassword } from '@/common/js/util'
-import axios from 'axios'
 import { Toast } from 'mint-ui'
 export default {
   mixins: [loginMixin],
@@ -43,7 +42,7 @@ export default {
         return
       }
       const password = encryptPassword(this.password)
-      axios.post('http://127.0.0.1:7001/user/signIn', {
+      this.$axios.post('/user/signIn', {
         tel: this.phone,
         password
       }).then(res => {

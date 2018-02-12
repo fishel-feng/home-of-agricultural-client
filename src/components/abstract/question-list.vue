@@ -35,7 +35,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import { Toast, MessageBox } from 'mint-ui'
   import { showImageMixin, accountTestMixin, getTimeMixin, goToRelativePathMixin } from '@/common/js/mixin'
   export default {
@@ -73,7 +72,7 @@
           confirmButtonText: '删除',
           cancelButtonText: '取消'
         }).then(() => {
-          axios.post('http://localhost:7001/question/deleteQuestion', {
+          this.$axios.post('/question/deleteQuestion', {
             questionId: questionId
           }).then(res => {
             if (res.data.code === 200) {

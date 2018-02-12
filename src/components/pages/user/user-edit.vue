@@ -33,7 +33,6 @@
   import Uploader from '@/components/abstract/uploader'
   import { accountTestMixin } from '@/common/js/mixin'
   import {Toast, MessageBox} from 'mint-ui'
-  import axios from 'axios'
   export default {
     mixins: [accountTestMixin],
     data () {
@@ -56,7 +55,7 @@
     },
     methods: {
       initData () {
-        axios.get(`http://127.0.0.1:7001/user/getUserInfo/${this.myId}`).then(res => {
+        this.$axios.get(`/user/getUserInfo/${this.myId}`).then(res => {
           if (res.data.code === 200) {
             let user = res.data.data.user
             this.nickName = user.nickName
@@ -99,7 +98,7 @@
           })
           return
         }
-        axios.post(`http://127.0.0.1:7001/user/modifyUserInfo`, {
+        this.$axios.post(`/user/modifyUserInfo`, {
           nickName: this.nickName,
           gender: this.gender,
           age: this.age,

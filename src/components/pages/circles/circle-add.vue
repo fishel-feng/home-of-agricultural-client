@@ -23,7 +23,6 @@
 
 <script>
 import {Toast} from 'mint-ui'
-import axios from 'axios'
 import Uploader from '@/components/abstract/uploader'
 import {accountTestMixin} from '@/common/js/mixin'
 export default {
@@ -53,7 +52,7 @@ export default {
         })
         return
       }
-      axios.post('http://localhost:7001/circle/addCircle', {
+      this.$axios.post('/circle/addCircle', {
         content: this.content,
         images: this.images
       }).then(res => {

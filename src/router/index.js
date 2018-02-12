@@ -269,7 +269,6 @@ export default new Router({
       path: '/question',
       component: Question,
       children: [
-        ...QuestionFragment,
         {
           path: 'selectItem',
           component: SelectItem
@@ -277,18 +276,19 @@ export default new Router({
         {
           path: 'addQuestion',
           component: QuestionAdd
-        }
+        },
+        ...QuestionFragment
       ]
     },
     {
       path: '/circles',
       component: Circles,
       children: [
-        ...CircleFragment,
         {
           path: 'addCircle',
           component: CircleAdd
-        }
+        },
+        ...CircleFragment
       ]
     },
     {

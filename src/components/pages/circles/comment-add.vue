@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import {accountTestMixin} from '@/common/js/mixin'
 export default {
   mixins: [ accountTestMixin ],
@@ -37,7 +36,7 @@ export default {
   },
   methods: {
     submit () {
-      axios.post('http://localhost:7001/circle/addComment', {
+      this.$axios.post('/circle/addComment', {
         circleId: this.$route.query.id,
         content: this.content,
         targetId: this.$route.query.targetId ? this.$route.query.targetId : ''

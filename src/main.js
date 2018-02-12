@@ -17,7 +17,9 @@ Vue.use(MintUI)
 
 Vue.config.productionTip = false
 
-axios.interceptors.request.use((config) => {
+Vue.prototype.$axios = axios
+
+axios.interceptors.request.use(config => {
   if (loadToken()) {
     config.headers.Authorization = loadToken()
   }

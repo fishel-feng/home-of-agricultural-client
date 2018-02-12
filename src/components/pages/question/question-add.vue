@@ -22,119 +22,118 @@
 </template>
 
 <script>
-import Uploader from '@/components/abstract/uploader'
-import axios from 'axios'
-import { Toast } from 'mint-ui'
-import { accountTestMixin } from '@/common/js/mixin'
-export default {
-  mixins: [ accountTestMixin ],
-  data () {
-    return {
-      tag: '',
-      tags: [],
-      value: '',
-      tagRadio: false,
-      content: '',
-      title: '',
-      hasImage: false,
-      images: []
-    }
-  },
-  components: {
-    Uploader
-  },
-  mounted () {
-    this.getTag()
-  },
-  methods: {
-    submit () {
-      if (this.hasImage) {
-        Toast({
-          message: '有未上传的图片，请上传完毕或取消上传后再继续',
-          position: 'bottom',
-          duration: 3000
-        })
-        return
+  import Uploader from '@/components/abstract/uploader'
+  import { Toast } from 'mint-ui'
+  import { accountTestMixin } from '@/common/js/mixin'
+  export default {
+    mixins: [ accountTestMixin ],
+    data () {
+      return {
+        tag: '',
+        tags: [],
+        value: '',
+        tagRadio: false,
+        content: '',
+        title: '',
+        hasImage: false,
+        images: []
       }
-      if (!this.title || !this.content) {
-        Toast({
-          message: '标题或内容不能为空',
-          position: 'bottom',
-          duration: 3000
-        })
-        return
-      }
-      if (!this.tag) {
-        Toast({
-          message: '请选择问题标签',
-          position: 'bottom',
-          duration: 3000
-        })
-        return
-      }
-      axios.post('http://localhost:7001/question/addQuestion', {
-        title: this.title,
-        content: this.content,
-        tag: this.tag,
-        images: this.images
-      }).then(res => {
-        if (res.data.code === 200) {
+    },
+    components: {
+      Uploader
+    },
+    mounted () {
+      this.getTag()
+    },
+    methods: {
+      submit () {
+        if (this.hasImage) {
           Toast({
-            message: '提问成功',
+            message: '有未上传的图片，请上传完毕或取消上传后再继续',
             position: 'bottom',
-            duration: 2000
+            duration: 3000
           })
-          this.$router.replace('/question/addQuestion?tag=' + this.tag)
-          this.$router.go(-1)
+          return
         }
-      })
-    },
-    clearImage () {
-      this.hasImage = false
-    },
-    addImage () {
-      this.hasImage = true
-    },
-    uploadSuccess (images) {
-      this.images = images
-      this.hasImage = false
-    },
-    getTag () {
-      axios.get('http://localhost:7001/question/getTags').then(res => {
-        if (res.data.code === 200) {
-          res.data.data.forEach(element => {
-            this.tags.push(element.tagName)
+        if (!this.title || !this.content) {
+          Toast({
+            message: '标题或内容不能为空',
+            position: 'bottom',
+            duration: 3000
           })
+          return
         }
-      })
+        if (!this.tag) {
+          Toast({
+            message: '请选择问题标签',
+            position: 'bottom',
+            duration: 3000
+          })
+          return
+        }
+        this.$axios.post('/question/addQuestion', {
+          title: this.title,
+          content: this.content,
+          tag: this.tag,
+          images: this.images
+        }).then(res => {
+          if (res.data.code === 200) {
+            Toast({
+              message: '提问成功',
+              position: 'bottom',
+              duration: 2000
+            })
+            this.$router.replace('/question/addQuestion?tag=' + this.tag)
+            this.$router.go(-1)
+          }
+        })
+      },
+      clearImage () {
+        this.hasImage = false
+      },
+      addImage () {
+        this.hasImage = true
+      },
+      uploadSuccess (images) {
+        this.images = images
+        this.hasImage = false
+      },
+      getTag () {
+        this.$axios.get('/question/getTags').then(res => {
+          if (res.data.code === 200) {
+            res.data.data.forEach(element => {
+              this.tags.push(element.tagName)
+            })
+          }
+        })
+      }
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>
-.slide-enter-active, .slide-leave-active
-  transition all 0.3s
-.slide-enter, .slide-leave-to
-  transform translate3d(100%, 0, 0)
-.question-add
-  position fixed
-  overflow-y auto
-  top 0
-  bottom 0
-  left 0
-  right 0
-  z-index 100
-  background #fff
-  padding-top 50px
-  .tag-wrapper
-    display flex
-    justify-content space-between
-    padding 5px 20px
-    align-items: center
-  .tag-radio
-    width 90%
+  .slide-enter-active, .slide-leave-active
+    transition all 0.3s
+  .slide-enter, .slide-leave-to
+    transform translate3d(100%, 0, 0)
+  .question-add
+    position fixed
     overflow-y auto
-    height 80%
-    background-color #fff
+    top 0
+    bottom 0
+    left 0
+    right 0
+    z-index 100
+    background #fff
+    padding-top 50px
+    .tag-wrapper
+      display flex
+      justify-content space-between
+      padding 5px 20px
+      align-items: center
+    .tag-radio
+      width 90%
+      overflow-y auto
+      height 80%
+      background-color #fff
 </style>

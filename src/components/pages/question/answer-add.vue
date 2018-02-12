@@ -15,7 +15,6 @@
 
 <script>
   import Uploader from '@/components/abstract/uploader'
-  import axios from 'axios'
   import { Toast } from 'mint-ui'
   import { accountTestMixin } from '@/common/js/mixin'
   export default {
@@ -49,7 +48,7 @@
           })
           return
         }
-        axios.post('http://localhost:7001/question/addAnswer', {
+        this.$axios.post('/question/addAnswer', {
           questionId: this.$route.params.questionId,
           content: this.content,
           images: this.images
@@ -81,7 +80,6 @@
     transform translate3d(100%, 0, 0)
   .answer-add
     position fixed
-    overflow-y auto
     top 0
     bottom 0
     left 0

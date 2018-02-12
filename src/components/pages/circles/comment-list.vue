@@ -30,7 +30,6 @@
 <script>
   import {MessageBox, Toast} from 'mint-ui'
   import {getTimeMixin, accountTestMixin, goToRelativePathMixin} from '@/common/js/mixin'
-  import axios from 'axios'
   export default {
     mixins: [getTimeMixin, accountTestMixin, goToRelativePathMixin],
     data () {
@@ -43,7 +42,7 @@
     },
     methods: {
       getData () {
-        axios.get(`http://127.0.0.1:7001/circle/getComment/${this.$route.query.id}`).then(res => {
+        this.$axios.get(`/circle/getComment/${this.$route.query.id}`).then(res => {
           if (res.data.code === 200) {
             this.comments = res.data.data.comments
           }
@@ -61,7 +60,7 @@
           confirmButtonText: '删除',
           cancelButtonText: '取消'
         }).then(action => {
-          axios.post('http://localhost:7001/circle/deleteComment', {
+          this.$axios.post('/circle/deleteComment', {
             circleId: this.$route.query.id,
             commentId: commentId
           }).then(res => {
@@ -100,7 +99,6 @@
     transform translate3d(100%, 0, 0)
   .comment-list
     position fixed
-    overflow-y auto
     top 0
     bottom 0
     left 0
@@ -108,12 +106,16 @@
     z-index 100
     background #fff
     .container
+      width 100%
+      position fixed
+      overflow-y auto
+      top 40px
+      bottom 0
       background #ccc
-      margin-top 40px
       .item
         background #fff
         padding 10px
-        margin 3px 0
+        margin-bottom 3px
         .user-info
           display flex
           justify-content space-between

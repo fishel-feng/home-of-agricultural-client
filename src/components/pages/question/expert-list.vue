@@ -10,7 +10,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import { accountTestMixin } from '@/common/js/mixin'
   import PersonList from '@/components/abstract/person-list'
   export default {
@@ -28,7 +27,7 @@
     },
     methods: {
       getData () {
-        axios.get('http://127.0.0.1:7001/question/getExpertList/' + this.$route.query.tag).then(res => {
+        this.$axios.get('/question/getExpertList/' + this.$route.query.tag).then(res => {
           if (res.data.code === 200) {
             this.experts = res.data.data.experts
           }
