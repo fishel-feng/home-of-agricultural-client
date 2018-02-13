@@ -38,7 +38,7 @@
     name: 'app',
     data () {
       return {
-        selected: 'news',
+        selected: this.$route.path.slice(1),
         messageCount: 0,
         title: { news: '新闻', wiki: '百科', question: '问专家', circles: '农友圈', user: '我的' }
       }
@@ -51,7 +51,7 @@
     },
     methods: {
       selectItem () {
-        if (this.selected === 'news' && this.selected === 'wiki') {
+        if (this.selected !== 'news' && this.selected !== 'wiki') {
           this.verifyLogin(() => {
             this.$router.push('/' + this.selected)
           })

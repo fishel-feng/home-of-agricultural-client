@@ -9,17 +9,16 @@ export const loginMixin = {
       'addToken',
       'saveUserInfo'
     ]),
-    initUserInfo (token) {
+    initUserInfo (token, callback) {
       this.$socket.emit('login', this.token)
       this.addToken(token)
       if (token) {
-        axios.get('http://127.0.0.1:7001/user/getUserIndex', {
-          headers: {
-            Authorization: token
-          }
-        }).then(res => {
+        axios.get('/user/getUserIndex').then(res => {
           const user = res.data.data.user
           this.saveUserInfo(user)
+          if (callback) {
+            callback()
+          }
         })
       }
     }
@@ -43,6 +42,7 @@ export const accountTestMixin = {
         }).then(action => {
           this.$router.push('/signIn')
         }).catch(e => {
+          this.$router.push('/news')
         })
       } else {
         callback()

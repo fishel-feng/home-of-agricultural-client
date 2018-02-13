@@ -93,18 +93,20 @@
         })
       },
       deleteFromCollection () {
-        const articleId = this.$route.params.articleId
-        this.$axios.post('/news/deleteFromCollections', {
-          articleId
-        }).then(res => {
-          if (res.data.code === 200) {
-            this.deleteCollection(articleId)
-            Toast({
-              message: '取消收藏成功',
-              position: 'bottom',
-              duration: 2000
-            })
-          }
+        this.verifyLogin(() => {
+          const articleId = this.$route.params.articleId
+          this.$axios.post('/news/deleteFromCollections', {
+            articleId
+          }).then(res => {
+            if (res.data.code === 200) {
+              this.deleteCollection(articleId)
+              Toast({
+                message: '取消收藏成功',
+                position: 'bottom',
+                duration: 2000
+              })
+            }
+          })
         })
       }
     }

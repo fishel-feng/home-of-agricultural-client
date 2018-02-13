@@ -148,8 +148,9 @@
                 duration: 3000
               })
               const token = res.data.data.token
-              this.initUserInfo(token)
-              this.$router.replace('/user/edit')
+              this.initUserInfo(token, () => {
+                this.$router.replace('/user/edit')
+              })
             } else if (res.data.code === 457) {
               Toast({
                 message: '验证码错误',
