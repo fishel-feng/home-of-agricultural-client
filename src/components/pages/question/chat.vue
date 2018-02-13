@@ -4,9 +4,9 @@
       <mt-header fixed :title="this.$route.query.userName">
         <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
       </mt-header>
-      <div class="main-wrapper">
+      <div class="main-wrapper" ref="main">
         <mt-loadmore :top-method="loadTop" ref="loadmore">
-          <ul class="messages" ref="div">
+          <ul class="messages">
             <div class="load-hint" v-show="messageList.length >= 30">{{hint}}</div>
             <li  v-for="(item, index) in messageList" :key="index" ref="li">
               <div v-if="item.type==='text'" :class="item.sender!==myId?'message-item':'message-item right'">
@@ -90,16 +90,16 @@
       sendImage () {
         if (this.showUploader) {
           this.showUploader = false
-          this.$refs.div.style['margin-bottom'] = '48px'
+          this.$refs.main.style['bottom'] = '48px'
         } else {
           this.showUploader = true
-          this.$refs.div.style['margin-bottom'] = this.hasImage ? '208px' : '154px'
+          this.$refs.main.style['bottom'] = this.hasImage ? '208px' : '154px'
           this.$refs.li[this.messageList.length - 1].scrollIntoView()
         }
       },
       uploadSuccess (images) {
         this.hasImage = false
-        this.$refs.div.style['margin-bottom'] = '154px'
+        this.$refs.main.style['bottom'] = '154px'
         this.$socket.emit('chat', this.token, this.$route.query.userId, images[0], 'image')
         this.messageList.push({type: 'image', sender: this.myId, content: images[0]})
         this.$nextTick(() => {
@@ -108,11 +108,11 @@
       },
       clearImage () {
         this.hasImage = false
-        this.$refs.div.style['margin-bottom'] = '154px'
+        this.$refs.main.style['bottom'] = '154px'
       },
       addImage () {
         this.hasImage = true
-        this.$refs.div.style['margin-bottom'] = '208px'
+        this.$refs.main.style['bottom'] = '208px'
         this.$refs.li[this.messageList.length - 1].scrollIntoView()
       },
       sendMessage () {
@@ -148,7 +148,6 @@
     transform translate3d(100%, 0, 0)
   .chat
     position fixed
-    overflow-y auto
     top 0
     bottom 0
     left 0

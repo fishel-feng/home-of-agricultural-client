@@ -2,10 +2,10 @@
   <div class="wiki">
     <div class="container">
       <img src="../../../assets/svg/search.svg" width="180px" height="180px" alt="">
-      <mt-field placeholder="在此输入查询关键词" v-model="keyWord"/>
+      <mt-field placeholder="在此输入查询关键词" v-model="keyWord"></mt-field>
       <mt-button @click.native="search" type="primary" class="btn-submit">搜索</mt-button>
     </div>
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 
