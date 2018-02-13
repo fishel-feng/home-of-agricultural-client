@@ -23,7 +23,7 @@
   import { loginMixin } from '@/common/js/mixin'
   import { encryptPassword } from '@/common/js/util'
   import { mapActions } from 'vuex'
-  import { Toast, MessageBox } from 'mint-ui'
+  import { Toast } from 'mint-ui'
   const TIME_COUNT = 60
   export default {
     mixins: [loginMixin],
@@ -143,21 +143,13 @@
           }).then(res => {
             if (res.data.code === 200) {
               Toast({
-                message: '注册成功',
+                message: '注册成功,请完善个人信息',
                 position: 'bottom',
                 duration: 3000
               })
               const token = res.data.data.token
               this.initUserInfo(token)
-              MessageBox.confirm('注册成功，是否完善个人信息', {
-                closeOnClickModal: false,
-                confirmButtonText: '现在',
-                cancelButtonText: '以后'
-              }).then(action => {
-                this.$router.replace('/user')
-              }).catch(e => {
-                this.$router.go(-1)
-              })
+              this.$router.replace('/user/edit')
             } else if (res.data.code === 457) {
               Toast({
                 message: '验证码错误',
