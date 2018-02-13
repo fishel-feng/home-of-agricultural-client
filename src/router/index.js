@@ -21,6 +21,12 @@ const Wiki = (resolve) => {
   })
 }
 
+const WikiContent = (resolve) => {
+  import('@/components/pages/wiki/wiki-content').then((module) => {
+    resolve(module)
+  })
+}
+
 const Question = (resolve) => {
   import('@/components/pages/question/question').then((module) => {
     resolve(module)
@@ -273,7 +279,13 @@ export default new Router({
     },
     {
       path: '/wiki',
-      component: Wiki
+      component: Wiki,
+      children: [
+        {
+          path: 'content',
+          component: WikiContent
+        }
+      ]
     },
     {
       path: '/question',

@@ -18,7 +18,10 @@ export default {
   },
   methods: {
     search () {
-      // todo
+      if (!this.keyWord.trim()) {
+        return
+      }
+      this.$router.push('/wiki/content?keyWord=' + this.keyWord)
     }
   }
 }
