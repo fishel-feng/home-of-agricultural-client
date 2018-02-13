@@ -54,9 +54,7 @@
         this.getCircleList(callback)
       },
       addCircle () {
-        this.verifyLogin(() => {
-          this.$router.push('/circles/addCircle')
-        })
+        this.$router.push('/circles/addCircle')
       }
     },
     watch: {

@@ -22,7 +22,7 @@
         </div>
         <div class="uploader">
           上传身份证正反两面照片：
-          <uploader @success="uploadSuccess" :src="'http://localhost:7001/upload/expert'"/>
+          <uploader @success="uploadSuccess" :src="'/upload/expert'"/>
         </div>
         <mt-popup @click.native="tagRadio = false" v-model="tagRadio" class="tag-radio">
           <mt-radio align="right" v-model="tag" :options="tags"></mt-radio>

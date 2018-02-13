@@ -13,7 +13,7 @@
         <div>问题标签：{{tag}}</div>
         <mt-button @click.native="tagRadio = true" type="primary" size="small">选择问题标签</mt-button>
       </div>
-      <uploader @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/question'"/>
+      <uploader @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'/upload/question'"/>
       <mt-popup @click.native="tagRadio = false" v-model="tagRadio" class="tag-radio">
         <mt-radio align="right" v-model="tag" :options="tags"></mt-radio>
       </mt-popup>

@@ -26,7 +26,7 @@
           <mt-button @click.native="sendMessage" class="btn-submit" type="primary" size="small" >发送</mt-button>
         </div>
         <div class="uploader-wrapper" v-show="showUploader">
-          <uploader :submitText="'发送图片'" :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/chat'"/>
+          <uploader :submitText="'发送图片'" :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'/upload/chat'"/>
         </div>
       </div>
       <div @click="hideImage" v-if="showImage" class="image-wrapper">

@@ -27,7 +27,6 @@
     },
     methods: {
       getData () {
-        // todo 百科查询，登录注册，权限跳转
         this.$axios.get('/wiki/getWiki/' + this.$route.query.keyWord).then(res => {
           if (res.data.code) {
             this.wiki = res.data.data

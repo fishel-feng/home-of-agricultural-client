@@ -16,7 +16,7 @@
           剩余{{rest}}字
         </div>
       </div>
-      <uploader @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/circle'"/>
+      <uploader @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'/upload/circle'"/>
     </div>
   </transition>
 </template>

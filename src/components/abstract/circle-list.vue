@@ -102,34 +102,28 @@
         this.goToRelativePath('like?id=' + circleId)
       },
       giveLike (circle) {
-        this.verifyLogin(() => {
-          this.$axios.post('/circle/giveLike', {
-            circleId: circle._id
-          }).then(res => {
-            if (res.data.code === 200) {
-              this.addLike(circle._id)
-              circle.likeCount++
-              this.$socket.emit('like', this.token, circle.userId, circle._id)
-            }
-          })
+        this.$axios.post('/circle/giveLike', {
+          circleId: circle._id
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.addLike(circle._id)
+            circle.likeCount++
+            this.$socket.emit('like', this.token, circle.userId, circle._id)
+          }
         })
       },
       cancelLike (circle) {
-        this.verifyLogin(() => {
-          this.$axios.post('/circle/cancelLike', {
-            circleId: circle._id
-          }).then(res => {
-            if (res.data.code === 200) {
-              this.deleteLike(circle._id)
-              circle.likeCount--
-            }
-          })
+        this.$axios.post('/circle/cancelLike', {
+          circleId: circle._id
+        }).then(res => {
+          if (res.data.code === 200) {
+            this.deleteLike(circle._id)
+            circle.likeCount--
+          }
         })
       },
       giveComment (circleId, index) {
-        this.verifyLogin(() => {
-          this.goToRelativePath(`addComment?id=${circleId}&index=${index}`)
-        })
+        this.goToRelativePath(`addComment?id=${circleId}&index=${index}`)
       },
       isMine (userId) {
         return userId === this.myId

@@ -60,7 +60,9 @@
         }
       },
       showMessageCenter () {
-        this.$router.push('/message')
+        this.verifyLogin(() => {
+          this.$router.push('/message')
+        })
       },
       ...mapActions([
         'addMessages',

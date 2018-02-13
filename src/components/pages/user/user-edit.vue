@@ -9,7 +9,7 @@
         <div class="head-image-container">
           <span>头像</span>
           <img :src="`http://localhost:7001/public/headImage/${headImage}`" width="40px" height="40px" alt="">
-          <uploader :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/headImage'"/>
+          <uploader :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'/upload/headImage'"/>
           &nbsp;上传头像
         </div>
         <mt-field label="个人简介" placeholder="在此输入个人简介" :attr="{ maxlength: 40 }" type="textarea" rows="3" v-model="description"></mt-field>

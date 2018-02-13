@@ -8,7 +8,7 @@
         </div>
       </mt-header>
       <mt-field placeholder="在此输入答案" type="textarea" rows="6" v-model="content"></mt-field>
-      <uploader @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'http://localhost:7001/upload/answer'"/>
+      <uploader @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'/upload/answer'"/>
     </div>
   </transition>
 </template>
