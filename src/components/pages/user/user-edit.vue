@@ -58,13 +58,13 @@
         this.$axios.get(`/user/getUserInfo/${this.myId}`).then(res => {
           if (res.data.code === 200) {
             let user = res.data.data.user
-            this.nickName = user.nickName
-            this.description = user.description
-            this.gender = user.gender
-            this.age = user.age
-            this.location = user.location
-            this.job = user.job
-            this.headImage = user.headImage
+            this.nickName = user.nickName || ''
+            this.description = user.description || ''
+            this.gender = user.gender || ''
+            this.age = user.age || 0
+            this.location = user.location || ''
+            this.job = user.job || ''
+            this.headImage = user.headImage || ''
           }
         })
       },
@@ -113,6 +113,7 @@
               position: 'bottom',
               duration: 2000
             })
+            this.$router.replace('/user/edit?flag=' + true)
             this.$router.go(-1)
           }
         })

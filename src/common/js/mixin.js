@@ -7,7 +7,6 @@ export const loginMixin = {
   methods: {
     ...mapActions([
       'addToken',
-      'addMyId',
       'saveUserInfo'
     ]),
     initUserInfo (token) {
@@ -20,7 +19,6 @@ export const loginMixin = {
           }
         }).then(res => {
           const user = res.data.data.user
-          this.addMyId(user._id)
           this.saveUserInfo(user)
         })
       }

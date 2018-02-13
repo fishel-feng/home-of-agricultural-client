@@ -21,3 +21,7 @@ export const SET_TAGS = 'SET_TAGS'
 export const SET_MY_ID = 'SET_MY_ID'
 
 export const SET_MESSAGES = 'SET_MESSAGES'
+
+export const SET_CERTIFICATION = 'SET_CERTIFICATION'
+
+export const SET_USER_COUNT = 'SET_USER_COUNT'

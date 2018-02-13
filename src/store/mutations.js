@@ -36,6 +36,12 @@ const mutations = {
   },
   [types.SET_MESSAGES] (state, messages) {
     state.messages = messages
+  },
+  [types.SET_CERTIFICATION] (state, certification) {
+    state.certification = certification
+  },
+  [types.SET_USER_COUNT] (state, userCount) {
+    state.userCount = userCount
   }
 }
 

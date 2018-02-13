@@ -7,7 +7,7 @@
       <div class="main-wrapper">
         <mt-loadmore :top-method="loadTop" ref="loadmore">
           <ul class="messages" ref="div">
-            <div class="load-hint" v-show="messageList.length > 30">{{hint}}</div>
+            <div class="load-hint" v-show="messageList.length >= 30">{{hint}}</div>
             <li  v-for="(item, index) in messageList" :key="index" ref="li">
               <div v-if="item.type==='text'" :class="item.sender!==myId?'message-item':'message-item right'">
                 <span>{{item.content}}</span>
@@ -69,15 +69,17 @@
             if (!callback) {
               this.messageList = res.data.data
               this.$nextTick(() => {
-                this.$refs.li[this.messageList.length - 1].scrollIntoView()
+                if (this.messageList.length) {
+                  this.$refs.li[this.messageList.length - 1].scrollIntoView()
+                }
               })
             } else {
               if (res.data.data.length) {
                 this.messageList.unshift(...res.data.data)
-                callback()
               } else {
                 this.hint = '已无更多消息'
               }
+              callback()
             }
           }
         })

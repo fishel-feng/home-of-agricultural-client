@@ -4,23 +4,23 @@
       <mt-button @click.native="$router.go(-1)" icon="back" slot="left">返回</mt-button>
     </mt-header>
     <div class="message-container">
-      <div class="chat-message" @click="$router.push('/message/recent')">
-        聊天消息<mt-badge size="normal" type="error">无最新消息</mt-badge>
+      <div class="chat-message" @click="$router.push('/user/recent')">
+        聊天消息<mt-badge size="normal" type="error">{{userCount ? '有新消息' : '无最新消息'}}</mt-badge>
       </div>
       <div v-for="(item, index) in messages" :key="index">
-        <div v-if="item.type==='like'" class="message-item" @click="showCircle(item.circleId)">
+        <div v-if="item.type==='like'" class="message-item" @click="showCircle(item.circleId, 'like')">
           <div>
             <span class="nick-name" @click.stop="showUserInfo(item.userId)">{{item.nickName}}</span> 赞了你的动态
           </div>
           <span class="time">{{getTime(item.time)}}</span>
         </div>
-        <div v-else-if="item.type==='comment'" class="message-item" @click="showCircle(item.circleId)">
+        <div v-else-if="item.type==='comment'" class="message-item" @click="showCircle(item.circleId, 'comment')">
           <div>
             <span class="nick-name" @click.stop="showUserInfo(item.userId)">{{item.nickName}}</span> 评论了你的动态
           </div>
           <span class="time">{{getTime(item.time)}}</span>
         </div>
-        <div v-else-if="item.type==='reply'" class="message-item" @click="showCircle(item.circleId)">
+        <div v-else-if="item.type==='reply'" class="message-item" @click="showCircle(item.circleId, 'reply')">
           <div>
             <span class="nick-name" @click.stop="showUserInfo(item.userId)">{{item.nickName}}</span> 回复了你的评论
           </div>
@@ -63,27 +63,38 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapMutations} from 'vuex'
   import {getTimeMixin, accountTestMixin} from '@/common/js/mixin'
   export default {
     computed: {
       ...mapGetters([
-        'messages'
+        'messages',
+        'userCount'
       ])
     },
     mixins: [getTimeMixin, accountTestMixin],
     methods: {
       showUserInfo (userId) {
-        this.$router.push('/user/' + userId)
+        this.$router.push('/message/userCard?userId=' + userId)
       },
       showQuestionInfo (questionId) {
-        this.$router.push('/question/all/' + questionId)
+        this.$router.push('/question/' + questionId)
       },
-      showCircle (circleId) {
-        this.$router.push('/user/circles?id=' + circleId)
+      showCircle (circleId, type) {
+        this.$router.push('/user/circles?newId=' + circleId + '&type=' + type)
       },
       showFollowers () {
         this.$router.push('/user/followers')
+      },
+      ...mapMutations({
+        setUserCount: 'SET_USER_COUNT'
+      })
+    },
+    watch: {
+      '$route' (to, from) {
+        if (from.path === '/user/recent') {
+          this.setUserCount(0)
+        }
       }
     }
   }

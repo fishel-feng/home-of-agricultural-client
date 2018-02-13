@@ -31,7 +31,7 @@
 
 <script>
   import axios from 'axios'
-  import { mapActions, mapMutations } from 'vuex'
+  import { mapActions, mapMutations, mapGetters } from 'vuex'
   import { accountTestMixin } from '@/common/js/mixin'
   export default {
     mixins: [accountTestMixin],
@@ -67,7 +67,8 @@
         'saveUserInfo'
       ]),
       ...mapMutations({
-        setMessage: 'SET_MESSAGES'
+        setMessage: 'SET_MESSAGES',
+        setUserCount: 'SET_USER_COUNT'
       }),
       initData () {
         axios.get('/user/showMessage').then(res => {
@@ -79,18 +80,27 @@
         })
       }
     },
+    computed: {
+      ...mapGetters([
+        'userCount'
+      ])
+    },
     watch: {
       '$route' (to, from) {
-        // todo 重构路由结构，提取抽象组件
         this.selected = to.path.slice(1)
         if (from.path === '/message') {
           this.messageCount = 0
+          this.setUserCount(0)
         }
       }
     },
     sockets: {
-      chat () {
-        // TODO 接收消息状态，初始化消息 完成消息中心页面跳转 修复技术错误，写完两个页面，重构for...of循环爬取百科页面 整理页面信息 打包
+      chatMessage (userCount) {
+        this.setUserCount(userCount)
+      },
+      chat (content) {
+        this.messageCount++
+        this.setUserCount(this.userCount + 1)
       },
       message (content) {
         if (content) {

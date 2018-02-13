@@ -21,3 +21,7 @@ export const myId = state => state.myId
 export const tags = state => state.tags
 
 export const messages = state => state.messages
+
+export const certification = state => state.certification
+
+export const userCount = state => state.userCount

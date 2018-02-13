@@ -38,6 +38,17 @@
           }
         })
       }
+    },
+    watch: {
+      '$route' (to, from) {
+        if (from.path === '/user/recent/chat' && from.query.userId) {
+          this.recent.forEach(item => {
+            if (item.userId === from.query.userId) {
+              item.newMessage = false
+            }
+          })
+        }
+      }
     }
   }
 </script>

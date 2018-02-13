@@ -87,6 +87,13 @@
     },
     mounted () {
       this.verifyLogin(this.getData)
+    },
+    watch: {
+      '$route' (to, from) {
+        if (from.path === '/user/edit' && from.query.flag) {
+          this.getData()
+        }
+      }
     }
   }
 </script>

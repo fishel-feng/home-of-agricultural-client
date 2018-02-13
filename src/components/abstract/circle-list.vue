@@ -22,7 +22,9 @@
                 <span>{{getTime(item.time)}}</span>
                 <div>
                   <span @click="getLikeList(item._id)" class="btn-info">{{item.likeCount}}人觉得很赞</span>&nbsp;
+                  <span class="new-hint" v-show="$route.query.newId && $route.query.type === 'like' && $route.query.newId === item._id">new</span>
                   <span @click="getCommentList(item._id)" class="btn-info">{{item.commentCount}}条评论</span>
+                  <span class="new-hint" v-show="$route.query.newId && $route.query.type === 'comment' && $route.query.newId === item._id">new</span>
                 </div>
               </div>
               <div class="circle-action">
@@ -88,9 +90,15 @@
         this.goToRelativePath('userCard?userId=' + userId)
       },
       getCommentList (circleId) {
+        if (circleId === this.$route.query.newId && this.$route.query.type === 'comment') {
+          this.$router.replace('/user/circles')
+        }
         this.goToRelativePath('comment?id=' + circleId)
       },
       getLikeList (circleId) {
+        if (circleId === this.$route.query.newId && this.$route.query.type === 'like') {
+          this.$router.replace('/user/circles')
+        }
         this.goToRelativePath('like?id=' + circleId)
       },
       giveLike (circle) {
@@ -205,6 +213,8 @@
             flex-direction column
             .btn-info
               color $color-can-be-click
+            .new-hint
+              color red
           .circle-action
             padding 5px
             display flex
