@@ -11,6 +11,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import { mapGetters } from 'vuex'
   import QuestionList from '@/components/abstract/question-list'
   export default {
@@ -49,7 +50,7 @@
         let last = this.questions.length ? this.questions[this.questions.length - 1].time : new Date().toISOString()
         this.showLoading = true
         this.loading = true
-        this.$axios.get('/question' + url + last).then(res => {
+        this.$axios.get(BASE_API_PATH + '/question' + url + last).then(res => {
           this.questions.push(...res.data.data.questions)
           if (callback) {
             callback()

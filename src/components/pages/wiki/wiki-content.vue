@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   export default {
     data () {
       return {
@@ -27,7 +28,7 @@
     },
     methods: {
       getData () {
-        this.$axios.get('/wiki/getWiki/' + this.$route.query.keyWord).then(res => {
+        this.$axios.get(BASE_API_PATH + '/wiki/getWiki/' + this.$route.query.keyWord).then(res => {
           if (res.data.code) {
             this.wiki = res.data.data
           }

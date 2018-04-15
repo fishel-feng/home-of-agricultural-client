@@ -10,6 +10,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import CircleList from '@/components/abstract/circle-list'
   import { accountTestMixin } from '@/common/js/mixin'
   export default {
@@ -34,7 +35,7 @@
         let last = this.circles.length ? this.circles[this.circles.length - 1].time : new Date().toISOString()
         this.showLoading = true
         this.loading = true
-        this.$axios.get('/circle' + url + last).then(res => {
+        this.$axios.get(BASE_API_PATH + '/circle' + url + last).then(res => {
           this.circles.push(...res.data.data.circleList)
           if (callback) {
             callback()

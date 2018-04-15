@@ -39,6 +39,7 @@
 </template>
 
 <script>
+  import {BASE_API_PATH} from '@/common/js/util'
   import {Toast} from 'mint-ui'
   import {mapGetters} from 'vuex'
   import Uploader from '@/components/abstract/uploader'
@@ -67,7 +68,7 @@
     },
     methods: {
       getTag () {
-        this.$axios.get('/question/getTags').then(res => {
+        this.$axios.get(BASE_API_PATH + '/question/getTags').then(res => {
           if (res.data.code === 200) {
             res.data.data.forEach(element => {
               this.tags.push(element.tagName)
@@ -124,7 +125,7 @@
           })
           return
         }
-        this.$axios.post('/user/applyCertification', {
+        this.$axios.post(BASE_API_PATH + '/user/applyCertification', {
           realName: this.realName,
           idCardNumber: this.idCardNumber,
           urls: this.images,

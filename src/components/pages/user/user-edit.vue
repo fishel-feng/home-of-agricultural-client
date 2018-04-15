@@ -8,7 +8,7 @@
         <mt-field label="用户名" placeholder="请输入用户名" v-model="nickName"></mt-field>
         <div class="head-image-container">
           <span>头像</span>
-          <img :src="`http://localhost:7001/public/headImage/${headImage}`" width="40px" height="40px" alt="">
+          <img :src="`http://39.106.41.253:7001/public/headImage/${headImage}`" width="40px" height="40px" alt="">
           <uploader :once="true" @addImage="addImage" @success="uploadSuccess" @empty="clearImage" :src="'/upload/headImage'"/>
           &nbsp;上传头像
         </div>
@@ -23,13 +23,16 @@
         <mt-field label="年龄" type="number" placeholder="输入年龄" v-model="age"></mt-field>
         <mt-field label="地区" placeholder="输入所在地区" v-model="location"></mt-field>
         <mt-field label="职业" placeholder="输入您的职业" v-model="job"></mt-field>
-        <mt-button @click.native="submit" type="primary" class="btn-submit">保存修改</mt-button>
+        <div class="btn-wrapper">
+          <mt-button @click.native="submit" type="primary" class="btn-submit">保存修改</mt-button>
+        </div>
       </div>
     </div>
   </transition>
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import Uploader from '@/components/abstract/uploader'
   import { accountTestMixin } from '@/common/js/mixin'
   import {Toast, MessageBox} from 'mint-ui'
@@ -55,7 +58,7 @@
     },
     methods: {
       initData () {
-        this.$axios.get(`/user/getUserInfo/${this.myId}`).then(res => {
+        this.$axios.get(BASE_API_PATH + `/user/getUserInfo/${this.myId}`).then(res => {
           if (res.data.code === 200) {
             let user = res.data.data.user
             this.nickName = user.nickName || ''
@@ -98,7 +101,7 @@
           })
           return
         }
-        this.$axios.post(`/user/modifyUserInfo`, {
+        this.$axios.post(BASE_API_PATH + `/user/modifyUserInfo`, {
           nickName: this.nickName,
           gender: this.gender,
           age: this.age,
@@ -143,7 +146,6 @@
       top 40px
       bottom 0
       width 100%
-      padding 10px
       .head-image-container
         display flex
         align-items center
@@ -159,7 +161,8 @@
         align-items center
         span
           margin-right 50px
-      .btn-submit
-        margin-top 10px
-        width 100%
+      .btn-wrapper
+        padding 10px 15px
+        .btn-submit
+          width 100%
 </style>

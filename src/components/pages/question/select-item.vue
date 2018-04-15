@@ -19,70 +19,71 @@
 </template>
 
 <script>
-import { Toast, MessageBox } from 'mint-ui'
-import { accountTestMixin } from '@/common/js/mixin'
-import { mapMutations, mapGetters } from 'vuex'
-export default {
-  mixins: [accountTestMixin],
-  data () {
-    return {
-      options: [],
-      value: []
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'tags'
-    ])
-  },
-  mounted () {
-    this.initData()
-  },
-  methods: {
-    submit () {
-      this.setTags(this.value)
-      this.$axios.post('/question/saveTags', {
-        tags: this.value
-      }).then(res => {
-        if (res.data.code === 200) {
-          Toast({
-            message: '保存成功',
-            position: 'bottom',
-            duration: 2000
-          })
-          this.$router.go(-1)
-        }
-      })
+  import { BASE_API_PATH } from '@/common/js/util'
+  import { Toast, MessageBox } from 'mint-ui'
+  import { accountTestMixin } from '@/common/js/mixin'
+  import { mapMutations, mapGetters } from 'vuex'
+  export default {
+    mixins: [accountTestMixin],
+    data () {
+      return {
+        options: [],
+        value: []
+      }
     },
-    back () {
-      MessageBox.confirm('是否保存修改', {
-        closeOnClickModal: true,
-        confirmButtonText: '保存',
-        cancelButtonText: '不保存'
-      }).then(action => {
-        this.submit()
-      }).catch(e => {
-        this.$router.go(-1)
-      })
+    computed: {
+      ...mapGetters([
+        'tags'
+      ])
     },
-    initData () {
-      this.$axios.get('/question/getTags').then(res => {
-        if (res.data.code === 200) {
-          res.data.data.forEach(element => {
-            this.options.push({
-              label: element.tagName,
-              value: element
+    mounted () {
+      this.initData()
+    },
+    methods: {
+      submit () {
+        this.setTags(this.value)
+        this.$axios.post(BASE_API_PATH + '/question/saveTags', {
+          tags: this.value
+        }).then(res => {
+          if (res.data.code === 200) {
+            Toast({
+              message: '保存成功',
+              position: 'bottom',
+              duration: 2000
             })
-          })
-        }
+            this.$router.go(-1)
+          }
+        })
+      },
+      back () {
+        MessageBox.confirm('是否保存修改', {
+          closeOnClickModal: true,
+          confirmButtonText: '保存',
+          cancelButtonText: '不保存'
+        }).then(action => {
+          this.submit()
+        }).catch(e => {
+          this.$router.go(-1)
+        })
+      },
+      initData () {
+        this.$axios.get(BASE_API_PATH + '/question/getTags').then(res => {
+          if (res.data.code === 200) {
+            res.data.data.forEach(element => {
+              this.options.push({
+                label: element.tagName,
+                value: element
+              })
+            })
+          }
+        })
+        this.value = this.tags
+      },
+      ...mapMutations({
+        setTags: 'SET_TAGS'
       })
-      this.value = this.tags
-    },
-    ...mapMutations({
-      setTags: 'SET_TAGS'
-    })
+    }
   }
-}
 </script>
 
 <style lang="stylus" scoped>

@@ -26,111 +26,111 @@
 </template>
 
 <script>
-import { accountTestMixin } from '@/common/js/mixin'
-import axios from 'axios'
-export default {
-  mixins: [ accountTestMixin ],
-  props: {
-    src: {
-      type: String,
-      required: true
-    },
-    once: {
-      type: Boolean,
-      default: false
-    },
-    submitText: {
-      type: String,
-      default: '上传'
-    }
-  },
-  data () {
-    return {
-      status: 'ready',
-      files: [],
-      point: {},
-      uploading: false,
-      percent: 0
-    }
-  },
-  methods: {
-    add () {
-      this.$refs.file.click()
-    },
-    submit () {
-      if (this.files.length === 0) {
-        console.warn('no file!')
-        return
+  import { BASE_API_PATH } from '@/common/js/util'
+  import { accountTestMixin } from '@/common/js/mixin'
+  export default {
+    mixins: [ accountTestMixin ],
+    props: {
+      src: {
+        type: String,
+        required: true
+      },
+      once: {
+        type: Boolean,
+        default: false
+      },
+      submitText: {
+        type: String,
+        default: '上传'
       }
-      const formData = new FormData()
-      this.files.forEach((item) => {
-        formData.append(item.name, item.file)
-      })
-      axios.post(this.src, formData).then(res => {
-        if (res.data.code === 200 && res.data.data.length) {
-          this.$emit('success', res.data.data)
-          // this.status = 'finished'
-          this.finished()
-        } else {
-          this.status = 'error'
+    },
+    data () {
+      return {
+        status: 'ready',
+        files: [],
+        point: {},
+        uploading: false,
+        percent: 0
+      }
+    },
+    methods: {
+      add () {
+        this.$refs.file.click()
+      },
+      submit () {
+        if (this.files.length === 0) {
+          console.warn('no file!')
+          return
         }
-      })
-    },
-    finished () {
-      this.files = []
-      this.status = 'ready'
-    },
-    remove (index) {
-      this.files.splice(index, 1)
-      if (!this.files.length) {
-        this.$emit('empty')
-      }
-    },
-    fileChanged () {
-      const list = this.$refs.file.files
-      if (list.length) {
-        this.$emit('addImage')
-      }
-      for (let i = 0; i < list.length; i++) {
-        if (!this.isContain(list[i])) {
-          const item = {
-            name: list[i].name,
-            size: list[i].size,
-            file: list[i]
+        const formData = new FormData()
+        this.files.forEach((item) => {
+          formData.append(item.name, item.file)
+        })
+        this.$axios.post(BASE_API_PATH + this.src, formData).then(res => {
+          if (res.data.code === 200 && res.data.data.length) {
+            this.$emit('success', res.data.data)
+            // this.status = 'finished'
+            this.finished()
+          } else {
+            this.status = 'error'
           }
-          this.html5Reader(list[i], item)
-          this.files.push(item)
+        })
+      },
+      finished () {
+        this.files = []
+        this.status = 'ready'
+      },
+      remove (index) {
+        this.files.splice(index, 1)
+        if (!this.files.length) {
+          this.$emit('empty')
         }
-      }
-      this.$refs.file.value = ''
-    },
-    // 将图片文件转成BASE64格式
-    html5Reader (file, item) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        this.$set(item, 'src', e.target.result)
-      }
-      reader.readAsDataURL(file)
-    },
-    isContain (file) {
-      this.files.forEach((item) => {
-        if (item.name === file.name && item.size === file.size) {
-          return true
+      },
+      fileChanged () {
+        const list = this.$refs.file.files
+        if (list.length) {
+          this.$emit('addImage')
         }
-      })
-      return false
-    },
-    uploadProgress (evt) {
-      const component = this
-      if (evt.lengthComputable) {
-        const percentComplete = Math.round((evt.loaded * 100) / evt.total)
-        component.percent = percentComplete / 100
-      } else {
-        console.warn('upload progress unable to compute')
+        for (let i = 0; i < list.length; i++) {
+          if (!this.isContain(list[i])) {
+            const item = {
+              name: list[i].name,
+              size: list[i].size,
+              file: list[i]
+            }
+            this.html5Reader(list[i], item)
+            this.files.push(item)
+          }
+        }
+        this.$refs.file.value = ''
+      },
+      // 将图片文件转成BASE64格式
+      html5Reader (file, item) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          this.$set(item, 'src', e.target.result)
+        }
+        reader.readAsDataURL(file)
+      },
+      isContain (file) {
+        this.files.forEach((item) => {
+          if (item.name === file.name && item.size === file.size) {
+            return true
+          }
+        })
+        return false
+      },
+      uploadProgress (evt) {
+        const component = this
+        if (evt.lengthComputable) {
+          const percentComplete = Math.round((evt.loaded * 100) / evt.total)
+          component.percent = percentComplete / 100
+        } else {
+          console.warn('upload progress unable to compute')
+        }
       }
     }
   }
-}
 </script>
 
 <style>

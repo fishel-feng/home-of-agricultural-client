@@ -9,11 +9,11 @@
         <div class="question-content">{{question.content}}</div>
         <div class="question-image">
           <div v-for="(image, i) in question.images" :key="i">
-            <img @click.stop="showBigImage(`http://localhost:7001/public/question/${image}`)" :src="`http://localhost:7001/public/question/${image}`" width="100px" height="100px"  alt="">
+            <img @click.stop="showBigImage(`http://39.106.41.253:7001/public/question/${image}`)" :src="`http://39.106.41.253:7001/public/question/${image}`" width="100px" height="100px"  alt="">
           </div>
         </div>
         <div class="questioner-info">
-          <img :src="`http://localhost:7001/public/headImage/${question.headImage}`" width="30px" height="30px" alt="">
+          <img :src="`http://39.106.41.253:7001/public/headImage/${question.headImage}`" width="30px" height="30px" alt="">
           <div class="questioner-desc">
             <div class="nick-name" @click="showUserInfo(question.userId)">{{question.nickName}}</div>
             <div class="location">{{question.location}}</div>
@@ -30,7 +30,7 @@
           <li v-for="(answer, index) in answers" :key="index" class="answer-item">
             <div class="answer-title">
               <div class="title-container">
-                <img :src="`http://localhost:7001/public/headImage/${answer.headImage}`" width="30px" height="30px" alt="">
+                <img :src="`http://39.106.41.253:7001/public/headImage/${answer.headImage}`" width="30px" height="30px" alt="">
                 <div class="nick-name" @click="showUserInfo(answer.userId)">{{answer.nickName}}</div>
                 <div class="expert-container">
                   <span class="expert-state" v-show="answer.certification"><img src="../../../assets/svg/v.svg" width="12px" height="12px" alt=""> {{answer.certification}}专家</span>
@@ -46,7 +46,7 @@
               <div>{{answer.content}}</div>
               <div class="answer-images">
                 <div v-for="(image, i) in answer.images" :key="i">
-                  <img @click.stop="showBigImage(`http://localhost:7001/public/answer/${image}`)" :src="`http://localhost:7001/public/answer/${image}`" width="100px" height="100px"  alt="">
+                  <img @click.stop="showBigImage(`http://39.106.41.253:7001/public/answer/${image}`)" :src="`http://39.106.41.253:7001/public/answer/${image}`" width="100px" height="100px"  alt="">
                 </div>
               </div>
             </div>
@@ -62,6 +62,7 @@
 </template>
 
 <script>
+  import {BASE_API_PATH} from '@/common/js/util'
   import {getTimeMixin, accountTestMixin, showImageMixin, goToRelativePathMixin} from '@/common/js/mixin'
   import {Toast, MessageBox} from 'mint-ui'
   import {mapGetters, mapActions} from 'vuex'
@@ -84,7 +85,7 @@
     },
     methods: {
       getData () {
-        this.$axios.get(`/question/getQuestion/${this.$route.params.questionId}`).then(res => {
+        this.$axios.get(BASE_API_PATH + `/question/getQuestion/${this.$route.params.questionId}`).then(res => {
           if (res.data.code === 200) {
             this.question = res.data.data
             this.answers = this.question.answers.reverse()
@@ -93,7 +94,7 @@
         })
       },
       giveAttention () {
-        this.$axios.post('/question/attentionQuestion/', {
+        this.$axios.post(BASE_API_PATH + '/question/attentionQuestion/', {
           questionId: this.question._id
         }).then(res => {
           console.log(res.data)
@@ -109,7 +110,7 @@
         })
       },
       removeAttention () {
-        this.$axios.post('/question/removeAttentionQuestion/', {
+        this.$axios.post(BASE_API_PATH + '/question/removeAttentionQuestion/', {
           questionId: this.question._id
         }).then(res => {
           if (res.data.code === 200) {
@@ -138,7 +139,7 @@
           confirmButtonText: '删除',
           cancelButtonText: '取消'
         }).then(action => {
-          this.$axios.post('/question/deleteAnswer', {
+          this.$axios.post(BASE_API_PATH + '/question/deleteAnswer', {
             questionId: this.$route.params.questionId,
             answerId: answerId
           }).then(res => {

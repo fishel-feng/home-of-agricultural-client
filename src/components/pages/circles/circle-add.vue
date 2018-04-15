@@ -22,6 +22,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import {Toast} from 'mint-ui'
   import Uploader from '@/components/abstract/uploader'
   import {accountTestMixin} from '@/common/js/mixin'
@@ -52,7 +53,7 @@
           })
           return
         }
-        this.$axios.post('/circle/addCircle', {
+        this.$axios.post(BASE_API_PATH + '/circle/addCircle', {
           content: this.content,
           images: this.images
         }).then(res => {

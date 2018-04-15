@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="head">
-      <img @click="showBigImage(`http://localhost:7001/public/headImage/${headImage}`)" :src="`http://localhost:7001/public/headImage/${headImage}`" height="80px" width="80px" alt="">
+      <img @click="showBigImage(`http://39.106.41.253:7001/public/headImage/${headImage}`)" :src="`http://39.106.41.253:7001/public/headImage/${headImage}`" height="80px" width="80px" alt="">
       <div class="desc" @click="showUserInfo">
         <div class="name-wrapper">
           {{nickName}}
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+  import {BASE_API_PATH} from '@/common/js/util'
   import {accountTestMixin, showImageMixin} from '@/common/js/mixin'
   import {mapActions} from 'vuex'
   export default {
@@ -57,7 +58,7 @@
     },
     methods: {
       getData () {
-        this.$axios.get('/user/getUserIndex').then(res => {
+        this.$axios.get(BASE_API_PATH + '/user/getUserIndex').then(res => {
           const user = res.data.data.user
           this.collectionCount = user.collectionCount
           this.circleCount = user.circleCount

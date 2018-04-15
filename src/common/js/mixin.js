@@ -2,6 +2,7 @@ import { mapActions, mapGetters } from 'vuex'
 import { MessageBox } from 'mint-ui'
 import axios from 'axios'
 import moment from 'moment'
+import { BASE_API_PATH } from '@/common/js/util'
 
 export const loginMixin = {
   methods: {
@@ -10,10 +11,10 @@ export const loginMixin = {
       'saveUserInfo'
     ]),
     initUserInfo (token, callback) {
-      this.$socket.emit('login', this.token)
+      this.$socket.emit('login', token)
       this.addToken(token)
       if (token) {
-        axios.get('/user/getUserIndex').then(res => {
+        axios.get(BASE_API_PATH + '/user/getUserIndex').then(res => {
           const user = res.data.data.user
           this.saveUserInfo(user)
           if (callback) {

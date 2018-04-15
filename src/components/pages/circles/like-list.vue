@@ -12,6 +12,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import PersonList from '@/components/abstract/person-list'
   export default {
     data () {
@@ -28,7 +29,7 @@
     methods: {
       initData () {
         const circleId = this.$route.query.id
-        this.$axios.get(`/circle/getLikeList/${circleId}`).then(res => {
+        this.$axios.get(BASE_API_PATH + `/circle/getLikeList/${circleId}`).then(res => {
           if (res.data.code === 200) {
             this.likes.push(...res.data.data.likes)
           }

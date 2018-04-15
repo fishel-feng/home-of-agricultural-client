@@ -10,7 +10,7 @@
           <div class="desc">{{item.desc}}</div>
           <div class="image">
             <div v-for="(image,index) in item.images" :key="index">
-              <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/question/${image}`)" :src="`http://127.0.0.1:7001/public/question/${image}`" width="100px" height="100px" alt="">
+              <img @click.stop="showBigImage(`http://39.106.41.253:7001/public/question/${image}`)" :src="`http://39.106.41.253:7001/public/question/${image}`" width="100px" height="100px" alt="">
             </div>
           </div>
           <div class="tail">
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import { Toast, MessageBox } from 'mint-ui'
   import { showImageMixin, accountTestMixin, getTimeMixin, goToRelativePathMixin } from '@/common/js/mixin'
   export default {
@@ -72,7 +73,7 @@
           confirmButtonText: '删除',
           cancelButtonText: '取消'
         }).then(() => {
-          this.$axios.post('/question/deleteQuestion', {
+          this.$axios.post(BASE_API_PATH + '/question/deleteQuestion', {
             questionId: questionId
           }).then(res => {
             if (res.data.code === 200) {

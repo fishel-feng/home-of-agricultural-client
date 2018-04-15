@@ -13,7 +13,7 @@
                 <span>{{item.content}}</span>
               </div>
               <div v-if="item.type==='image'" :class="item.sender!==myId?'message-item':'message-item right'">
-                <img @click.stop="showBigImage(`http://127.0.0.1:7001/public/chat/${item.content}`)" :src="`http://127.0.0.1:7001/public/chat/${item.content}`" alt="" width="120px" height="120px">
+                <img @click.stop="showBigImage(`http://39.106.41.253:7001/public/chat/${item.content}`)" :src="`http://39.106.41.253:7001/public/chat/${item.content}`" alt="" width="120px" height="120px">
               </div>
             </li>
           </ul>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import Uploader from '@/components/abstract/uploader'
   import { showImageMixin, accountTestMixin } from '@/common/js/mixin'
   export default {
@@ -64,7 +65,7 @@
       getData (callback) {
         let chatId = this.myId < this.$route.query.userId ? this.myId + this.$route.query.userId : this.$route.query.userId + this.myId
         let time = this.messageList.length ? this.messageList[0].time : new Date().toISOString()
-        this.$axios.get(`/question/getChat/${chatId}/${time}`).then(res => {
+        this.$axios.get(BASE_API_PATH + `/question/getChat/${chatId}/${time}`).then(res => {
           if (res.data.code === 200) {
             if (!callback) {
               this.messageList = res.data.data

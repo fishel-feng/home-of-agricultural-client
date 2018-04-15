@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import { BASE_API_PATH } from '@/common/js/util'
   import { mapActions, mapMutations, mapGetters } from 'vuex'
   import { accountTestMixin } from '@/common/js/mixin'
   export default {
@@ -73,11 +73,11 @@
         setUserCount: 'SET_USER_COUNT'
       }),
       initData () {
-        axios.get('/user/showMessage').then(res => {
+        this.$axios.get(BASE_API_PATH + '/user/showMessage').then(res => {
           this.messages = res.data.data.messages
           this.setMessage(this.messages)
         })
-        axios.get('/user/getUserIndex').then(res => {
+        this.$axios.get(BASE_API_PATH + '/user/getUserIndex').then(res => {
           this.saveUserInfo(res.data.data.user)
         })
       }

@@ -28,6 +28,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import {MessageBox, Toast} from 'mint-ui'
   import {getTimeMixin, accountTestMixin, goToRelativePathMixin} from '@/common/js/mixin'
   export default {
@@ -42,7 +43,7 @@
     },
     methods: {
       getData () {
-        this.$axios.get(`/circle/getComment/${this.$route.query.id}`).then(res => {
+        this.$axios.get(BASE_API_PATH + `/circle/getComment/${this.$route.query.id}`).then(res => {
           if (res.data.code === 200) {
             this.comments.push(...res.data.data.comments)
           }
@@ -60,7 +61,7 @@
           confirmButtonText: '删除',
           cancelButtonText: '取消'
         }).then(action => {
-          this.$axios.post('/circle/deleteComment', {
+          this.$axios.post(BASE_API_PATH + '/circle/deleteComment', {
             circleId: this.$route.query.id,
             commentId: commentId
           }).then(res => {

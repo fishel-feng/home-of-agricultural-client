@@ -12,49 +12,50 @@
 </template>
 
 <script>
-import CircleList from '@/components/abstract/circle-list'
-import { accountTestMixin } from '@/common/js/mixin'
-export default {
-  mixins: [accountTestMixin],
-  data () {
-    return {
-      loading: false,
-      showLoading: false,
-      circles: []
-    }
-  },
-  components: {
-    CircleList
-  },
-  mounted () {
-    this.getCircleList()
-  },
-  methods: {
-    getCircleList (callback) {
-      let last = this.circles.length ? this.circles[this.circles.length - 1].time : new Date().toISOString()
-      this.showLoading = true
-      this.loading = true
-      this.$axios.get('/user/getCircles/' + last).then(res => {
-        this.circles.push(...res.data.data.circleList)
-        if (callback) {
-          callback()
-        }
-        setTimeout(() => {
-          this.loading = false
-          this.showLoading = false
-        }, 2000)
-      })
+  import { BASE_API_PATH } from '@/common/js/util'
+  import CircleList from '@/components/abstract/circle-list'
+  import { accountTestMixin } from '@/common/js/mixin'
+  export default {
+    mixins: [accountTestMixin],
+    data () {
+      return {
+        loading: false,
+        showLoading: false,
+        circles: []
+      }
     },
-    getPageContent () {
-      this.circles = []
+    components: {
+      CircleList
+    },
+    mounted () {
       this.getCircleList()
     },
-    reload (callback) {
-      this.questions = []
-      this.getCircleList(callback)
+    methods: {
+      getCircleList (callback) {
+        let last = this.circles.length ? this.circles[this.circles.length - 1].time : new Date().toISOString()
+        this.showLoading = true
+        this.loading = true
+        this.$axios.get(BASE_API_PATH + '/user/getCircles/' + last).then(res => {
+          this.circles.push(...res.data.data.circleList)
+          if (callback) {
+            callback()
+          }
+          setTimeout(() => {
+            this.loading = false
+            this.showLoading = false
+          }, 2000)
+        })
+      },
+      getPageContent () {
+        this.circles = []
+        this.getCircleList()
+      },
+      reload (callback) {
+        this.questions = []
+        this.getCircleList(callback)
+      }
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>

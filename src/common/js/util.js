@@ -11,3 +11,5 @@ export function encryptPassword (realPassword) {
   const encrypted = jse.encrypt(realPassword)
   return encrypted
 }
+
+export const BASE_API_PATH = 'http://39.106.41.253:7001'

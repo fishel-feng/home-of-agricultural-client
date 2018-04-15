@@ -21,7 +21,7 @@
 
 <script>
   import { loginMixin } from '@/common/js/mixin'
-  import { encryptPassword } from '@/common/js/util'
+  import { encryptPassword, BASE_API_PATH } from '@/common/js/util'
   import { mapActions } from 'vuex'
   import { Toast } from 'mint-ui'
   const TIME_COUNT = 60
@@ -69,13 +69,13 @@
       sendCode () {
         if (this.phone && /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(this.phone)) {
           this.disabledButton()
-          this.$axios.post('/user/sendVerifyCode', {
+          this.$axios.post(BASE_API_PATH + '/user/sendVerifyCode', {
             tel: this.phone,
             reset: !this.isNew
           }).then(res => {
             if (res.data.code === 200) {
               Toast({
-                message: '发送成功',
+                message: '发送成功，验证码五分钟内有效',
                 position: 'bottom',
                 duration: 3000
               })
@@ -136,7 +136,7 @@
       signUp () {
         if (this.verifyParams(this.phone, this.password, this.repeatPassword, this.captcha)) {
           const password = encryptPassword(this.password)
-          this.$axios.post('/user/signUp', {
+          this.$axios.post(BASE_API_PATH + '/user/signUp', {
             tel: this.phone,
             password,
             code: this.captcha
@@ -153,7 +153,7 @@
               })
             } else if (res.data.code === 457) {
               Toast({
-                message: '验证码错误',
+                message: '验证码错误或失效',
                 position: 'bottom',
                 duration: 3000
               })
@@ -170,7 +170,7 @@
       resetPassword () {
         if (this.verifyParams(this.phone, this.password, this.repeatPassword, this.captcha)) {
           const password = encryptPassword(this.password)
-          this.$axios.post('/user/resetPassword', {
+          this.$axios.post(BASE_API_PATH + '/user/resetPassword', {
             tel: this.phone,
             password,
             code: this.captcha
@@ -184,7 +184,7 @@
               this.$router.go(-1)
             } else if (res.data.code === 457) {
               Toast({
-                message: '验证码错误',
+                message: '验证码错误或失效',
                 position: 'bottom',
                 duration: 3000
               })

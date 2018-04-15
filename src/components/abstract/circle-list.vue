@@ -4,7 +4,7 @@
       <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
         <li v-for="(item, index) in circles" :key="index" class="list-item" ref="li">
           <div class="head-image">
-            <img @click="getUserCard(item.userId)" :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="50px" height="50px">
+            <img @click="getUserCard(item.userId)" :src="`http://39.106.41.253:7001/public/headImage/${item.headImage}`" width="50px" height="50px">
           </div>
           <div class="circle-content">
             <div class="title-container">
@@ -14,7 +14,7 @@
             <div class="circle-text">{{item.content}}</div>
             <div class="circle-image">
               <div v-for="(image,innerIndex) in item.images" :key="innerIndex">
-                <img @click.stop="showBigImage(`http://localhost:7001/public/circle/${image}`)" :src="`http://localhost:7001/public/circle/${image}`" width="80px" height="80px" alt="">
+                <img @click.stop="showBigImage(`http://39.106.41.253:7001/public/circle/${image}`)" :src="`http://39.106.41.253:7001/public/circle/${image}`" width="80px" height="80px" alt="">
               </div>
             </div>
             <div class="circle-tail">
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import { mapGetters, mapActions } from 'vuex'
   import { showImageMixin, accountTestMixin, getTimeMixin, goToRelativePathMixin } from '@/common/js/mixin'
   import { Toast, MessageBox } from 'mint-ui'
@@ -102,7 +103,7 @@
         this.goToRelativePath('like?id=' + circleId)
       },
       giveLike (circle) {
-        this.$axios.post('/circle/giveLike', {
+        this.$axios.post(BASE_API_PATH + '/circle/giveLike', {
           circleId: circle._id
         }).then(res => {
           if (res.data.code === 200) {
@@ -113,7 +114,7 @@
         })
       },
       cancelLike (circle) {
-        this.$axios.post('/circle/cancelLike', {
+        this.$axios.post(BASE_API_PATH + '/circle/cancelLike', {
           circleId: circle._id
         }).then(res => {
           if (res.data.code === 200) {
@@ -134,7 +135,7 @@
           confirmButtonText: '删除',
           cancelButtonText: '取消'
         }).then(() => {
-          this.$axios.post('/circle/deleteCircle', {
+          this.$axios.post(BASE_API_PATH + '/circle/deleteCircle', {
             circleId: circleId
           }).then(res => {
             if (res.data.code === 200) {

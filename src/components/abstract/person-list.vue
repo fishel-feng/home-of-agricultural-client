@@ -3,7 +3,7 @@
     <ul>
       <li class="item" v-for="(item,index) in data" :key="index" @click="showUserCard(item)">
         <div class="user-wrapper">
-          <img :src="`http://localhost:7001/public/headImage/${item.headImage}`" width="70px" height="70px" alt="">
+          <img :src="`http://39.106.41.253:7001/public/headImage/${item.headImage}`" width="70px" height="70px" alt="">
           <div class="text">
               <div class="nick-name">{{item.nickName}}</div>
               <div>{{item.description}}</div>

@@ -12,6 +12,7 @@
 </template>
 
 <script>
+  import {BASE_API_PATH} from '@/common/js/util'
   import {accountTestMixin, goToRelativePathMixin} from '@/common/js/mixin'
   import PersonList from '@/components/abstract/person-list'
   export default {
@@ -32,7 +33,7 @@
         this.goToRelativePath(`chat?userId=${item.userId}&userName=${item.nickName}`)
       },
       initData () {
-        this.$axios.get('/user/getRecent').then(res => {
+        this.$axios.get(BASE_API_PATH + '/user/getRecent').then(res => {
           if (res.data.code === 200) {
             this.recent = res.data.data.recent
           }

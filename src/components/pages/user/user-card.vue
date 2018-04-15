@@ -43,6 +43,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import {mapGetters, mapActions} from 'vuex'
   import { accountTestMixin } from '@/common/js/mixin'
   export default {
@@ -71,14 +72,14 @@
     },
     methods: {
       getData () {
-        this.$axios.get(`/user/getUserInfo/${this.$route.query.userId}`).then(res => {
+        this.$axios.get(BASE_API_PATH + `/user/getUserInfo/${this.$route.query.userId}`).then(res => {
           if (res.data.code === 200) {
             this.user = res.data.data.user
           }
         })
       },
       followUser () {
-        this.$axios.post(`/user/giveFollow`, {
+        this.$axios.post(BASE_API_PATH + `/user/giveFollow`, {
           targetId: this.$route.query.userId
         }).then(res => {
           if (res.data.code === 200) {
@@ -93,7 +94,7 @@
         })
       },
       unFollowUser () {
-        this.$axios.post(`/user/cancelFollow`, {
+        this.$axios.post(BASE_API_PATH + `/user/cancelFollow`, {
           targetId: this.$route.query.userId
         }).then(res => {
           if (res.data.code === 200) {

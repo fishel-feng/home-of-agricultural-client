@@ -21,6 +21,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import {accountTestMixin} from '@/common/js/mixin'
   export default {
     mixins: [ accountTestMixin ],
@@ -36,7 +37,7 @@
     },
     methods: {
       submit () {
-        this.$axios.post('/circle/addComment', {
+        this.$axios.post(BASE_API_PATH + '/circle/addComment', {
           circleId: this.$route.query.id,
           content: this.content,
           targetId: this.$route.query.targetId ? this.$route.query.targetId : ''

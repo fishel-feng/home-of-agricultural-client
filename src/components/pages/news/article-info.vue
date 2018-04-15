@@ -31,6 +31,7 @@
 </template>
 
 <script>
+  import {BASE_API_PATH} from '@/common/js/util'
   import {accountTestMixin} from '@/common/js/mixin'
   import {Toast} from 'mint-ui'
   import {mapGetters, mapActions} from 'vuex'
@@ -67,7 +68,7 @@
         'deleteCollection'
       ]),
       initData () {
-        this.$axios.get(`/news/getArticleInfo/${this.$route.params.articleId}`).then(res => {
+        this.$axios.get(BASE_API_PATH + `/news/getArticleInfo/${this.$route.params.articleId}`).then(res => {
           if (res && res.data.code === 200) {
             this.article = res.data.data
           }
@@ -77,7 +78,7 @@
         this.verifyLogin(() => {
           const articleId = this.$route.params.articleId
           const title = this.article.title
-          this.$axios.post('/news/addToCollections', {
+          this.$axios.post(BASE_API_PATH + '/news/addToCollections', {
             articleId,
             title
           }).then(res => {
@@ -95,7 +96,7 @@
       deleteFromCollection () {
         this.verifyLogin(() => {
           const articleId = this.$route.params.articleId
-          this.$axios.post('/news/deleteFromCollections', {
+          this.$axios.post(BASE_API_PATH + '/news/deleteFromCollections', {
             articleId
           }).then(res => {
             if (res.data.code === 200) {

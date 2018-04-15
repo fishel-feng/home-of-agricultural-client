@@ -12,6 +12,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import { accountTestMixin } from '@/common/js/mixin'
   import PersonList from '@/components/abstract/person-list'
   export default {
@@ -29,7 +30,7 @@
     },
     methods: {
       getData () {
-        this.$axios.get('/question/getExpertList/' + this.$route.query.tag).then(res => {
+        this.$axios.get(BASE_API_PATH + '/question/getExpertList/' + this.$route.query.tag).then(res => {
           if (res.data.code === 200) {
             this.experts.push(...res.data.data.experts)
           }

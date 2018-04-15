@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  import {BASE_API_PATH} from '@/common/js/util'
   import {accountTestMixin} from '@/common/js/mixin'
   export default {
     mixins: [accountTestMixin],
@@ -26,7 +27,7 @@
     },
     methods: {
       initData () {
-        this.$axios.get('/user/getCollections').then(res => {
+        this.$axios.get(BASE_API_PATH + '/user/getCollections').then(res => {
           this.collections = res.data.data.collections
         })
       },

@@ -6,13 +6,12 @@ import 'mint-ui/lib/style.css'
 import App from './App'
 import router from './router'
 import store from './store'
-// import fastclick from 'fastclick'
 import VueSocketio from 'vue-socket.io'
 import axios from 'axios'
 import {loadToken} from '@/common/js/cache'
 import '@/assets/stylus/index.styl'
 
-Vue.use(VueSocketio, 'http://127.0.0.1:7001')
+Vue.use(VueSocketio, 'http://39.106.41.253:7001')
 
 Vue.use(MintUI)
 
@@ -29,13 +28,21 @@ axios.interceptors.request.use(config => {
   return Promise.reject(err)
 })
 
-// fastclick.attach(document.body)
-
 /* eslint-disable no-new */
+// document.addEventListener('deviceready', function () {
+//   new Vue({
+//     el: '#app',
+//     router,
+//     store,
+//     template: '<App/>',
+//     components: { App }
+//   })
+//   window.navigator.splashscreen.hide()
+// }, false)
 new Vue({
   el: '#app',
   router,
   store,
   template: '<App/>',
-  components: { App }
+  components: {App}
 })

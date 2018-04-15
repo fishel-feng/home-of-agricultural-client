@@ -20,47 +20,47 @@
 </template>
 
 <script>
-import { loginMixin } from '@/common/js/mixin'
-import { encryptPassword } from '@/common/js/util'
-import { Toast } from 'mint-ui'
-export default {
-  mixins: [loginMixin],
-  data () {
-    return {
-      phone: '',
-      password: ''
-    }
-  },
-  methods: {
-    signIn () {
-      if (!this.phone || !/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(this.phone) || !this.password) {
-        Toast({
-          message: '请输入正确的手机号或密码',
-          position: 'bottom',
-          duration: 3000
-        })
-        return
+  import { loginMixin } from '@/common/js/mixin'
+  import { encryptPassword, BASE_API_PATH } from '@/common/js/util'
+  import { Toast } from 'mint-ui'
+  export default {
+    mixins: [loginMixin],
+    data () {
+      return {
+        phone: '',
+        password: ''
       }
-      const password = encryptPassword(this.password)
-      this.$axios.post('/user/signIn', {
-        tel: this.phone,
-        password
-      }).then(res => {
-        if (res.data.code === 423) {
+    },
+    methods: {
+      signIn () {
+        if (!this.phone || !/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(this.phone) || !this.password) {
           Toast({
-            message: '用户名或密码错误',
+            message: '请输入正确的手机号或密码',
             position: 'bottom',
             duration: 3000
           })
-        } else if (res.data.code === 200) {
-          const token = res.data.data.token
-          this.initUserInfo(token)
-          this.$router.go(-1)
+          return
         }
-      })
+        const password = encryptPassword(this.password)
+        this.$axios.post(BASE_API_PATH + '/user/signIn', {
+          tel: this.phone,
+          password
+        }).then(res => {
+          if (res.data.code === 423) {
+            Toast({
+              message: '用户名或密码错误',
+              position: 'bottom',
+              duration: 3000
+            })
+          } else if (res.data.code === 200) {
+            const token = res.data.data.token
+            this.initUserInfo(token)
+            this.$router.go(-1)
+          }
+        })
+      }
     }
   }
-}
 </script>
 
 <style lang="stylus" scoped>

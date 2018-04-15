@@ -36,6 +36,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import ArticleList from '@/components/abstract/article-list'
   export default {
     data () {
@@ -66,7 +67,7 @@
     },
     methods: {
       initData () {
-        this.$axios.get('/news/getArticleIndex').then(res => {
+        this.$axios.get(BASE_API_PATH + '/news/getArticleIndex').then(res => {
           if (res.data.code === 200) {
             this.scroll = res.data.data.scroll
             this.hotList = res.data.data.todayNews
@@ -86,7 +87,7 @@
       getArticleList () {
         this.showLoading = true
         this.loading = true
-        this.$axios.get(`/news/getArticleListByPage/${this.selected}/${this.page}`).then(res => {
+        this.$axios.get(BASE_API_PATH + `/news/getArticleListByPage/${this.selected}/${this.page}`).then(res => {
           if (res.data.code === 200) {
             if (this.newsList.length) {
               setTimeout(() => {

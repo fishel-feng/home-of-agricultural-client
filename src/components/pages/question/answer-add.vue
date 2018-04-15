@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import { BASE_API_PATH } from '@/common/js/util'
   import Uploader from '@/components/abstract/uploader'
   import { Toast } from 'mint-ui'
   import { accountTestMixin } from '@/common/js/mixin'
@@ -48,7 +49,7 @@
           })
           return
         }
-        this.$axios.post('/question/addAnswer', {
+        this.$axios.post(BASE_API_PATH + '/question/addAnswer', {
           questionId: this.$route.params.questionId,
           content: this.content,
           images: this.images
